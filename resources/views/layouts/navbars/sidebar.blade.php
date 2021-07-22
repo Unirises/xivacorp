@@ -85,8 +85,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-badge" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">Users</span>
+                        <i class="ni ni-badge"></i>
+                        <span class="nav-link-text">Employees</span>
                     </a>
 
                     <div class="collapse show" id="navbar-examples">
@@ -94,16 +94,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
                                     Overview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    My Records
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Link Generator
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -116,25 +106,15 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-archive-2"></i>
-                        <span class="nav-link-text">Listings</span>
+                        <i class="ni ni-settings-gear-65"></i>
+                        <span class="nav-link-text">Manage Types</span>
                     </a>
 
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    Health Care Providers
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Tests
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Services
+                                    Overview
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -168,27 +148,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-ambulance"></i>
-                        <span class="nav-link-text">Bookings</span>
-                    </a>
-
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    Overview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Manage Documentation Fields
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-circle-08"></i>
                         <span class="nav-link-text">Teleconsult</span>
                     </a>
@@ -211,7 +170,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-favourite-28"></i>
-                        <span class="nav-link-text">Health Services</span>
+                        <span class="nav-link-text">Tests and Services</span>
                     </a>
 
                     <div class="collapse show" id="navbar-examples">
@@ -223,7 +182,22 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
+                                    Manage Documentation Fields
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index') }}">
+                                    My Health Diary
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index') }}">
                                     Schedule a Booking
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index') }}">
+                                    Referrals and Prescriptions
                                 </a>
                             </li>
                         </ul>
@@ -242,25 +216,10 @@
                                     Overview
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Referrals
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Prescriptions
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>
-
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
+                <!--
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('map') }}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
@@ -277,6 +236,23 @@
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
                 </li> -->
+            </ul>
+              <!-- Divider -->
+              <hr class="my-3">
+            <!-- Heading -->
+            <h6 class="navbar-heading text-muted">Other Services</h6>
+            <!-- Navigation -->
+            <ul class="navbar-nav mb-md-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://xivahealth.io">
+                        <i class="ni ni-planet text-blue"></i>News and Updates
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://xivahealth.io">
+                        <i class="ni ni-cloud-download-95 text-blue"></i>Book Vaccination Service
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
