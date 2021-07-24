@@ -20,6 +20,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'hcp_data_id',
+        'role',
+        'workspace_id',
     ];
 
     /**
@@ -40,4 +43,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hcpData()
+    {
+        return $this->hasOne(HcpData::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'workspace_id', 'code');
+    }
 }
