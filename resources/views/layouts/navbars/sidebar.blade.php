@@ -240,13 +240,13 @@
                     <div class="collapse hide" id="forms">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('forms.index') }}">
                                     Overview
                                 </a>
                             </li>
                             @if(auth()->user()->role->value == 0)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('forms.create') }}">
                                     Add New
                                 </a>
                             </li>

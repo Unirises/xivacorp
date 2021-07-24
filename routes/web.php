@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('types', 'App\Http\Controllers\TypeController');
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');
 	Route::resource('marketplace', 'App\Http\Controllers\ItemController');
+	Route::resource('forms', 'App\Http\Controllers\FormController');
 
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
