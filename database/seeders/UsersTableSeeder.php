@@ -30,5 +30,21 @@ class UsersTableSeeder extends Seeder
             'role' => 0,
             'workspace_id' => 'XVHLTH00',
         ]);
+        DB::table('users')->insert([
+            'name' => 'HCP',
+            'email' => 'hcp@test.xyz',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'role' => 1,
+            'workspace_id' => 'XVHLTH00',
+        ]);
+        DB::table('hcp_data')->insert([
+            'user_id' => 2,
+            'type_id' => 3,
+            'prc_id' => '1234567890',
+            'photo' => 'default.png'
+        ]);
     }
 }

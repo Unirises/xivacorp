@@ -112,15 +112,17 @@
                     <div class="collapse hide" id="employees">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('employees.index') }}">
                                     Overview
                                 </a>
                             </li>
+                            @if(auth()->user()->role->value == 0)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('employees.create') }}">
                                     Add New
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>

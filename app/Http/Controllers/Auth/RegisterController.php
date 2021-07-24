@@ -61,9 +61,9 @@ class RegisterController extends Controller
             'type' => 'required|digits_between:1,4',
             'code' => 'required|exists:companies,code',
         ];
-
+        
         if($data['type'] == '1') {
-            array_merge($array, [
+            $array = array_merge($array, [
                 'role' => 'required|exists:types,id',
                 'prc_id' => 'required',
                 'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096'
@@ -81,13 +81,13 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-        //XVNRSS1
         $data = $request->all();
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['type'],
+            'workspace_id' => $data['code'],
         ]);
 
         if($data['type'] == '1') {

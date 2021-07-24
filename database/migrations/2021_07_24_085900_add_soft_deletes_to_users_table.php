@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddWorkspaceIdToUsersTable extends Migration
+class AddSoftDeletesToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddWorkspaceIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('workspace_id')->index()->nullable();
-            $table->foreign('workspace_id')->references('code')->on('companies');
+            $table->softDeletes();
         });
     }
 
@@ -27,7 +26,7 @@ class AddWorkspaceIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropSoftDeletes();
         });
     }
 }
