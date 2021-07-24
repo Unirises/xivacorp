@@ -48,7 +48,7 @@ class CompanyController extends Controller
         $company->code = $company->code . $company->id;
         $company->save();
 
-        return redirect()->back();
+        return redirect()->route('company.index');
     }
 
     /**

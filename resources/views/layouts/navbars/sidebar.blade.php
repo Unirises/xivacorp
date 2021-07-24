@@ -133,12 +133,12 @@
                     <div class="collapse hide" id="types">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('types.index') }}">
                                     Overview
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('types.create') }}">
                                     Add New
                                 </a>
                             </li>

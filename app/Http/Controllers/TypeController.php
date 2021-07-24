@@ -14,7 +14,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('types.index')->with('types', Type::all());
     }
 
     /**
@@ -24,7 +24,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('types.create');
     }
 
     /**
@@ -35,7 +35,13 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|string',
+            'type' => 'required|digits_between:0,2',
+        ]);
+        Type::create($data);
+
+        return redirect()->route('types.index');
     }
 
     /**
@@ -46,7 +52,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        //
+        // return view('types.show', compact('type'));
     }
 
     /**
@@ -57,7 +63,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        return view('types.edit', compact('type'));
     }
 
     /**
@@ -69,7 +75,13 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|string',
+            'type' => 'required|digits_between:0,2',
+        ]);
+        Type::where('id', $type->id)->update($data);
+
+        return redirect()->back();
     }
 
     /**
