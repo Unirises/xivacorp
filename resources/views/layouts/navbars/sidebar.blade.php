@@ -82,6 +82,7 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
+                @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
                     <a class="nav-link" href="#companies" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="companies">
                         <i class="ni ni-building"></i>
@@ -103,6 +104,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
                         <i class="ni ni-badge"></i>
@@ -126,6 +128,7 @@
                         </ul>
                     </div>
                 </li>
+                @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
                     <a class="nav-link" href="#types" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="types">
                         <i class="ni ni-settings-gear-65"></i>
@@ -147,6 +150,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="#marketplace" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="marketplace">
                         <i class="ni ni-bag-17"></i>
@@ -156,15 +160,17 @@
                     <div class="collapse hide" id="marketplace">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('marketplace.index') }}">
                                     Overview
                                 </a>
                             </li>
+                            @if(auth()->user()->role->value == 0)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('marketplace.create') }}">
                                     Add New
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
@@ -238,6 +244,13 @@
                                     Overview
                                 </a>
                             </li>
+                            @if(auth()->user()->role->value == 0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                    Add New
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </li>

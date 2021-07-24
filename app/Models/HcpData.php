@@ -25,4 +25,8 @@ class HcpData extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function getPhotoAttribute($value) {
+        return url('storage/hcp/' . rawurlencode($value));
+    }
 }
