@@ -86,6 +86,27 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
+                        <i class="ni ni-building"></i>
+                        <span class="nav-link-text">Companies</span>
+                    </a>
+
+                    <div class="collapse hide" id="employees">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('company.index') }}">
+                                    Overview
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('company.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
                         <i class="ni ni-badge"></i>
                         <span class="nav-link-text">Employees</span>
                     </a>
