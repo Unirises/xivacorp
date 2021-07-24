@@ -83,12 +83,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
+                    <a class="nav-link" href="#companies" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="companies">
                         <i class="ni ni-building"></i>
                         <span class="nav-link-text">Companies</span>
                     </a>
 
-                    <div class="collapse hide" id="employees">
+                    <div class="collapse hide" id="companies">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('company.index') }}">
