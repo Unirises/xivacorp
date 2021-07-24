@@ -10,13 +10,13 @@
             <div class="card bg-secondary shadow border-0">
                 <form role="form" method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                    <div class="card-header bg-transparent ">
+                        <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
                             <div class="input-group input-group-alternative mb-3">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">I am signing up as</label>
+                                    <label class="input-group-text" for="type">I am signing up as</label>
                                 </div>
-                                <select class="custom-select" id="inputGroupSelect01">
+                                <select class="custom-select" id="type">
                                     <option disabled>Choose...</option>
                                     <option value="1">Health Care Provider</option>
                                     <option value="1">HR</option>
@@ -24,9 +24,27 @@
                                     <option value="1">Employee</option>
                                 </select>
                             </div>
-                            @if ($errors->has('name'))
+                            @if ($errors->has('type'))
                             <span class="invalid-feedback" style="display: block;" role="alert">
-                                <strong>{{ $errors->first('name') }}</strong>
+                                <strong>{{ $errors->first('type') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="role">My role is</label>
+                                </div>
+                                <select class="custom-select" id="role">
+                                    <option disabled>Choose...</option>
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @if ($errors->has('role'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('role') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -44,7 +62,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
+                    <div class="card-body px-lg-5 pb-lg-5">
                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                             <div class="input-group input-group-alternative mb-3">
                                 <div class="input-group-prepend">

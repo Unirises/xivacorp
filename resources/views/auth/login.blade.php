@@ -17,20 +17,6 @@
                         </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
-
-                            <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }} mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
-                                    </div>
-                                    <input class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" placeholder="Workspace Identifier" type="text" name="code" value="{{ old('code') }}" required autofocus>
-                                </div>
-                                @if ($errors->has('code'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('code') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
