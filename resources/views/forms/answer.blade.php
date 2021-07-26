@@ -9,7 +9,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Create a new fillable form</h3>
+                    <h3 class="mb-0">{{ $answer->form->name }}</h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body px-lg-5 py-lg-5">
@@ -39,7 +39,6 @@
                 </div>
                 <!-- Card footer -->
                 <div class="card-footer py-4">
-                    <button type="submit" class="btn btn-primary">Create Record</button>
                 </div>
             </div>
         </div>

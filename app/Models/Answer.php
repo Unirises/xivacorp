@@ -10,4 +10,8 @@ class Answer extends Model
     use HasFactory;
 
     protected $fillable = ['data', 'form_id', 'user_id'];
+
+    public function form() {
+        return $this->belongsTo(Form::class);
+    }
 }
