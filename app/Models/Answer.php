@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Form extends Model
+class Answer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'data', 'required'];
+    protected $fillable = ['data', 'form_id', 'user_id'];
 }

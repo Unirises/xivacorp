@@ -47,6 +47,10 @@ class User extends Authenticatable
         'role' => UserRole::class,
     ];
 
+    protected $appends = [
+        'company_name',
+    ];
+
     public function hcp_data()
     {
         return $this->hasOne(HcpData::class);
@@ -55,5 +59,9 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class, 'workspace_id', 'code');
+    }
+
+    public function getCompanyNameAttribute() {
+        return $this->company->name ?? 'Floating';
     }
 }

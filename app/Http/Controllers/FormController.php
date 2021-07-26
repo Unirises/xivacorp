@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Form;
 use Illuminate\Http\Request;
 
@@ -36,14 +37,42 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        $validated =  $this->validate($request, ['form_name' => 'required|string', 'data' => 'required|json']);
-        
+        $validated =  $this->validate($request, ['form_name' => 'required|string', 'data' => 'required|json', 'required' => 'nullable']);
+
         Form::create([
             'name' => $validated['form_name'],
             'data' => json_encode($validated['data']),
+            'required' => $request->has('required') ? true : false,
         ]);
 
         return redirect()->back();
+    }
+
+    public function storeAnswer(Request $request)
+    {
+        $validated =  $this->validate($request, [
+            'data' => 'required|array',
+            'data.*.name' => 'nullable|string',
+            'data.*.label' => 'nullable|string',
+            'data.*.value' => 'nullable|string',
+            'form_id' => 'required|exists:forms,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        Answer::updateOrCreate([
+            'data' => json_encode($validated['data']),
+            'form_id' => $validated['form_id'],
+            'user_id' => $validated['user_id']
+        ]);
+        
+        return route('view-answer', ['formId' => $validated['form_id'], 'userId' => $validated['user_id']]);
+    }
+
+    public function showAnswers(int $formId, int $userId)
+    {
+        $answer = Answer::where('form_id', $formId)->where('user_id', $userId)->firstOrFail();
+        $answer->data = json_decode($answer['data']);
+        return view('forms.answer', compact('answer'));
     }
 
     /**

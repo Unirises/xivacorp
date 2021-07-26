@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('marketplace', 'App\Http\Controllers\ItemController');
 	Route::resource('forms', 'App\Http\Controllers\FormController');
 
+	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);
+	Route::get('answers/{formId}/{userId}', ['as' => 'view-answer', 'uses' => 'App\Http\Controllers\FormController@showAnswers']);
+
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

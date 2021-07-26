@@ -210,22 +210,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
-                                    Manage Documentation Fields
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
                                     My Health Diary
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
                                     Schedule a Booking
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Referrals and Prescriptions
                                 </a>
                             </li>
                         </ul>
