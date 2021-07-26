@@ -10,4 +10,11 @@ class Form extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'data', 'required'];
+
+    protected $appends = ['has_answer'];
+
+    public function getHasAnswerAttribute()
+    {
+        return Answer::where('user_id', auth()->user()->id)->where('form_id', $this->id)->exists();
+    }
 }

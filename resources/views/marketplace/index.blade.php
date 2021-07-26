@@ -9,7 +9,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Marketplace Listing <a href="{{ route('marketplace.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a></h3>
+                    <h3 class="mb-0">Marketplace Listing @if(auth()->user()->role->value == 0)<a href="{{ route('marketplace.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body">

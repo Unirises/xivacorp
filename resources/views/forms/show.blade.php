@@ -16,6 +16,19 @@
                         <h3 class="mb-0">{{ $form->name }}</h3>
                     </div>
                     <div class="card-body">
+                        @if($users)
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="user">I am answering for</label>
+                            </div>
+                            <select class="custom-select" id="user" name="user">
+                                <option disabled>Choose...</option>
+                                @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ (old('user_id', $user->id ?? auth()->user()->id) == $user->id ? 'selected' : '') }}>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                         <div class="fb-render"></div>
                     </div>
                     <!-- Card footer -->
@@ -65,11 +78,11 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     'Accept': 'application/json',
-                    "Content-Type": "application/json",     
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     form_id: "{{ $form->id }}",
-                    user_id: "{{ auth()->user()->id }}",
+                    user_id: $("select#user option").filter(":selected").val() ?? "{{ auth()->user()->id }}",
                     data: parsedFields
                 })
             }).then(async (resp) => {

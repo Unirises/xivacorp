@@ -9,7 +9,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Forms <a href="{{ route('forms.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a></h3>
+                    <h3 class="mb-0">Forms @if(auth()->user()->role->value == 0)<a href="{{ route('forms.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">
@@ -35,8 +35,17 @@
                                     {{ $form->required ? 'YES' : null }}
                                 </td>
                                 <td>
+                                    <a href="{{ route('forms.show', $form) }}" class="btn btn-primary my-4">
+                                        @if($form->has_answer)
+                                        Update Answer
+                                        @else
+                                        Answer Now
+                                        @endif
+                                    </a>
+                                    @if($form->has_answer)
+                                    <a href="{{ route('view-answer', ['formId' => $form->id, 'userId' => auth()->user()->id]) }}" class="btn btn-primary my-4">View Answer</a>
+                                    @endif
                                     @if(auth()->user()->role->value == 0)
-                                    <a href="{{ route('forms.show', $form) }}" class="btn btn-primary my-4">View</a>
                                     <form method="POST" action="{{ route('forms.destroy', $form->id) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}

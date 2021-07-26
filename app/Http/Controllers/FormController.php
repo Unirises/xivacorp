@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\Answer;
 use App\Models\Form;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -56,8 +58,12 @@ class FormController extends Controller
             'data.*.label' => 'nullable|string',
             'data.*.value' => 'nullable|string',
             'form_id' => 'required|exists:forms,id',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
         ]);
+
+        if(!$request->filled('user_id')) {
+            $validated['user_id'] = auth()->user()->id;
+        }
 
         Answer::updateOrCreate([
             'data' => json_encode($validated['data']),
@@ -84,7 +90,15 @@ class FormController extends Controller
     public function show(Form $form)
     {
         $form['data'] = json_decode($form['data']);
-        return view('forms.show', compact('form'));
+        $users = null;
+
+        if(auth()->user()->role == UserRole::Admin()) {
+            $users = User::all();
+        } else if(auth()->user()->role == UserRole::HCP()) {
+            $users = User::where('workspace_id', auth()->user()->workspace_id)->get();
+        }
+
+        return view('forms.show', compact('form', 'users'));
     }
 
     /**
