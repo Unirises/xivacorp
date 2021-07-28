@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\Consultation;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ConsultationController extends Controller
 {
@@ -24,7 +28,11 @@ class ConsultationController extends Controller
      */
     public function create()
     {
-        return view('consultations.create');
+        $workspaceId = auth()->user()->workspace_id;
+        $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get();
+        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [1, 4])->get();
+
+        return view('consultations.create', compact('providers', 'users'));
     }
 
     /**
@@ -35,7 +43,40 @@ class ConsultationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $currentUserRole = auth()->user()->role;
+
+        $validated = $this->validate($request, [
+            'provider' => 'required|exists:users,id',
+            'schedule' => 'required|date',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+        
+        if($currentUserRole == UserRole::Employee()) {
+            $validated['user_id'] = auth()->user()->id;
+        }
+
+        $startsAt = Carbon::parse($validated['schedule']);
+        $endsAt = Carbon::parse($validated['schedule'])->addMinutes(30);
+
+        $response = Http::withToken(env('DAILY_API', 'be86164a3699b823d22e5cc4d7ae84919e941b61f8226c3fdd6740934922d43e'))->post('https://api.daily.co/v1/rooms', [
+            'properties' => [
+                'exp' => $endsAt->timestamp,
+                'nbf' => $startsAt->timestamp,
+                'max_participants' => 2,
+                'enable_chat' => true,
+                'enable_screenshare' => true,
+            ]
+        ]);
+
+        Consultation::create([
+            'user_id' => $validated['user_id'],
+            'hcp_id' => $validated['provider'],
+            'starts_at' => Carbon::parse($validated['schedule']),
+            'ends_at' => Carbon::parse($validated['schedule'])->addMinutes(30),
+            'room_id' => $response->json()['url'],
+        ]);
+
+        return redirect()->route('consultations.index');
     }
 
     /**
@@ -46,7 +87,20 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
-        //
+        $user = auth()->user();
+        if($user->role != UserRole::Admin()) {
+            if($user->role == UserRole::HCP()) {
+                if ($consultation->hcp_id != $user->id) {
+                    return abort(401);
+                }
+            }
+            if($user->role == UserRole::Employee()) {
+                if ($consultation->user_id != $user->id) {
+                    return abort(401);
+                }
+            }
+        }
+        return view('consultations.show', compact('consultation'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,17 @@ class Consultation extends Model
         'ends_at',
         'room_id'
     ];
+
+    protected $appends = [
+        'forms'
+    ];
+
+    public function getFormsAttribute()
+    {
+        $userRole = auth()->user()->role;
+        
+        return $userRole == UserRole::Employee() ? $this->userForms() : $this->hcpForms();
+    }
 
     public function userForms() {
         return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');

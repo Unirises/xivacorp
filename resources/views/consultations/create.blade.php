@@ -15,7 +15,39 @@
                     <!-- Light table -->
                     @csrf
                     <div class="card-body px-lg-5 py-lg-5">
-                        
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="user_id">Select a user</label>
+                            </div>
+                            <select class="custom-select" id="user_id" name="user_id">
+                                <option disabled>Choose...</option>
+                                @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ (old('user_id', $user->id ?? 0) == $user->id ? 'selected' : '') }}>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="provider">Select a provider</label>
+                            </div>
+                            <select class="custom-select" id="provider" name="provider">
+                                <option disabled>Choose...</option>
+                                @foreach($providers as $provider)
+                                <option value="{{ $provider->id }}" {{ (old('provider', $provider->id ?? 0) == $provider->id ? 'selected' : '') }}>{{ $provider->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="schedule">Select a schedule</label>
+                            </div>
+                            <select class="custom-select" id="schedule" name="schedule">
+                                <option disabled>Choose...</option>
+                                @foreach(\Carbon\CarbonInterval::minutes(30)->toPeriod('2:00 PM', '9:00 PM') as $schedule)
+                                <option value="{{ $schedule }}" {{ (old('schedule', $schedule ?? null) == $schedule ? 'selected' : '') }}>{{ $schedule }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">
