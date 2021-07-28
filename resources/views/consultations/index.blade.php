@@ -9,25 +9,48 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Marketplace Listing @if(auth()->user()->role->value == 0)<a href="{{ route('marketplace.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
+                    <h3 class="mb-0">Your Consultations</h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body">
-                    <div class="row icon-examples" style="column-gap: 1rem; row-gap: 1rem;">
-                        @foreach($items as $item)
-                        <div class="card col-lg-3 col-md-5">
-                            @if($item->photo)
-                            <img class="card-img-top" src="{{ $item->photo }}" alt="Card image cap">
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }} - Php {{ $item->price }}</h5>
-                                <p class="card-text">{{ $item->description }}</p>
-                                @if(auth()->user()->role->value == 0)
-                                <a href="{{ route('marketplace.edit', $item->id) }}" class="btn btn-primary">Update</a>
-                                @endif
-                            </div>
-                        </div>
-                        @endforeach
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+
+                                    <th scope="col" class="sort" data-sort="name">Provider</th>
+                                    <th scope="col" class="sort" data-sort="name">Client</th>
+                                    <th scope="col" class="sort" data-sort="name">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                @foreach($consultations as $consultation)
+                                <tr>
+                                    <th scope="row">
+                                        <p class="text-{{ $consultation->status_color }}">
+                                            <b>{{ $consultation->status->description }}</b>
+                                        </p>
+                                    </th>
+                                    <td>
+                                        {{ $consultation->provider->name }}
+                                    </td>
+                                    <td>
+                                        {{ $consultation->user->name }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('consultations.show', $consultation) }}" class="btn btn-primary my-4">
+                                            @if($consultation->status->value == 1)
+                                            Attend
+                                            @else
+                                            View
+                                            @endif
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Card footer -->

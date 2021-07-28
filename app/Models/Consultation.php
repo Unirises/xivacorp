@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\ServiceStatus;
 use App\Enums\UserRole;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +21,14 @@ class Consultation extends Model
     ];
 
     protected $appends = [
-        'forms'
+        'forms',
+        'status',
+        'status_color'
+    ];
+
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
     ];
 
     public function getFormsAttribute()
@@ -35,5 +44,33 @@ class Consultation extends Model
 
     public function hcpForms() {
         return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');
+    }
+
+    public function getStatusAttribute() {
+        if($this->ends_at->isPast()) {
+            return ServiceStatus::Completed();
+        } else if(Carbon::now()->between($this->starts_at, $this->ends_at)) {
+            return ServiceStatus::Ongoing();
+        }
+
+        return ServiceStatus::Upcoming();
+    }
+
+    public function getStatusColorAttribute() {
+        if($this->ends_at->isPast()) {
+            return 'success';
+        } else if(Carbon::now()->between($this->starts_at, $this->ends_at)) {
+            return 'warning';
+        }
+
+        return 'info';
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function provider() {
+        return $this->belongsTo(User::class, 'hcp_id', 'id');
     }
 }

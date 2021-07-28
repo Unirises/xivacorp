@@ -18,7 +18,9 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        //
+        $isAdmin = auth()->user()->role == UserRole::Admin();
+        $consultations = $isAdmin ? Consultation::all() : Consultation::where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+        return view('consultations.index', compact('consultations'));
     }
 
     /**
