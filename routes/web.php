@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');
 	Route::resource('marketplace', 'App\Http\Controllers\ItemController');
 	Route::resource('forms', 'App\Http\Controllers\FormController');
+	Route::resource('consultations', 'App\Http\Controllers\ConsultationController');
 
 	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);
 	Route::get('answers/{formId}/{userId}', ['as' => 'view-answer', 'uses' => 'App\Http\Controllers\FormController@showAnswers']);

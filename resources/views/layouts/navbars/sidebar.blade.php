@@ -183,13 +183,13 @@
                     <div class="collapse hide" id="teleconsult">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('consultations.index') }}">
                                     Overview
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    Complaints
+                                <a class="nav-link" href="{{ route('consultations.create') }}">
+                                    Schedule
                                 </a>
                             </li>
                         </ul>
@@ -215,12 +215,13 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}">
-                                    Schedule a Booking
+                                    Schedule
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
                     <a class="nav-link" href="#forms" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="forms">
                         <i class="ni ni-collection"></i>
@@ -234,16 +235,15 @@
                                     Overview
                                 </a>
                             </li>
-                            @if(auth()->user()->role->value == 0)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('forms.create') }}">
                                     Add New
                                 </a>
                             </li>
-                            @endif
                         </ul>
                     </div>
                 </li>
+                @endif
                 <!--
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('map') }}">
