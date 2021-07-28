@@ -1,3 +1,7 @@
+@section('head')
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+@endsection
+
 <div>
     <div class="card-header bg-transparent ">
         <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }} mb-3">
@@ -120,6 +124,14 @@
             </span>
             @endif
         </div>
+
+        <!-- Time Picker -->
+         <!-- <div class="form-group">
+            <div class='input-group date' id='datetimepicker3'>
+               <input type='text' class="form-control timepicker" />
+            </div>
+         </div> -->
+
         <div class="form-group">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
@@ -147,6 +159,7 @@
 </div>
 
 @push('js')
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>
     window.addEventListener('load', function() {
         var dropdown = document.getElementById('type');
@@ -163,6 +176,8 @@
                 hcpToggleDiv.style.display = "none";
             }
         })
+
+        $('input.timepicker').timepicker({});
     })
 </script>
 @endpush
