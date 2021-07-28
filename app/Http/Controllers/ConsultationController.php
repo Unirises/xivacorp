@@ -20,6 +20,7 @@ class ConsultationController extends Controller
     {
         $isAdmin = auth()->user()->role == UserRole::Admin();
         $consultations = $isAdmin ? Consultation::all() : Consultation::where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+        $consultations = $consultations->sortByDesc('created_at');
         return view('consultations.index', compact('consultations'));
     }
 
@@ -45,15 +46,13 @@ class ConsultationController extends Controller
      */
     public function store(Request $request)
     {
-        $currentUserRole = auth()->user()->role;
-
         $validated = $this->validate($request, [
             'provider' => 'required|exists:users,id',
             'schedule' => 'required|date',
             'user_id' => 'nullable|exists:users,id',
         ]);
         
-        if($currentUserRole == UserRole::Employee()) {
+        if(!$request->has('user_id')) {
             $validated['user_id'] = auth()->user()->id;
         }
 

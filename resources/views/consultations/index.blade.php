@@ -17,10 +17,10 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-
+                                    <th scope="col" class="sort" data-sort="name">Status</th>
                                     <th scope="col" class="sort" data-sort="name">Provider</th>
                                     <th scope="col" class="sort" data-sort="name">Client</th>
-                                    <th scope="col" class="sort" data-sort="name">Status</th>
+                                    <th scope="col" class="sort" data-sort="name">Schedule</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -37,6 +37,9 @@
                                     </td>
                                     <td>
                                         {{ $consultation->user->name }}
+                                    </td>
+                                    <td>
+                                        {{ $consultation->starts_at->format('m/d/Y g:i A') }} - {{ $consultation->ends_at->format('g:i A') }}
                                     </td>
                                     <td>
                                         <a href="{{ route('consultations.show', $consultation) }}" class="btn btn-primary my-4">

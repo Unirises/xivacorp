@@ -15,6 +15,7 @@
                     <!-- Light table -->
                     @csrf
                     <div class="card-body px-lg-5 py-lg-5">
+                        @if(auth()->user()->role->value != 4)
                         <div class="input-group input-group-alternative mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="user_id">Select a user</label>
@@ -26,6 +27,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endif
                         <div class="input-group input-group-alternative mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="provider">Select a provider</label>
@@ -43,7 +45,7 @@
                             </div>
                             <select class="custom-select" id="schedule" name="schedule">
                                 <option disabled>Choose...</option>
-                                @foreach(\Carbon\CarbonInterval::minutes(30)->toPeriod('2:00 PM', '9:00 PM') as $schedule)
+                                @foreach(\Carbon\CarbonInterval::minutes(30)->toPeriod('2:00 PM', '11:59 PM') as $schedule)
                                 <option value="{{ $schedule }}" {{ (old('schedule', $schedule ?? null) == $schedule ? 'selected' : '') }}>{{ $schedule }}</option>
                                 @endforeach
                             </select>
