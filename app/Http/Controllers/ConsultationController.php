@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ServiceType;
 use App\Enums\UserRole;
 use App\Models\Consultation;
 use App\Models\User;
@@ -19,7 +20,7 @@ class ConsultationController extends Controller
     public function index()
     {
         $isAdmin = auth()->user()->role == UserRole::Admin();
-        $consultations = $isAdmin ? Consultation::all() : Consultation::where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+        $consultations = $isAdmin ? Consultation::where('service_type', ServiceType::Consultations)->get() : Consultation::where('service_type', ServiceType::Consultations)->where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
         $consultations = $consultations->sortByDesc('created_at');
         return view('consultations.index', compact('consultations'));
     }
@@ -75,6 +76,7 @@ class ConsultationController extends Controller
             'starts_at' => Carbon::parse($validated['schedule']),
             'ends_at' => Carbon::parse($validated['schedule'])->addMinutes(30),
             'room_id' => $response->json()['url'],
+            'service_type' => ServiceType::Consultations,
         ]);
 
         return redirect()->route('consultations.index');
@@ -88,6 +90,10 @@ class ConsultationController extends Controller
      */
     public function show(Consultation $consultation)
     {
+        if($consultation->service_type != ServiceType::Consultations()) {
+            abort(401);
+        }
+
         $user = auth()->user();
         if($user->role != UserRole::Admin()) {
             if($user->role == UserRole::HCP()) {

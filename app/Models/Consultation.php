@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ServiceStatus;
+use App\Enums\ServiceType;
 use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,8 @@ class Consultation extends Model
         'hcp_id',
         'starts_at',
         'ends_at',
-        'room_id'
+        'room_id',
+        'service_type'
     ];
 
     protected $appends = [
@@ -29,6 +31,7 @@ class Consultation extends Model
     protected $casts = [
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
+        'service_type' => ServiceType::class,
     ];
 
     public function getFormsAttribute()
