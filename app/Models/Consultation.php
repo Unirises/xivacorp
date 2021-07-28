@@ -19,7 +19,8 @@ class Consultation extends Model
         'starts_at',
         'ends_at',
         'room_id',
-        'service_type'
+        'service_type',
+        'service_id',
     ];
 
     protected $appends = [
