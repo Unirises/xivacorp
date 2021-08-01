@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class ServiceType extends Enum
 {
-    const Consultations =   0;
+    const Consultation =   0;
     const Test =   1;
     const Service =   2;
 }

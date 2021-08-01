@@ -77,4 +77,8 @@ class Consultation extends Model
     public function provider() {
         return $this->belongsTo(User::class, 'hcp_id', 'id');
     }
+
+    public function service() {
+        return $this->belongsTo(Type::class);
+    }
 }

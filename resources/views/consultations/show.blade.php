@@ -9,7 +9,9 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Consultation</h3>
+                    <h3 class="mb-0">
+                        {{ $consultation->service_type->description }}
+                    </h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body">
@@ -30,6 +32,7 @@
 </div>
 @endsection
 
+@if($consultation->room_id)
 @push('js')
 <script src="https://unpkg.com/@daily-co/daily-js"></script>
 <script>
@@ -43,3 +46,4 @@
     });
 </script>
 @endpush
+@endif

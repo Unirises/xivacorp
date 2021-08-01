@@ -7,14 +7,33 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('consultations.store') }}" method="POST">
+                <form action="{{ route('services.store') }}" method="POST">
                     <!-- Card header -->
                     <div class="card-header border-0">
-                        <h3 class="mb-0">Schedule a Consultation</h3>
+                        <h3 class="mb-0">Schedule a
+                            @if(Route::is('consultations.index'))
+                            Consultation
+                            @else
+                            Health Services Booking
+                            @endif
+                        </h3>
                     </div>
                     <!-- Light table -->
                     @csrf
                     <div class="card-body px-lg-5 py-lg-5">
+                    @if(Route::is('services.create'))
+                        <div class="input-group input-group-alternative mb-3">
+                            <div class="input-group-prepend">   
+                                <label class="input-group-text" for="service_id">Select a service</label>
+                            </div>
+                            <select class="custom-select" id="service_id" name="service_id">
+                                <option disabled>Choose...</option>
+                                @foreach($services as $service)
+                                <option value="{{ $service->id }}" {{ (old('service_id', $service->id ?? 0) == $service->id ? 'selected' : '') }}>{{ $service->type->description }} — {{ $service->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @endif
                         @if(auth()->user()->role->value != 4)
                         <div class="input-group input-group-alternative mb-3">
                             <div class="input-group-prepend">

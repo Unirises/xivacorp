@@ -9,7 +9,13 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Your Consultations</h3>
+                    <h3 class="mb-0">Your 
+                    @if(Route::is('consultations.index'))
+                    Consultations
+                    @else
+                    Health Services Bookings
+                    @endif
+                    </h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body">
@@ -20,6 +26,9 @@
                                     <th scope="col" class="sort" data-sort="name">Status</th>
                                     <th scope="col" class="sort" data-sort="name">Provider</th>
                                     <th scope="col" class="sort" data-sort="name">Client</th>
+                                    @if(Route::is('services.index'))
+                                    <th scope="col" class="sort" data-sort="name">Service Provided</th>
+                                    @endif
                                     <th scope="col" class="sort" data-sort="name">Schedule</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -38,11 +47,16 @@
                                     <td>
                                         {{ $consultation->user->name }}
                                     </td>
+                                    @if(Route::is('services.index'))
+                                    <td>
+                                        {{ $consultation->service->type->description }} — {{ $consultation->service->name }}
+                                    </td>
+                                    @endif
                                     <td>
                                         {{ $consultation->starts_at->format('m/d/Y g:i A') }} - {{ $consultation->ends_at->format('g:i A') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('consultations.show', $consultation) }}" class="btn btn-primary my-4">
+                                        <a href="{{ route('services.show', $consultation) }}" class="btn btn-primary my-4">
                                             @if($consultation->status->value == 1)
                                             Attend
                                             @else
