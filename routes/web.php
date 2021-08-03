@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('consultations', 'App\Http\Controllers\ConsultationController');
 	Route::resource('services', 'App\Http\Controllers\ServiceController');
 	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
+	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
 
 	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);
 	Route::get('answers/{formId}/{userId}', ['as' => 'view-answer', 'uses' => 'App\Http\Controllers\FormController@showAnswers']);
