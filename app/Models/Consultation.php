@@ -85,4 +85,8 @@ class Consultation extends Model
     public function prescription() {
         return $this->hasOne(Prescription::class);
     }
+
+    public function diaries() {
+        return $this->hasMany(Diary::class);
+    }
 }
