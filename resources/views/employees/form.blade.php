@@ -111,6 +111,50 @@
             </span>
             @endif
         </div>
+        <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
+            <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-world-2"></i></span>
+                </div>
+                <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="Address" type="text" name="address" value="{{ old('address') ?? $employee->address ?? '' }}" required autofocus>
+            </div>
+            @if ($errors->has('address'))
+            <span class="invalid-feedback" style="display: block;" role="alert">
+                <strong>{{ $errors->first('address') }}</strong>
+            </span>
+            @endif
+        </div>
+        <div class="form-group{{ $errors->has('dob') ? ' has-danger' : '' }}">
+            <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-watch-time"></i></span>
+                </div>
+                <input class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" placeholder="Date of Birth" type="date" name="dob" value="{{ old('dob') ?? $employee->dob ?? '' }}" required autofocus>
+            </div>
+            @if ($errors->has('dob'))
+            <span class="invalid-feedback" style="display: block;" role="alert">
+                <strong>{{ $errors->first('dob') }}</strong>
+            </span>
+            @endif
+        </div>
+        <div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
+            <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="gender">I am a</label>
+                </div>
+                <select class="custom-select" id="gender" name="gender">
+                    <option disabled>Choose...</option>
+                    <option value="1" {{ (old('gender', $employee->gender->value ?? 1) == 1 ? 'selected' : '') }}>Male</option>
+                    <option value="2" {{ (old('gender', $employee->gender->value ?? 1) == 2 ? 'selected' : '') }}>Female</option>
+                    <option value="3" {{ (old('gender', $employee->gender->value ?? 1) == 3 ? 'selected' : '') }}>Others</option>
+                </select>
+            </div>
+            @if ($errors->has('gender'))
+            <span class="invalid-feedback" style="display: block;" role="alert">
+                <strong>{{ $errors->first('gender') }}</strong>
+            </span>
+            @endif
+        </div>
         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">

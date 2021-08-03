@@ -25,6 +25,9 @@ class User extends Authenticatable
         'hcp_data_id',
         'role',
         'workspace_id',
+        'dob',
+        'address',
+        'gender'
     ];
 
     /**

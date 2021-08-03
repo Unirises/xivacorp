@@ -25,11 +25,11 @@
                             @foreach($types as $type)
                             <tr>
                                 <td class="budget">
-                                    @if($type->type == 0)
+                                    @if($type->type->value == 0)
                                     HCP Type
-                                    @elseif ($type->type == 1)
+                                    @elseif ($type->type->value == 1)
                                     Tests
-                                    @elseif ($type->type == 2)
+                                    @elseif ($type->type->value == 2)
                                     Services
                                     @endif
                                 </td>

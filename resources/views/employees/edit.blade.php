@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('employees.update', $employee) }}" method="POST">
+                <form action="{{ route('employees.update', $employee) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     <!-- Card header -->
                     <div class="card-header border-0">

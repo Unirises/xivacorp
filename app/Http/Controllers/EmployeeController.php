@@ -52,6 +52,9 @@ class EmployeeController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
+            'dob' => 'required|date',
+            'address' => 'required|string',
+            'gender' => 'required|numeric',
         ];
         
         if($request['type'] == '1') {
@@ -70,6 +73,9 @@ class EmployeeController extends Controller
             'password' => Hash::make($validated['password']),
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
+            'dob' => $validated['dob'],
+            'address' => $validated['address'],
+            'gender' => $validated['gender'],
         ]);
 
         if($validated['type'] == '1') {

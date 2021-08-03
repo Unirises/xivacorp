@@ -60,6 +60,9 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
             'code' => 'required|exists:companies,code',
+            'dob' => 'required|date',
+            'address' => 'required|string',
+            'gender' => 'required|numeric',
         ];
         
         if($data['type'] == '1') {
@@ -88,6 +91,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => $data['type'],
             'workspace_id' => $data['code'],
+            'dob' => $data['dob'],
+            'address' => $data['address'],
+            'gender' => $data['gender'],
         ]);
 
         if($data['type'] == '1') {
