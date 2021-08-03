@@ -29,6 +29,9 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
             'role' => 0,
             'workspace_id' => 'XVHLTH00',
+            'dob' => '1980-01-01',
+            'address' => "xivahealth's Office",
+            'gender' => 0,
         ]);
         DB::table('users')->insert([
             'name' => 'HCP',
@@ -39,6 +42,9 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
             'role' => 1,
             'workspace_id' => 'XVHLTH00',
+            'dob' => '1980-01-01',
+            'address' => "xivahealth's Office",
+            'gender' => 0,
         ]);
         DB::table('hcp_data')->insert([
             'user_id' => 2,

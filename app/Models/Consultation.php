@@ -81,4 +81,8 @@ class Consultation extends Model
     public function service() {
         return $this->belongsTo(Type::class);
     }
+
+    public function prescription() {
+        return $this->hasOne(Prescription::class);
+    }
 }

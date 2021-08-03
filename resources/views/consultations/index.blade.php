@@ -56,7 +56,7 @@
                                         {{ $consultation->starts_at->format('m/d/Y g:i A') }} - {{ $consultation->ends_at->format('g:i A') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('services.show', $consultation) }}" class="btn btn-primary my-4">
+                                        <a href="{{ Route::is('consultations.index') ? route('consultations.show', $consultation) : route('services.show', $consultation) }}" class="btn btn-primary my-4">
                                             @if($consultation->status->value == 1)
                                             Attend
                                             @else

@@ -7,11 +7,11 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('services.store') }}" method="POST">
+                <form action="{{ Route::is('consultations.create') ? route('consultations.store') : route('services.store') }}" method="POST">
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <h3 class="mb-0">Schedule a
-                            @if(Route::is('consultations.index'))
+                            @if(Route::is('consultations.create'))
                             Consultation
                             @else
                             Health Services Booking
