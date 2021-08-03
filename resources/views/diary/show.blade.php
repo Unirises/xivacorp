@@ -11,14 +11,13 @@
                 <div class="card-header border-0">
                     <h3 class="mb-0">
                         {{ $consultation->service_type->description }}
-                        @if((auth()->user()->role->value == 0 || auth()->user()->role->value == 1) && Route::is('services.show'))
+                        @if(auth()->user()->role->value == 0 || auth()->user()->role->value == 1)
                         @if($consultation->prescription)
                         <a href="{{ route('services.prescriptions.edit', [$consultation->id, $consultation->prescription->id]) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Edit Prescription</a>
                         <a href="{{ route('services.prescriptions.show', [$consultation->id, $consultation->prescription->id]) }}"><i class="fas fa-image text-danger ml-1"></i> Export as Photo</a>
                         @else
                         <a href="{{ route('services.prescriptions.create', $consultation->id) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Create Prescription</a>
                         @endif
-                        <a href="{{ route('services.diary.index', $consultation->id) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Health Diary</a>
                         @endif
                     </h3>
                 </div>

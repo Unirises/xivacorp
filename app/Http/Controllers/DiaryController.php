@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
 use App\Models\Diary;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DiaryController extends Controller
@@ -12,9 +14,10 @@ class DiaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(int $consultationId)
     {
-        //
+        $diaries = Diary::where('consultation_id', $consultationId)->get();
+        return view('diary.index', compact('diaries', 'consultationId'));
     }
 
     /**
@@ -22,9 +25,11 @@ class DiaryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $consultationId)
     {
-        //
+        $consultation = Consultation::findOrFail($consultationId);
+        $users = User::whereIn('id', [$consultation->user_id, $consultation->hcp_id])->get();
+        return view('diary.create', compact('consultationId', 'users'));
     }
 
     /**
@@ -33,9 +38,24 @@ class DiaryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, int $consultationId)
     {
-        //
+        $data = $this->validate($request, [
+            'note' => 'required|string',
+            'user_id' => 'nullable|exists:users,id'
+        ]);
+
+        if (!$request->has('user_id')) {
+            $data['user_id'] = auth()->user()->id;
+        }
+
+        Diary::create([
+            'note' => $data['note'],
+            'user_id' => $data['user_id'],
+            'consultation_id' => $consultationId,
+        ]);
+
+        return redirect()->route('services.diary.index', $consultationId);
     }
 
     /**
@@ -55,9 +75,12 @@ class DiaryController extends Controller
      * @param  \App\Models\Diary  $diary
      * @return \Illuminate\Http\Response
      */
-    public function edit(Diary $diary)
+    public function edit(int $consultationId, int $diaryId)
     {
-        //
+        $consultation = Consultation::findOrFail($consultationId);
+        $users = User::whereIn('id', [$consultation->user_id, $consultation->hcp_id])->get();
+
+        return view('diary.edit', compact('users', 'consultationId', 'diaryId'));
     }
 
     /**
@@ -67,9 +90,23 @@ class DiaryController extends Controller
      * @param  \App\Models\Diary  $diary
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diary $diary)
+    public function update(Request $request, int $consultationId, int $diaryId)
     {
-        //
+        $data = $this->validate($request, [
+            'note' => 'required|string',
+            'user_id' => 'nullable|exists:users,id'
+        ]);
+
+        if (!$request->has('user_id')) {
+            $data['user_id'] = auth()->user()->id;
+        }
+
+        Diary::where('id', $diaryId)->update([
+            'note' => $data['note'],
+            'user_id' => $data['user_id']
+        ]);
+
+        return redirect()->route('services.diary.index', $consultationId);
     }
 
     /**
