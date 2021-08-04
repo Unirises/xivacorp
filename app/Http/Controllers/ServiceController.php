@@ -6,10 +6,13 @@ use App\Enums\ServiceType;
 use App\Enums\TypeIdent;
 use App\Enums\UserRole;
 use App\Models\Consultation;
+use App\Models\ConsultationForm;
+use App\Models\Form;
 use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -101,7 +104,9 @@ class ServiceController extends Controller
                 }
             }
         }
-        return view('consultations.show', compact('consultation'));
+
+        $forms = Form::all();
+        return view('consultations.show', compact('consultation', 'forms'));
     }
 
     /**
@@ -136,5 +141,47 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateForms(Request $request, int $serviceId)
+    {
+        $service = Consultation::findOrFail($serviceId);
+
+        $data = $this->validate($request, [
+            'user-forms' => 'nullable',
+            'user-forms.*' => 'required|exists:forms,id',
+            'hcp-forms' => 'nullable',
+            'hcp-forms.*' => 'required|exists:forms,id',
+        ]);
+
+        if($request->has('user-forms')) {
+            foreach ($data['user-forms'] as $key => $value) {
+                ConsultationForm::firstOrCreate([
+                    'consultation_id' => $service->id,
+                    'answerable_by' => $service->user->id,
+                    'form_id' => $value
+                ]);
+            }
+
+            DB::table('consultation_form')->where('consultation_id', $service->id)->where('answerable_by', $service->user->id)->whereNotIn('form_id', $data['user-forms'])->delete();
+        } else {
+            DB::table('consultation_form')->where('consultation_id', $service->id)->where('answerable_by', $service->user->id)->delete();
+        }
+
+        if($request->has('hcp-forms')) {
+            foreach ($data['hcp-forms'] as $key => $value) {
+                ConsultationForm::firstOrCreate([
+                    'consultation_id' => $service->id,
+                    'answerable_by' => $service->provider->id,
+                    'form_id' => $value
+                ]);
+            }
+
+            DB::table('consultation_form')->where('consultation_id', $service->id)->where('answerable_by', $service->provider->id)->whereNotIn('form_id', $data['hcp-forms'])->delete();
+        } else {
+            DB::table('consultation_form')->where('consultation_id', $service->id)->where('answerable_by', $service->provider->id)->delete();
+        }
+
+        return redirect()->route('services.show', $serviceId);
     }
 }

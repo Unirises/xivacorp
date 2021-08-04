@@ -14,14 +14,14 @@ class CreateConsultationFormPivotTable extends Migration
     public function up()
     {
         Schema::create('consultation_form', function (Blueprint $table) {
-            $table->unsignedBigInteger('consultation_id')->index();
-            $table->foreign('consultation_id')->references('id')->on('consultations')->onDelete('cascade');
-            $table->unsignedBigInteger('form_id')->index();
-            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
-            $table->primary(['consultation_id', 'form_id']);
+            $table->unsignedBigInteger('consultation_id');
+            $table->foreign('consultation_id')->references('id')->on('consultations');
+            $table->unsignedBigInteger('form_id');
+            $table->foreign('form_id')->references('id')->on('forms');
             $table->boolean('required')->default(false);
             $table->unsignedBigInteger('answerable_by');
             $table->foreign('answerable_by')->references('id')->on('users');
+            $table->primary(['answerable_by', 'consultation_id', 'form_id']);
         });
     }
 

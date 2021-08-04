@@ -52,5 +52,18 @@ class UsersTableSeeder extends Seeder
             'prc_id' => '1234567890',
             'photo' => 'default.png'
         ]);
+        DB::table('users')->insert([
+            'name' => 'Employee',
+            'email' => 'employee@test.xyz',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'role' => 4,
+            'workspace_id' => 'XVHLTH00',
+            'dob' => '1980-01-01',
+            'address' => "xivahealth's Office",
+            'gender' => 0,
+        ]);
     }
 }

@@ -35,21 +35,6 @@ class Consultation extends Model
         'service_type' => ServiceType::class,
     ];
 
-    public function getFormsAttribute()
-    {
-        $userRole = auth()->user()->role;
-        
-        return $userRole == UserRole::Employee() ? $this->userForms() : $this->hcpForms();
-    }
-
-    public function userForms() {
-        return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');
-    }
-
-    public function hcpForms() {
-        return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');
-    }
-
     public function getStatusAttribute() {
         if($this->ends_at->isPast()) {
             return ServiceStatus::Completed();
@@ -88,5 +73,9 @@ class Consultation extends Model
 
     public function diaries() {
         return $this->hasMany(Diary::class);
+    }
+
+    public function forms() {
+        return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');
     }
 }
