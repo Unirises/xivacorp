@@ -10,7 +10,11 @@
                 <!-- Card header -->
                 <div class="card-header border-0">
                     <h3 class="mb-0">
-                        {{ $consultation->service_type->description }}
+                        @if($consultation->service_id != null)
+                        {{ $consultation->service->type->description }} | {{ $consultation->service->name }}
+                        @else
+                        Teleconsult Booking
+                        @endif
                         @if((auth()->user()->role->value == 0 || auth()->user()->role->value == 1) && Route::is('services.show'))
                         @if($consultation->prescription)
                         <a href="{{ route('services.prescriptions.edit', [$consultation->id, $consultation->prescription->id]) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Edit Prescription</a>
@@ -35,7 +39,7 @@
     </div>
     @include('layouts.footers.auth')
 </div>
-@if(!$forms->isEmpty())
+@if($forms ?? '')
 <div class="container-fluid mt--6">
     <div class="row">
         <div class="col">
