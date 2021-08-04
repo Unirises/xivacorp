@@ -75,8 +75,8 @@
                                     {{ $form->pivot->answerable_by == $consultation->user->id ? $consultation->user->name : $consultation->provider->name }}
                                 </td>
                                 <td>
-                                    <a href="{{ Route::is('consultations.index') ? route('consultations.show', $consultation) : route('services.show', $consultation) }}" class="btn btn-primary my-4">Answer/Update</a>
-                                    <a href="{{ Route::is('consultations.index') ? route('consultations.show', $consultation) : route('services.show', $consultation) }}" class="btn btn-primary my-4">View Response</a>
+                                    <a href="{{ Route::is('consultations.show') ? route('consultations.forms.edit', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) : route('services.forms.edit', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) }}" class="btn btn-primary my-4">Answer/Update</a>
+                                    <a href="{{ Route::is('consultations.show') ? route('consultations.forms.show', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) : route('services.forms.show', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) }}" class="btn btn-primary my-4">View Response</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -86,7 +86,7 @@
                 </div>
                 <!-- Card footer -->
                 <div class="card-footer py-4">
-                    @if((auth()->user()->role->value == 0 || auth()->user()->role->value == 1) && Route::is('services.show'))
+                    @if((auth()->user()->role->value == 0 || auth()->user()->role->value == 1))
                     <form action="{{ route('update-form', $consultation->id) }}" method="POST">
                         @csrf
                         <h1>Answerable by HCP</h1>

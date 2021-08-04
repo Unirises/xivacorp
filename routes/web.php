@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultationFormController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('services', 'App\Http\Controllers\ServiceController');
 	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
 	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
+
+	Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
+	Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
+	Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');
+
+	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');
+	Route::get('consultations/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('consultations.forms.edit');
+	Route::post('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('consultations.forms.store');
 
 	Route::post('update-form/{serviceId}', ['as' => 'update-form', 'uses' => 'App\Http\Controllers\ServiceController@updateForms']);
 	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);

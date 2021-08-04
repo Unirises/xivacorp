@@ -182,6 +182,6 @@ class ServiceController extends Controller
             DB::table('consultation_form')->where('consultation_id', $service->id)->where('answerable_by', $service->provider->id)->delete();
         }
 
-        return redirect()->route('services.show', $serviceId);
+        return redirect()->back();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ServiceType;
 use App\Enums\UserRole;
 use App\Models\Consultation;
+use App\Models\Form;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -107,7 +108,9 @@ class ConsultationController extends Controller
                 }
             }
         }
-        return view('consultations.show', compact('consultation'));
+
+        $forms = Form::all();
+        return view('consultations.show', compact('consultation', 'forms'));
     }
 
     /**
