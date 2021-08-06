@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Enums\GenderEnum;
 use App\Enums\UserRole;
+use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\OpeningHours\OpeningHours;
 
 class User extends Authenticatable
 {
@@ -55,6 +57,7 @@ class User extends Authenticatable
 
     protected $appends = [
         'company_name',
+        'in_schedule',
     ];
 
     public function hcp_data()
@@ -69,5 +72,14 @@ class User extends Authenticatable
 
     public function getCompanyNameAttribute() {
         return $this->company->name ?? 'Floating';
+    }
+
+    public function getInScheduleAttribute()
+    {
+        if(!$this->hours ?? null) {
+            return false;
+        }
+
+        return (OpeningHours::create(json_decode($this->hours, true)))->isOpen();
     }
 }
