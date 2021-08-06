@@ -3,7 +3,7 @@
         <div class="col">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="provider">Select a provider</label>
+                    <label class="input-group-text" for="provider">Provider</label>
                 </div>
                 <select class="custom-select" id="provider" name="provider" wire:model="provider">
                     <option>Choose...</option>
@@ -15,7 +15,6 @@
         </div>
         <div class="col">
             <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                <label class="form-control-label" for="input-email">Date</label>
                 <input type="text" name="date" id="date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}" placeholder="Select a Date" value="{{ old('date') }}" required wire:model="date">
 
                 @if ($errors->has('date'))
@@ -28,23 +27,12 @@
         <div class="col">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="schedule">Select a schedule</label>
+                    <label class="input-group-text" for="schedule">Time</label>
                 </div>
                 <select class="custom-select" id="schedule" name="schedule">
                     <option disabled>Choose...</option>
                 </select>
             </div>
-            <!-- <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="schedule">Select a schedule</label>
-                </div>
-                <select class="custom-select" id="schedule" name="schedule">
-                    <option disabled>Choose...</option>
-                    @foreach(\Carbon\CarbonInterval::minutes(30)->toPeriod('2:00 PM', '11:59 PM') as $schedule)
-                    <option value="{{ $schedule }}" {{ (old('schedule', $schedule ?? null) == $schedule ? 'selected' : '') }}>{{ $schedule }}</option>
-                    @endforeach
-                </select>
-            </div> -->
         </div>
     </div>
 </div>
@@ -52,6 +40,7 @@
 @push('js')
 @livewireScripts
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     $("#date").flatpickr({
         dateFormat: 'Y-m-d',
@@ -71,8 +60,9 @@
     })
 
     Livewire.on('updateHours', data => {
-        data.forEach((el) => {
-            $("#schedule").append(new Option(el,el))
+        Object.values(data).forEach((el) => {
+            const date = new Date(el).toLocaleString("en-US", {timeZone: "Asia/Manila"});
+            $("#schedule").append(new Option(moment(date).format('LTS'),date))
         })
     })
 </script>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Consultation;
 use App\Models\User;
+use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Livewire\Component;
 
@@ -64,6 +66,24 @@ class Schedule extends Component
 
     public function updatedDate()
     {
-        $this->emit('updateHours', CarbonInterval::minutes(30)->toPeriod($this->date . ' 2:00 PM', $this->date.' 11:59 PM')->toArray());
+        $provider = User::find($this->provider);
+
+        if(!$provider) {
+            return;
+        }
+
+        $parsedDate = Carbon::parse($this->date);
+        $bookings = Consultation::select('starts_at', 'hcp_id')->where('hcp_id', $this->provider)->whereBetween('starts_at', [$parsedDate->copy()->startOfDay(), $parsedDate->copy()->endOfDay()])->get();
+        $data = CarbonInterval::minutes(30)->toPeriod($this->date . ' ' . $provider->working_hours[0], $this->date.' '.$provider->working_hours[1])->toArray();
+        
+        foreach ($bookings as $booking) {
+            foreach ($data as $key => $value) {
+                if($booking->starts_at->toDateTimeString() == $value->toDateTimeString()) {
+                    unset($data[$key]);
+                }               
+            }
+        }
+
+        $this->emit('updateHours', $data);
     }
 }

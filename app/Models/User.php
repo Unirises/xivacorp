@@ -58,6 +58,7 @@ class User extends Authenticatable
     protected $appends = [
         'company_name',
         'in_schedule',
+        'working_hours',
     ];
 
     public function hcp_data()
@@ -81,5 +82,16 @@ class User extends Authenticatable
         }
 
         return (OpeningHours::create(json_decode($this->hours, true)))->isOpen();
+    }
+
+    public function getWorkingHoursAttribute()
+    {
+        if(!$this->hours ?? null) {
+            return false;
+        }
+
+        $decoded = json_decode($this->hours, true);
+        $exploded = explode('-', reset($decoded)[0]);
+        return [$exploded[0], $exploded[1]];
     }
 }
