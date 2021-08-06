@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Spatie\OpeningHours\OpeningHours;
 
 class ProfileController extends Controller
 {
@@ -50,5 +53,26 @@ class ProfileController extends Controller
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
+    }
+
+    public function hours(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'days' => 'required|array',
+            'days.*' => ['required', Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])],
+            'start' => 'required|date_format:G:i',
+            'end' => 'required|after_or_equal:start|date_format:G:i'
+        ]);
+
+        $formattedDays = [];
+        foreach ($validated['days'] as $key => $value) {
+            $formattedDays[$value] = [$validated['start'].'-'.$validated['end']];
+        }
+        
+        $user = auth()->user();
+        $user->hours = json_encode($formattedDays);
+        $user->save();
+        
+        return redirect()->back();
     }
 }

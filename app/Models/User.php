@@ -28,7 +28,8 @@ class User extends Authenticatable
         'workspace_id',
         'dob',
         'address',
-        'gender'
+        'gender',
+        'hours',
     ];
 
     /**

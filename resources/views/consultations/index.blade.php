@@ -49,7 +49,7 @@
                                     </td>
                                     @if(Route::is('services.index'))
                                     <td>
-                                        {{ $consultation->service->type->description }} — {{ $consultation->service->name }}
+                                        {{ $consultation->service->type->description ?? '' }} — {{ $consultation->service->name ?? '' }}
                                     </td>
                                     @endif
                                     <td>
