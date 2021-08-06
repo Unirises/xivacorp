@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('head')
+@livewireStyles
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
+
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
@@ -47,28 +52,7 @@
                             </select>
                         </div>
                         @endif
-                        <div class="input-group input-group-alternative mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="provider">Select a provider</label>
-                            </div>
-                            <select class="custom-select" id="provider" name="provider">
-                                <option disabled>Choose...</option>
-                                @foreach($providers as $provider)
-                                <option value="{{ $provider->id }}" {{ (old('provider', $provider->id ?? 0) == $provider->id ? 'selected' : '') }}>{{ $provider->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="input-group input-group-alternative mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="schedule">Select a schedule</label>
-                            </div>
-                            <select class="custom-select" id="schedule" name="schedule">
-                                <option disabled>Choose...</option>
-                                @foreach(\Carbon\CarbonInterval::minutes(30)->toPeriod('2:00 PM', '11:59 PM') as $schedule)
-                                <option value="{{ $schedule }}" {{ (old('schedule', $schedule ?? null) == $schedule ? 'selected' : '') }}>{{ $schedule }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @livewire('schedule')
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">
@@ -83,4 +67,5 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 @endpush
