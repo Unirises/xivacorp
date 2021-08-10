@@ -24,6 +24,18 @@
                                 <span class="text-gray">Sign Above</span>
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('photo') ? ' has-danger' : '' }}">
+                            <div class="custom-file">
+                                <input type="file" name="photo" class="custom-file-input" id="photo">
+                                <label class="custom-file-label" for="photo">Optional: Result Photo</label>
+                            </div>
+
+                            @if ($errors->has('photo'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('photo') }}</strong>
+                            </span>
+                            @endif
+                        </div>
                         @endif
                     </div>
                     <!-- Card footer -->
@@ -46,20 +58,28 @@
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script>
     jQuery(function($) {
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
         var canvas = document.querySelector("canvas");
-        if(canvas) {
+        if (canvas) {
             var signaturePad = new SignaturePad(canvas);
         }
-        
+
         var fbTemplate = document.getElementById('fb-template');
         var formBuilder = $('.fb-render').formRender({
             dataType: 'json',
             formData: JSON.parse(`{{ $form->data }}`.replace(/&quot;/g, '\"'))
         });
-        $('#my-form').on('submit', function(e) {
+        $('#my-form').on('submit', async function(e) {
             e.preventDefault();
             console.clear();
             var formData = $(this).serializeArray();
+            const photo = document.querySelector('#photo')?.files[0];
             var parsedFields = [];
             formData.forEach((el) => {
                 console.log(el);
@@ -84,6 +104,7 @@
                 body: JSON.stringify({
                     data: parsedFields,
                     signature: canvas != null ? signaturePad.toDataURL() : null,
+                    photo: photo != undefined ? await toBase64(photo) : null,
                 })
             }).then(async (resp) => {
                 var respData = await resp.text();

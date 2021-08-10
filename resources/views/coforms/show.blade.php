@@ -46,14 +46,28 @@
         </div>
     </div>
     @if($answer->signature ?? null)
-    <div class="row">
+    <div class="row mb-3">
         <div class="col">
             <div class="card">
                 <div class="card-header border-0">
                     <h3 class="mb-0">Signature</h3>
                 </div>
                 <div class="card-body px-lg-5 py-lg-5">
-                <img src="{{ $answer->signature }}" alt="Red dot" />
+                <img src="{{ $answer->signature }}" style="max-width: 100%" alt="HCP Signature" />
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @if($answer->photo ?? null)
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Photo</h3>
+                </div>
+                <div class="card-body px-lg-5 py-lg-5">
+                <img src="{{ $answer->photo }}" style="max-width: 100%" alt="Result photo" />
                 </div>
             </div>
         </div>

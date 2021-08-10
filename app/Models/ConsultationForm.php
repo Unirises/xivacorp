@@ -17,9 +17,14 @@ class ConsultationForm extends Model
         'required',
         'answerable_by',
         'signature',
+        'photo',
     ];
 
     public function user() {
         return $this->belongsTo(User::class, 'answerable_by', 'id');
+    }
+
+    public function getPhotoAttribute($value) {
+        return $value == null ? null : url('storage/results/'.$value);
     }
 }
