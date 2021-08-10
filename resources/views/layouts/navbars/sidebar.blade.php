@@ -235,7 +235,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://xivahealth.io">
+                    <a class="nav-link" href="{{ route('news') }}">
                         <i class="ni ni-planet text-blue"></i>News and Updates
                     </a>
                 </li>

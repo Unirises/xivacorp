@@ -44,6 +44,9 @@ Route::group(['middleware' => ['schedule', 'auth']], function () {
 	Route::post('update-form/{serviceId}', ['as' => 'update-form', 'uses' => 'App\Http\Controllers\ServiceController@updateForms']);
 	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);
 	Route::get('answers/{formId}/{userId}', ['as' => 'view-answer', 'uses' => 'App\Http\Controllers\FormController@showAnswers']);
+	Route::get('news', function () {
+		return view('layouts.news');
+	})->name('news');
 });
 
 Route::group(['middleware' => 'auth'], function () {
