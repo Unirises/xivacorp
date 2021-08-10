@@ -15,7 +15,8 @@ class ConsultationForm extends Model
         'consultation_id',
         'form_id',
         'required',
-        'answerable_by'
+        'answerable_by',
+        'signature',
     ];
 
     public function user() {

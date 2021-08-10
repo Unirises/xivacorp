@@ -23,10 +23,12 @@ class ConsultationFormController extends Controller
             'data.*.name' => 'nullable|string',
             'data.*.label' => 'nullable|string',
             'data.*.value' => 'nullable|string',
+            'signature' => 'nullable|string'
         ]);
 
         ConsultationForm::where('consultation_id', $consultationId)->where('form_id', $formId)->where('answerable_by', $userId)->update([
-            'data' => json_encode($validated['data'])
+            'data' => json_encode($validated['data']),
+            'signature' => $validated['signature'] ?? null,
         ]);
 
         return redirect()->back();

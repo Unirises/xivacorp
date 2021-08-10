@@ -17,6 +17,14 @@
                     </div>
                     <div class="card-body">
                         <div class="fb-render"></div>
+                        @if(auth()->user()->role->value == 1)
+                        <canvas width="664" style="touch-action: none;" height="373"></canvas>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text-gray">Sign Above</span>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">
@@ -35,8 +43,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script src="https://formbuilder.online/assets/js/form-builder.min.js"></script>
 <script src="https://formbuilder.online/assets/js/form-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script>
     jQuery(function($) {
+        var canvas = document.querySelector("canvas");
+        if(canvas) {
+            var signaturePad = new SignaturePad(canvas);
+        }
+        
         var fbTemplate = document.getElementById('fb-template');
         var formBuilder = $('.fb-render').formRender({
             dataType: 'json',
@@ -68,9 +82,8 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    form_id: "{{ $form->id }}",
-                    user_id: $("select#user option").filter(":selected").val() ?? "{{ auth()->user()->id }}",
-                    data: parsedFields
+                    data: parsedFields,
+                    signature: canvas != null ? signaturePad.toDataURL() : null,
                 })
             }).then(async (resp) => {
                 var respData = await resp.text();

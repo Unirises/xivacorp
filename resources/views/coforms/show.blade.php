@@ -4,7 +4,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
 <div class="container-fluid mt--6">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col">
             <div class="card">
                 <!-- Card header -->
@@ -45,6 +45,20 @@
             </div>
         </div>
     </div>
+    @if($answer->signature ?? null)
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Signature</h3>
+                </div>
+                <div class="card-body px-lg-5 py-lg-5">
+                <img src="{{ $answer->signature }}" alt="Red dot" />
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     @include('layouts.footers.auth')
 </div>
 @endsection
