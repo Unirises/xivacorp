@@ -23,8 +23,22 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $isAdmin = auth()->user()->role == UserRole::Admin();
-        $consultations = $isAdmin ? Consultation::where('service_type', '!=', ServiceType::Consultation)->get() : Consultation::where('service_type', '!=', ServiceType::Consultation)->where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+        switch(auth()->user()->role) {
+            case UserRole::Admin():
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->get();
+                break;
+            case UserRole::CoAdmin():
+            case UserRole::Clinic():
+            case UserRole::HR():
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('workspace_id', auth()->user()->workspace_id)->get();
+                break;
+            case UserRole::Employee():
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('user_id', auth()->user()->id)->get();
+                break;
+            case UserRole::HCP():
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('hcp_id', auth()->user()->id)->get();
+                break;
+        }
         $consultations = $consultations->sortByDesc('created_at');
         return view('consultations.index', compact('consultations'));
     }
@@ -64,7 +78,7 @@ class ServiceController extends Controller
         if(!$request->has('user_id')) {
             $validated['user_id'] = auth()->user()->id;
         }
-
+        $user = User::findOrFail($validated['user_id'], ['workspace_id']);
         Consultation::create([
             'user_id' => $validated['user_id'],
             'hcp_id' => $validated['provider'],
@@ -72,6 +86,7 @@ class ServiceController extends Controller
             'ends_at' => Carbon::parse($validated['schedule'])->addMinutes(30),
             'service_type' => $type->type->value,
             'service_id' => $validated['service_id'],
+            'workspace_id' => $user->workspace_id,
         ]);
 
         return redirect()->route('services.index');
@@ -105,7 +120,7 @@ class ServiceController extends Controller
             }
         }
 
-        $forms = Form::all();
+        $forms = Form::where('owner_id', auth()->user()->id)->get();
         return view('consultations.show', compact('consultation', 'forms'));
     }
 

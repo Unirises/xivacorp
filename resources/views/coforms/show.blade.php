@@ -18,7 +18,7 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Field Name</th>
+                                    <!-- <th scope="col">Field Name</th> -->
                                     <th scope="col">Label/Description</th>
                                     <th scope="col">Answer</th>
                                 </tr>
@@ -27,9 +27,9 @@
                                 @if($answer->data)
                                 @foreach($answer->data as $answerDetail)
                                 <tr>
-                                    <th scope="row">
+                                    <!-- <th scope="row">
                                         {{ $answerDetail->name }}
-                                    </th>
+                                    </th> -->
                                     <td>{{ $answerDetail->label }}</td>
                                     <td>{{ $answerDetail->value }}</td>
                                 </tr>

@@ -135,6 +135,9 @@ class EmployeeController extends Controller
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
+            'dob' => 'required|date',
+            'address' => 'required|string',
+            'gender' => 'required|numeric',
         ];
 
         if($request['type'] == '1') {
@@ -145,7 +148,7 @@ class EmployeeController extends Controller
         } 
 
         $validated = $this->validate($request, $array);
-        $validated['password'] = $request->has('password') ?  Hash::make($validated['password']) : $user->password;
+        $validated['password'] = $request->filled('password') ?  Hash::make($validated['password']) : $user->password;
 
         if($request['type'] != '1') {
             HcpData::where('user_id', $user->id)->delete();
@@ -157,6 +160,9 @@ class EmployeeController extends Controller
             'password' => $validated['password'],
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
+            'dob' => $validated['dob'],
+            'address' => $validated['address'],
+            'gender' => $validated['gender'],
         ]);
 
         if($user->hcp_data && $request['type'] == '1') {

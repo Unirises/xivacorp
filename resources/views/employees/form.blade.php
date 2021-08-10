@@ -4,6 +4,9 @@
 
 <div>
     <div class="card-header bg-transparent ">
+    @if($errors->any())
+    {{ implode('', $errors->all('<div>:message</div>')) }}
+@endif
         <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }} mb-3">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
@@ -144,9 +147,9 @@
                 </div>
                 <select class="custom-select" id="gender" name="gender">
                     <option disabled>Choose...</option>
-                    <option value="1" {{ (old('gender', $employee->gender->value ?? 1) == 1 ? 'selected' : '') }}>Male</option>
-                    <option value="2" {{ (old('gender', $employee->gender->value ?? 1) == 2 ? 'selected' : '') }}>Female</option>
-                    <option value="3" {{ (old('gender', $employee->gender->value ?? 1) == 3 ? 'selected' : '') }}>Others</option>
+                    <option value="0" {{ (old('gender', $employee->gender->value ?? 0) == 0 ? 'selected' : '') }}>Male</option>
+                    <option value="1" {{ (old('gender', $employee->gender->value ?? 0) == 1 ? 'selected' : '') }}>Female</option>
+                    <option value="2" {{ (old('gender', $employee->gender->value ?? 0) == 2 ? 'selected' : '') }}>Others</option>
                 </select>
             </div>
             @if ($errors->has('gender'))

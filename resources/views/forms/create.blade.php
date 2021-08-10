@@ -29,10 +29,10 @@
                             </span>
                             @endif
                         </div>
-                        <div class="form-check mb-3">
+                        <!-- <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="required" name="required">
                             <label class="form-check-label" for="required">This form is required before booking any future tests, vaccinations, and other services.</label>
-                        </div>
+                        </div> -->
                         <div id="build-wrap"></div>
                         @if ($errors->has('data'))
                         <span class="invalid-feedback" style="display: block;" role="alert">

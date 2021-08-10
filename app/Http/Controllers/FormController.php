@@ -17,7 +17,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        $forms = Form::all();
+        $forms = Form::where('owner_id', auth()->user()->id)->get();
         return view('forms.index', compact('forms'));
     }
 
@@ -45,9 +45,10 @@ class FormController extends Controller
             'name' => $validated['form_name'],
             'data' => json_encode($validated['data']),
             'required' => $request->has('required') ? true : false,
+            'owner_id' => auth()->user()->id,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('forms.index');
     }
 
     public function storeAnswer(Request $request)

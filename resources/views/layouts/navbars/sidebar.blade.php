@@ -204,7 +204,7 @@
                         </ul>
                     </div>
                 </li>
-                @if(auth()->user()->role->value == 0)
+                @if(auth()->user()->role->value == 0 || auth()->user()->role->value == 1)
                 <li class="nav-item">
                     <a class="nav-link" href="#forms" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="forms">
                         <i class="ni ni-collection"></i>

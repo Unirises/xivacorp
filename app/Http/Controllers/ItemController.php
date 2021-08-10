@@ -91,9 +91,27 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(Request $request, int $id)
     {
-        //
+        $validated = $this->validate($request, [
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'photo' => 'nullable|image',
+            'viewable_as' => 'required|digits_between:1,4',
+            'price' => 'required|numeric',
+        ]);
+
+        if($request->hasFile('photo')) {
+            $filename =  Str::random(22) . '.' . 'png';
+            Storage::disk('local')->put('public/items/' . $filename, File::get($request->file('photo')));
+            $validated['photo'] = $filename;
+        } else {
+            unset($validated['photo']);
+        }
+
+        Item::where('id', $id)->update($validated);
+
+        return redirect()->route('marketplace.index');
     }
 
     /**

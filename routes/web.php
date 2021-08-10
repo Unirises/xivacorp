@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::group(['middleware' => 'schedule', 'auth'], function () {
+Route::group(['middleware' => ['schedule', 'auth']], function () {
 	Route::resource('company', 'App\Http\Controllers\CompanyController');
 	Route::resource('types', 'App\Http\Controllers\TypeController');
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');

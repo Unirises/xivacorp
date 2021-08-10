@@ -6,9 +6,9 @@
             </div>
             <select class="custom-select" id="type" name="type">
                 <option disabled>Choose...</option>
-                <option value="0" {{ (old('type', $type->type ?? 0) == 0 ? 'selected' : '') }}>Health Care Provider</option>
-                <option value="1" {{ (old('type', $type->type ?? 0) == 1 ? 'selected' : '') }}>Tests</option>
-                <option value="2" {{ (old('type', $type->type ?? 0) == 2 ? 'selected' : '') }}>Services</option>
+                <option value="0" {{ (old('type', $type->type->value ?? 1) == 0 ? 'selected' : '') }}>Health Care Provider</option>
+                <option value="1" {{ (old('type', $type->type->value ?? 1) == 1 ? 'selected' : '') }}>Tests</option>
+                <option value="2" {{ (old('type', $type->type->value ?? 1) == 2 ? 'selected' : '') }}>Services</option>
             </select>
         </div>
         @if ($errors->has('type'))

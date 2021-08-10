@@ -44,11 +44,13 @@
 <script>
     $("#date").flatpickr({
         dateFormat: 'Y-m-d',
+        minDate: "today",
     });
 
     Livewire.on('updateDays', data => {
         $("#date").flatpickr({
             dateFormat: 'Y-m-d',
+            minDate: "today",
             disable: [
                 function(date) {
                     return data.some(function(e) {
@@ -62,6 +64,7 @@
     Livewire.on('updateHours', data => {
         Object.values(data).forEach((el) => {
             const date = new Date(el).toLocaleString("en-US", {timeZone: "Asia/Manila"});
+            if(moment().isAfter(date)) { return; };
             $("#schedule").append(new Option(moment(date).format('LTS'),date))
         })
     })

@@ -20,8 +20,20 @@ class ConsultationController extends Controller
      */
     public function index()
     {
-        $isAdmin = auth()->user()->role == UserRole::Admin();
-        $consultations = $isAdmin ? Consultation::where('service_type', ServiceType::Consultation)->get() : Consultation::where('service_type', ServiceType::Consultation)->where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+        switch(auth()->user()->role) {
+            case UserRole::Admin():
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->get();
+                break;
+            case UserRole::CoAdmin():
+            case UserRole::Clinic():
+            case UserRole::HR():
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('workspace_id', auth()->user()->workspace_id)->get();
+                break;
+            case UserRole::Employee():
+            case UserRole::HCP():
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
+                break;
+        }
         $consultations = $consultations->sortByDesc('created_at');
         return view('consultations.index', compact('consultations'));
     }
@@ -58,6 +70,8 @@ class ConsultationController extends Controller
             $validated['user_id'] = auth()->user()->id;
         }
 
+        $user = User::findOrFail($validated['user_id'], ['workspace_id']);
+
         $startsAt = Carbon::parse($validated['schedule']);
         $endsAt = Carbon::parse($validated['schedule'])->addMinutes(30);
 
@@ -78,6 +92,7 @@ class ConsultationController extends Controller
             'ends_at' => Carbon::parse($validated['schedule'])->addMinutes(30),
             'room_id' => $response->json()['url'],
             'service_type' => ServiceType::Consultation,
+            'workspace_id' => $user->workspace_id,
         ]);
 
         return redirect()->route('consultations.index');
@@ -109,7 +124,7 @@ class ConsultationController extends Controller
             }
         }
 
-        $forms = Form::all();
+        $forms = Form::where('owner_id', auth()->user()->id)->get();
         return view('consultations.show', compact('consultation', 'forms'));
     }
 

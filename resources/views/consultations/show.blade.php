@@ -56,7 +56,6 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">Form Name</th>
-                                <th scope="col" class="sort" data-sort="name">Required</th>
                                 <th scope="col" class="sort" data-sort="name">Answerable By</th>
                                 <th scope="col" class="sort" data-sort="name">Actions</th>
                             </tr>
@@ -69,13 +68,12 @@
                                     {{ $form->name }}
                                 </th>
                                 <td>
-                                    {{ $form->pivot->required == true ? 'Yes' : 'No' }}
-                                </td>
-                                <td>
                                     {{ $form->pivot->answerable_by == $consultation->user->id ? $consultation->user->name : $consultation->provider->name }}
                                 </td>
                                 <td>
+                                    @if( $form->pivot->answerable_by == auth()->user()->id)
                                     <a href="{{ Route::is('consultations.show') ? route('consultations.forms.edit', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) : route('services.forms.edit', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) }}" class="btn btn-primary my-4">Answer/Update</a>
+                                    @endif
                                     <a href="{{ Route::is('consultations.show') ? route('consultations.forms.show', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) : route('services.forms.show', [$consultation, $form->pivot->form_id, $form->pivot->answerable_by]) }}" class="btn btn-primary my-4">View Response</a>
                                 </td>
                             </tr>

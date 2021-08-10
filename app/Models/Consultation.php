@@ -21,6 +21,7 @@ class Consultation extends Model
         'room_id',
         'service_type',
         'service_id',
+        'workspace_id',
     ];
 
     protected $appends = [

@@ -60,8 +60,8 @@ class ProfileController extends Controller
         $validated = $this->validate($request, [
             'days' => 'required|array',
             'days.*' => ['required', Rule::in(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])],
-            'start' => 'required|date_format:G:i',
-            'end' => 'required|after_or_equal:start|date_format:G:i'
+            'start' => 'required|date_format:H:i',
+            'end' => 'required|after_or_equal:start|date_format:H:i'
         ]);
 
         $formattedDays = [];

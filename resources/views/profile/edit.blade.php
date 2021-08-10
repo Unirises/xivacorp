@@ -87,6 +87,7 @@
                         </div>
                     </form>
                     <hr class="my-4" />
+                    @if(auth()->user()->role->value == 1)
                     <form action="{{ route('profile.hours') }}" method="post">
                         @csrf
                         <h6 class="heading-small text-muted mb-4">Working Hours</h6>
@@ -136,7 +137,7 @@
                             <input class="form-check-input" type="checkbox" id="sunday" name="days[]" value="sunday">
                             <label class="form-check-label" for="sunday">Sunday</label>
                         </div>
-
+                        
                         <div class="row">
                             <div class="col">
                                 <div class="form-group{{ $errors->has('start') ? ' has-danger' : '' }}">
@@ -168,6 +169,7 @@
                         </div>
                     </form>
                     <hr class="my-4" />
+                    @endif
                     <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                         @csrf
                         @method('put')

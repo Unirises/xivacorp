@@ -9,7 +9,7 @@ class Form extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'data', 'required'];
+    protected $fillable = ['name', 'data', 'required', 'owner_id'];
 
     protected $appends = ['has_answer'];
 
