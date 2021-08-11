@@ -27,7 +27,8 @@ class Consultation extends Model
     protected $appends = [
         'forms',
         'status',
-        'status_color'
+        'status_color',
+        'is_ongoing',
     ];
 
     protected $casts = [
@@ -78,5 +79,10 @@ class Consultation extends Model
 
     public function forms() {
         return $this->belongsToMany(Form::class, 'consultation_form', 'consultation_id', 'form_id')->withPivot('required', 'answerable_by');
+    }
+
+    public function getIsOngoingAttribute()
+    {
+        return Carbon::now()->between($this->starts_at, $this->ends_at);
     }
 }
