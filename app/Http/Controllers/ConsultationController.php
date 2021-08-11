@@ -31,6 +31,7 @@ class ConsultationController extends Controller
                 break;
             case UserRole::Employee():
                 $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('user_id', auth()->user()->id)->get();
+                break;
             case UserRole::HCP():
                 $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('hcp_id', auth()->user()->id)->get();
                 break;
@@ -79,7 +80,7 @@ class ConsultationController extends Controller
         $response = Http::withToken(env('DAILY_API', 'be86164a3699b823d22e5cc4d7ae84919e941b61f8226c3fdd6740934922d43e'))->post('https://api.daily.co/v1/rooms', [
             'properties' => [
                 'exp' => $endsAt->timestamp,
-                'nbf' => $startsAt->timestamp,
+                // 'nbf' => $startsAt->timestamp,
                 'max_participants' => 2,
                 'enable_chat' => true,
                 'enable_screenshare' => true,
