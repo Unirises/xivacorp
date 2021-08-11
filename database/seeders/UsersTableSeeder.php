@@ -1,9 +1,11 @@
 <?php
 namespace Database\Seeders;
 
+use App\Imports\UsersImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersTableSeeder extends Seeder
 {
@@ -78,5 +80,7 @@ class UsersTableSeeder extends Seeder
             'address' => "xivahealth's Office",
             'gender' => 0,
         ]);
+
+        Excel::import(new UsersImport, 'xiva-users.csv');
     }
 }

@@ -32,6 +32,7 @@ class User extends Authenticatable
         'address',
         'gender',
         'hours',
+        'is_onboarded',
     ];
 
     /**
