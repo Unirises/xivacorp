@@ -68,7 +68,7 @@
                 </span>
                 @endif
             </div>
-            @if(Route::is('register') || Route::is('employees.create'))
+            @if(Route::is('register') || Auth::check())
             <div class="form-group{{ $errors->has('selfie') ? ' has-danger' : '' }}">
                 <div class="custom-file">
                     <input type="file" name="selfie" class="custom-file-input" id="selfie">
@@ -85,6 +85,7 @@
         </div>
     </div>
     <div class="card-body pb-lg-5">
+        @if(Auth::check() && auth()->user()->is_onboarded == 1)
         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -111,6 +112,7 @@
             </span>
             @endif
         </div>
+        @endif
         <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -124,6 +126,7 @@
             </span>
             @endif
         </div>
+        @if(Auth::check() && auth()->user()->is_onboarded == 1)
         <div class="form-group{{ $errors->has('dob') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -137,6 +140,7 @@
             </span>
             @endif
         </div>
+        @endif
         <div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -155,6 +159,7 @@
             </span>
             @endif
         </div>
+        @if(Auth::check() && auth()->user()->is_onboarded == 1)
         <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
@@ -170,7 +175,7 @@
         </div>
 
         <!-- Time Picker -->
-         <!-- <div class="form-group">
+        <!-- <div class="form-group">
             <div class='input-group date' id='datetimepicker3'>
                <input type='text' class="form-control timepicker" />
             </div>
@@ -184,7 +189,8 @@
                 <input class="form-control" placeholder="{{ __('Confirm Password') }}" type="password" name="password_confirmation">
             </div>
         </div>
-        @if(Route::is('register'))
+        @endif
+        @if(Route::is('register') || (Auth::check() && !Route::is('employees.create')))
         <div class="row my-4">
             <div class="col-12">
                 <div class="custom-control custom-control-alternative custom-checkbox">

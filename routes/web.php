@@ -5,7 +5,9 @@ use App\Http\Controllers\ConsultationFormController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
+// URL::forceScheme('https');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,9 +25,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::group(['middleware' => ['schedule', 'auth']], function () {
+Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::resource('company', 'App\Http\Controllers\CompanyController');
 	Route::resource('types', 'App\Http\Controllers\TypeController');
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');
@@ -53,7 +54,8 @@ Route::group(['middleware' => ['schedule', 'auth']], function () {
 	})->name('news');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'onboard']], function () {
+	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 	Route::resource('marketplace', 'App\Http\Controllers\ItemController');
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
@@ -62,3 +64,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('update-signature', ['as' => 'profile.signature', 'uses' => 'App\Http\Controllers\ProfileController@signature']);
 });
 
+Route::group(['middleware' => ['auth']], function () {
+	Route::post('register-onboard', ['as' => 'register-onboard', 'uses' => 'App\Http\Controllers\UserController@onboard']);
+});
