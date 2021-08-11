@@ -65,7 +65,7 @@
         Object.values(data).forEach((el) => {
             const date = new Date(el).toLocaleString("en-US", {timeZone: "Asia/Manila"});
             if(moment().isAfter(date)) { return; };
-            $("#schedule").append(new Option(moment(date).format('LTS'),date))
+            $("#schedule").append(new Option(moment(date).format('LT'),date))
         })
     })
 </script>
