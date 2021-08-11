@@ -175,7 +175,7 @@ class ConsultationController extends Controller
                 break;
             case UserRole::Employee():
             case UserRole::HCP():
-                abort(400);
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('user_id', auth()->user()->id)->orWhere('hcp_id', auth()->user()->id)->get();
                 break;
         }
         $consultations = $consultations->sortByDesc('created_at');

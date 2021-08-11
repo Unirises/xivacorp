@@ -212,8 +212,10 @@ class ServiceController extends Controller
                 $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('workspace_id', auth()->user()->workspace_id)->get();
                 break;
             case UserRole::Employee():
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('user_id', auth()->user()->id)->get();
+                break;
             case UserRole::HCP():
-                abort(400);
+                $consultations = Consultation::where('service_type', '!=', ServiceType::Consultation)->where('hcp_id', auth()->user()->id)->get();
                 break;
         }
         $consultations = $consultations->sortByDesc('created_at');
