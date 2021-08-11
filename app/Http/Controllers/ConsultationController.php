@@ -161,4 +161,50 @@ class ConsultationController extends Controller
     {
         //
     }
+
+    public function export()
+    {
+        switch(auth()->user()->role) {
+            case UserRole::Admin():
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->get();
+                break;
+            case UserRole::CoAdmin():
+            case UserRole::Clinic():
+            case UserRole::HR():
+                $consultations = Consultation::where('service_type', ServiceType::Consultation)->where('workspace_id', auth()->user()->workspace_id)->get();
+                break;
+            case UserRole::Employee():
+            case UserRole::HCP():
+                abort(400);
+                break;
+        }
+        $consultations = $consultations->sortByDesc('created_at');
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=consultations.csv",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $columns = array('Workspace ID', 'Client', 'Provider', 'Starts At', 'Ends At');
+
+        $callback = function() use($consultations, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($consultations as $consultation) {
+                $row['Workspace ID'] = $consultation->workspace_id;
+                $row['Client'] = $consultation->user->name;
+                $row['Provider'] = $consultation->provider->name;
+                $row['Starts At'] = $consultation->starts_at;
+                $row['Ends At'] = $consultation->ends_at;
+
+                fputcsv($file, array($row['Workspace ID'], $row['Client'], $row['Provider'], $row['Starts At'], $row['Ends At']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

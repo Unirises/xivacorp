@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationFormController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +38,12 @@ Route::group(['middleware' => ['schedule', 'auth']], function () {
 	Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
 	Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
 	Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');
-
+	Route::get('export-services', [ServiceController::class, 'export'])->name('services.export');
+	
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('consultations.forms.edit');
 	Route::post('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('consultations.forms.store');
+	Route::get('export-consultations', [ConsultationController::class, 'export'])->name('consultations.export');
 
 	Route::post('update-form/{serviceId}', ['as' => 'update-form', 'uses' => 'App\Http\Controllers\ServiceController@updateForms']);
 	Route::post('submit-answer', ['as' => 'submit-answer', 'uses' => 'App\Http\Controllers\FormController@storeAnswer']);
