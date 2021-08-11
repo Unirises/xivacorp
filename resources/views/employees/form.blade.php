@@ -4,9 +4,6 @@
 
 <div>
     <div class="card-header bg-transparent ">
-    @if($errors->any())
-    {{ implode('', $errors->all('<div>:message</div>')) }}
-@endif
         <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }} mb-3">
             <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
@@ -63,7 +60,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">PRC ID</span>
                     </div>
-                    <input class="form-control{{ $errors->has('prc_id') ? ' is-invalid' : '' }}" placeholder="" type="text" name="prc_id" value="{{ old('prc_id') ?? $employee->hcp_data->prc_id ?? '' }}" required autofocus>
+                    <input class="form-control{{ $errors->has('prc_id') ? ' is-invalid' : '' }}" placeholder="" type="text" name="prc_id" value="{{ old('prc_id') ?? $employee->hcp_data->prc_id ?? '' }}" autofocus>
                 </div>
                 @if ($errors->has('prc_id'))
                 <span class="invalid-feedback" style="display: block;" role="alert">

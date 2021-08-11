@@ -122,6 +122,8 @@
     @endif
     <div class="mb-5">
         <br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br>
     </div>
     @include('layouts.footers.auth')
 </div>
