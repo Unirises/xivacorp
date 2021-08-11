@@ -9,6 +9,7 @@
 
 @section('head')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 <div class="container-fluid mt--7">
@@ -169,6 +170,20 @@
                         </div>
                     </form>
                     <hr class="my-4" />
+                    <form id="my-form">
+                        @csrf
+                        <h6 class="heading-small text-muted mb-4">Signature</h6>
+                        <canvas width="664" style="touch-action: none;" height="373"></canvas>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text-gray">Sign Above</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-4">Update Signature</button>
+                        </div>
+                    </form>
+                    <hr class="my-4" />
                     @endif
                     <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                         @csrf
@@ -228,6 +243,7 @@
 
 @push('js')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script>
     $("#start").flatpickr({
         enableTime: true,
@@ -240,6 +256,40 @@
         noCalendar: true,
         time_24hr: true,
         dateFormat: "H:i",
+    });
+    jQuery(function($) {
+        var canvas = document.querySelector("canvas");
+        if (canvas) {
+            var signaturePad = new SignaturePad(canvas);
+        }
+
+        $('#my-form').on('submit', async function(e) {
+            e.preventDefault();
+
+            fetch("{{ route('profile.signature') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Accept': 'application/json',
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    signature: canvas != null ? signaturePad.toDataURL() : null,
+                })
+            }).then(async (resp) => {
+                var respData = await resp.text();
+                if (resp.status == 422) {
+                    return alert('Please fill in all the fields.');
+                }
+
+                alert('Your signature has been updated!');
+            }).catch((err) => {
+                console.error(err);
+                alert('There was a problem saving your data.');
+            });
+
+            return false;
+        });
     });
 </script>
 @endpush

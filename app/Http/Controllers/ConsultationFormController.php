@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ConsultationForm;
 use App\Models\Form;
+use App\Models\HcpData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -53,9 +54,10 @@ class ConsultationFormController extends Controller
     {
         $data = ConsultationForm::where('consultation_id', $consultationId)->where('form_id', $formId)->where('answerable_by', $userId)->first();
         $form = Form::findOrFail($formId);
+        $hcpData = HcpData::select('signature')->where('user_id', $userId)->firstOrFail();
         abort_if(!$data, 404);
         $data->data = json_decode($data['data']);
-        return view('coforms.show', compact('consultationId', 'formId', 'userId', 'form'))->with('answer', $data);
+        return view('coforms.show', compact('consultationId', 'formId', 'userId', 'form', 'hcpData'))->with('answer', $data);
     }
 
     function base64_to_jpeg($base64_string, $output_file)

@@ -18,12 +18,6 @@
                     <div class="card-body">
                         <div class="fb-render"></div>
                         @if(auth()->user()->role->value == 1)
-                        <canvas width="664" style="touch-action: none;" height="373"></canvas>
-                        <div class="row">
-                            <div class="col">
-                                <span class="text-gray">Sign Above</span>
-                            </div>
-                        </div>
                         <div class="form-group{{ $errors->has('photo') ? ' has-danger' : '' }}">
                             <div class="custom-file">
                                 <input type="file" name="photo" class="custom-file-input" id="photo">

@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    @if($answer->signature ?? null)
+    @if($hcpData->signature ?? null)
     <div class="row mb-3">
         <div class="col">
             <div class="card">
@@ -53,7 +53,7 @@
                     <h3 class="mb-0">Signature</h3>
                 </div>
                 <div class="card-body px-lg-5 py-lg-5">
-                <img src="{{ $answer->signature }}" style="max-width: 100%" alt="HCP Signature" />
+                <img src="{{ $hcpData->signature }}" style="max-width: 100%" alt="HCP Signature" />
                 </div>
             </div>
         </div>

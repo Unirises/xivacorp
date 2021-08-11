@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
+use App\Models\HcpData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -73,6 +74,19 @@ class ProfileController extends Controller
         $user->hours = json_encode($formattedDays);
         $user->save();
         
+        return redirect()->back();
+    }
+
+    public function signature(Request $request)
+    {
+        $validated =  $this->validate($request, [
+            'signature' => 'required|string',
+        ]);
+
+        HcpData::where('user_id', auth()->user()->id)->update([
+            'signature' => $validated['signature']
+        ]);
+
         return redirect()->back();
     }
 }

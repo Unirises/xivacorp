@@ -14,6 +14,7 @@ class HcpData extends Model
         'type_id',
         'prc_id',
         'photo',
+        'signature',
     ];
 
     public function user()
