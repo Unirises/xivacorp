@@ -24,6 +24,8 @@
                                 <p class="card-text">{{ $item->description }}</p>
                                 @if(auth()->user()->role->value == 0)
                                 <a href="{{ route('marketplace.edit', $item->id) }}" class="btn btn-primary">Update</a>
+                                @else
+                                <a href="javascript:void(Tawk_API.toggle())" class="btn btn-primary">Message to Inquire</a>
                                 @endif
                             </div>
                         </div>
