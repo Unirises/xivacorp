@@ -215,4 +215,13 @@ class EmployeeController extends Controller
 
         return redirect()->back();
     }
+
+    public function resetHours(int $id)
+    {
+        User::where('id', $id)->update([
+            'hours' => null
+        ]);
+
+        return redirect()->back();
+    }
 }

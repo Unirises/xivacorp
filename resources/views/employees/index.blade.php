@@ -57,6 +57,16 @@
                                             <input type="submit" class="btn btn-danger" value="Delete user">
                                         </div>
                                     </form>
+                                    @if($employee->role->value == 1 && $employee->hours != null)
+                                    <form method="POST" action="{{ route('employees.reset-hours', $employee->id) }}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-warning" value="Reset Working Hours">
+                                        </div>
+                                    </form>
+                                    @endif
                                     @endif
                                 </td>
                             </tr>
