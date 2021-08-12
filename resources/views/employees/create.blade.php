@@ -28,6 +28,3 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
-
-@push('js')
-@endpush

@@ -37,7 +37,8 @@ class UserController extends Controller
             $array = array_merge($array, [
                 'role' => 'required|exists:types,id',
                 'prc_id' => 'required',
-                'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096'
+                'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'signature' => 'required|string',
             ]);
         }
 
@@ -63,6 +64,7 @@ class UserController extends Controller
                 'type_id' => $validated['role'],
                 'prc_id' => $validated['prc_id'],
                 'photo' => $filename,
+                'signature' => $validated['signature'],
             ]);
         }
 

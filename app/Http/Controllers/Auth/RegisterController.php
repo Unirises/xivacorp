@@ -69,7 +69,8 @@ class RegisterController extends Controller
             $array = array_merge($array, [
                 'role' => 'required|exists:types,id',
                 'prc_id' => 'required',
-                'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096'
+                'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'signature' => 'required|string',
             ]);
         }
 
@@ -107,6 +108,7 @@ class RegisterController extends Controller
                 'type_id' => $data['role'],
                 'prc_id' => $data['prc_id'],
                 'photo' => $filename,
+                'signature' => $data['signature'],
             ]);
         }
 

@@ -81,7 +81,17 @@
                 </span>
                 @endif
             </div>
-            @endif
+            <div class="form-group{{ $errors->has('signature') ? ' has-danger' : '' }}">
+                <input type="hidden" id="signature" name="signature">
+                <canvas width="664" style="touch-action: none;" height="373"></canvas>
+                <div class="text-muted text-center mt-2 mb-3"><small>Sign above for your signature.</small></div>
+                @if ($errors->has('signature'))
+                <span class="invalid-feedback" style="display: block;" role="alert">
+                    <strong>{{ $errors->first('signature') }}</strong>
+                </span>
+                @endif
+                @endif
+            </div>
         </div>
     </div>
     <div class="card-body pb-lg-5">
@@ -224,10 +234,18 @@
 
 @push('js')
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script>
     window.addEventListener('load', function() {
+        console.log('oh talaga charmaine');
         var dropdown = document.getElementById('type');
         var hcpToggleDiv = document.getElementById('forHcp');
+        var canvas = document.querySelector("canvas");
+
+        if (canvas) {
+            var signaturePad = new SignaturePad(canvas);
+        }
+
         if (dropdown.value === '1') {
             hcpToggleDiv.style.display = "block";
         } else {
@@ -242,6 +260,15 @@
         })
 
         $('input.timepicker').timepicker({});
+        var nodes = document.querySelectorAll("form");
+        nodes[nodes.length - 1].onsubmit = function onSubmit(form) {
+            if (canvas && document.getElementById('signature').value == "") {
+                form.preventDefault();
+                document.getElementById('signature').value = signaturePad.toDataURL();
+                console.log(document.getElementById('signature').value);
+                nodes[nodes.length - 1].submit();
+            }
+        }
     })
 </script>
 @endpush
