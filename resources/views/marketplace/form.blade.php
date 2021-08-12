@@ -58,7 +58,7 @@
         </div>
         <div class="input-group input-group-alternative mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="viewable_as">Viewable as</label>
+                <label class="input-group-text" for="viewable_as">Viewable by</label>
             </div>
             <select class="custom-select" id="viewable_as" name="viewable_as">
                 <option disabled>Choose...</option>

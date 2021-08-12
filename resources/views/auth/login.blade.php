@@ -45,6 +45,7 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
                             </div>
+                            <div class="text-muted text-center mt-2 mb-3"><small>Don't have an account yet? <a href="{{ route('register') }}">Sign up here.</a></small></div>
                         </form>
                     </div>
                 </div>
