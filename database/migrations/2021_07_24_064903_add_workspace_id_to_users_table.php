@@ -15,7 +15,7 @@ class AddWorkspaceIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('workspace_id')->index()->nullable();
-            $table->foreign('workspace_id')->references('code')->on('companies');
+            $table->foreign('workspace_id')->references('code')->on('companies')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
