@@ -130,6 +130,24 @@
                     </div>
                 </li>
                 @endif
+                @if(auth()->user()->role->value == 0)
+                <li class="nav-item">
+                    <a class="nav-link" href="#notifications" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="notifications">
+                        <i class="ni ni-settings-gear-65"></i>
+                        <span class="nav-link-text">Notifications</span>
+                    </a>
+
+                    <div class="collapse hide" id="notifications">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('working-hours-notification.index') }}">
+                                    Working Hours
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="#marketplace" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="marketplace">
                         <i class="ni ni-bag-17"></i>

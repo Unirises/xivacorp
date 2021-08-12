@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Models\HcpData;
+use App\Models\WorkingHoursNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Spatie\OpeningHours\OpeningHours;
@@ -69,12 +71,13 @@ class ProfileController extends Controller
         foreach ($validated['days'] as $key => $value) {
             $formattedDays[$value] = [$validated['start'].'-'.$validated['end']];
         }
+
+        WorkingHoursNotification::create([
+            'user_id' => auth()->user()->id,
+            'hours' => json_encode($formattedDays)
+        ]);
         
-        $user = auth()->user();
-        $user->hours = json_encode($formattedDays);
-        $user->save();
-        
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Your new working hours is now for approval from admin.');
     }
 
     public function signature(Request $request)

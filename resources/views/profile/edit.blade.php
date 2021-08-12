@@ -99,6 +99,12 @@
                         </div>
                         @endif
 
+                        @if (\Session::has('success'))
+                        <div class="alert alert-success">
+                            {!! \Session::get('success') !!}</li>
+                        </div>
+                        @endif
+
                         @if(auth()->user()->hours)
                         <div class="alert alert-info" role="alert">
                             <strong>Current set schedule</strong>
@@ -138,7 +144,7 @@
                             <input class="form-check-input" type="checkbox" id="sunday" name="days[]" value="sunday">
                             <label class="form-check-label" for="sunday">Sunday</label>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col">
                                 <div class="form-group{{ $errors->has('start') ? ' has-danger' : '' }}">
