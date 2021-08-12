@@ -6,7 +6,7 @@
 <div class="container mt--8 pb-5">
     <!-- Table -->
     <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
+        <div class="col-lg-8 col-md-8">
             <div class="card bg-secondary shadow border-0">
                 <form role="form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                     @csrf

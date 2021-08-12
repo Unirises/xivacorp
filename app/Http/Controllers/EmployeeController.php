@@ -47,13 +47,17 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $array = [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:255'],
+            'street_address' => ['required', 'string', 'max:255'],
+            'barangay' => ['required', 'string', 'max:255'],
+            'region' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
-            'address' => 'required|string',
             'gender' => 'required|numeric',
         ];
         
@@ -71,13 +75,17 @@ class EmployeeController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'],
+            'street_address' => $validated['street_address'],
+            'barangay' => $validated['barangay'],
+            'region' => $validated['region'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
             'dob' => $validated['dob'],
-            'address' => $validated['address'],
             'gender' => $validated['gender'],
         ]);
 
@@ -134,13 +142,17 @@ class EmployeeController extends Controller
         $user = User::findOrFail($id);
 
         $array = [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:255'],
+            'street_address' => ['required', 'string', 'max:255'],
+            'barangay' => ['required', 'string', 'max:255'],
+            'region' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
-            'address' => 'required|string',
             'gender' => 'required|numeric',
         ];
 
@@ -159,13 +171,17 @@ class EmployeeController extends Controller
         } 
 
         $user->update([
-            'name' => $validated['name'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'],
+            'street_address' => $validated['street_address'],
+            'barangay' => $validated['barangay'],
+            'region' => $validated['region'],
             'email' => $validated['email'],
             'password' => $validated['password'],
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
             'dob' => $validated['dob'],
-            'address' => $validated['address'],
             'gender' => $validated['gender'],
         ]);
 

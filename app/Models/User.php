@@ -22,17 +22,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
         'hcp_data_id',
         'role',
         'workspace_id',
         'dob',
-        'address',
         'gender',
         'hours',
         'is_onboarded',
+        'last_name',
+        'first_name',
+        'middle_name',
+        'street_address',
+        'barangay',
+        'region',
     ];
 
     /**
@@ -60,6 +64,8 @@ class User extends Authenticatable
         'company_name',
         'in_schedule',
         'working_hours',
+        'name',
+        'address',
     ];
 
     public function hcp_data()
@@ -94,5 +100,15 @@ class User extends Authenticatable
         $decoded = json_decode($this->hours, true);
         $exploded = explode('-', reset($decoded)[0]);
         return [$exploded[0], $exploded[1]];
+    }
+
+    public function getNameAttribute()
+    {
+        return 'TODO';        
+    }
+
+    public function getAddressAttribute()
+    {
+
     }
 }

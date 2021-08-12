@@ -23,7 +23,8 @@ class UsersTableSeeder extends Seeder
             'contact' => "09123456789",
         ]);
         DB::table('users')->insert([
-            'name' => 'Mark Melgar',
+            'first_name' => 'Mark',
+            'last_name' => 'Melgar',
             'email' => 'corporate@xivahealth.io',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -32,11 +33,10 @@ class UsersTableSeeder extends Seeder
             'role' => 0,
             'workspace_id' => 'XVHLTH00',
             'dob' => '1980-01-01',
-            'address' => "xivahealth's Office",
             'gender' => 0,
         ]);
         DB::table('users')->insert([
-            'name' => 'HCP',
+            'first_name' => 'HCP',
             'email' => 'hcp@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -45,7 +45,6 @@ class UsersTableSeeder extends Seeder
             'role' => 1,
             'workspace_id' => 'XVHLTH00',
             'dob' => '1980-01-01',
-            'address' => "xivahealth's Office",
             'gender' => 0,
         ]);
         DB::table('hcp_data')->insert([
@@ -55,7 +54,7 @@ class UsersTableSeeder extends Seeder
             'photo' => 'default.png'
         ]);
         DB::table('users')->insert([
-            'name' => 'Employee',
+            'first_name' => 'Employee',
             'email' => 'employee@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -64,11 +63,10 @@ class UsersTableSeeder extends Seeder
             'role' => 4,
             'workspace_id' => 'XVHLTH00',
             'dob' => '1980-01-01',
-            'address' => "xivahealth's Office",
             'gender' => 0,
         ]);
         DB::table('users')->insert([
-            'name' => 'HR',
+            'first_name' => 'HR',
             'email' => 'hr@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -77,7 +75,6 @@ class UsersTableSeeder extends Seeder
             'role' => 2,
             'workspace_id' => 'XVHLTH00',
             'dob' => '1980-01-01',
-            'address' => "xivahealth's Office",
             'gender' => 0,
         ]);
 
