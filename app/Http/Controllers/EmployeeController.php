@@ -65,7 +65,9 @@ class EmployeeController extends Controller
             ]);
         }
 
-        $validated = $this->validate($request, $array);
+        $validated = $this->validate($request, $array, [], [
+            'selfie' => 'PRC ID',
+        ]);
 
         $user = User::create([
             'name' => $validated['name'],

@@ -68,7 +68,7 @@
             <div class="form-group{{ $errors->has('selfie') ? ' has-danger' : '' }}">
                 <div class="custom-file">
                     <input type="file" name="selfie" class="custom-file-input" id="selfie">
-                    <label class="custom-file-label" for="selfie">Attach your selfie with your PRC ID.</label>
+                    <label class="custom-file-label" for="selfie">Attach your PRC ID.</label>
                 </div>
 
                 @if ($errors->has('selfie'))

@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         $array = [
             'type' => 'required|digits_between:1,4',
-            'code' => 'required|exists:companies,code',
+            'code' => 'nullable|exists:companies,code',
             'address' => 'required|string',
             'gender' => 'required|numeric',
         ];
@@ -41,7 +41,9 @@ class UserController extends Controller
             ]);
         }
 
-        $validated = $this->validate($request, $array);
+        $validated = $this->validate($request, $array, [], [
+            'selfie' => 'PRC ID',
+        ]);
 
         User::where('id', auth()->user()->id)->update([
             'role' => $validated['type'],

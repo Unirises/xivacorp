@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'type' => 'required|digits_between:1,4',
-            'code' => 'required|exists:companies,code',
+            'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
             'address' => 'required|string',
             'gender' => 'required|numeric',
@@ -73,7 +73,9 @@ class RegisterController extends Controller
             ]);
         }
 
-        return Validator::make($data, $array);
+        return Validator::make($data, $array, [], [
+            'selfie' => 'PRC ID',
+        ]);
     }
 
     /**
