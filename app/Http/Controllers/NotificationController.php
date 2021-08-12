@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\HcpData;
 use App\Models\User;
 use App\Models\WorkingHoursNotification;
@@ -29,6 +30,29 @@ class NotificationController extends Controller
         ]);
 
         WorkingHoursNotification::where('user_id', $data->user_id)->delete();
+
+        return redirect()->back();
+    }
+
+    public function companyIndex()
+    {
+        abort_if(auth()->user()->role->value != 0, 401);
+
+        $hcps = User::where('role', 1)->get();
+        $companies = Company::all();
+
+        return view('admin.change-company', compact('hcps', 'companies'));
+    }
+
+    public function companyChange(Request $request, int $id)
+    {
+        abort_if(auth()->user()->role->value != 0, 401);
+        $request->validate([
+            'code' => 'required|exists:companies,code'
+        ]);
+        User::where('id', $id)->update([
+            'workspace_id' => $request->code,
+        ]);
 
         return redirect()->back();
     }

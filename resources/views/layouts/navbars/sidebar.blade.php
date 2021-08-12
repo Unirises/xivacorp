@@ -144,6 +144,11 @@
                                     Working Hours
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('change-company.index') }}">
+                                    Change HCP Company
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

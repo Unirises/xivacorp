@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-URL::forceScheme('https');
+// URL::forceScheme('https');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +57,12 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('news', function () {
 		return view('layouts.news');
 	})->name('news');
+
+	Route::get('notifications', ['as' => 'working-hours-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@index']);
+	Route::post('notifications/{id}', ['as' => 'working-hours-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@approve']);
+
+	Route::get('change-company', ['as' => 'change-company.index', 'uses' => 'App\Http\Controllers\NotificationController@companyIndex']);
+	Route::post('change-company/{id}', ['as' => 'change-company.change', 'uses' => 'App\Http\Controllers\NotificationController@companyChange']);
 });
 
 Route::group(['middleware' => ['auth', 'onboard']], function () {
