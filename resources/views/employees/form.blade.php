@@ -72,7 +72,7 @@
             <div class="form-group{{ $errors->has('selfie') ? ' has-danger' : '' }}">
                 <div class="custom-file">
                     <input type="file" name="selfie" class="custom-file-input" id="selfie">
-                    <label class="custom-file-label" for="selfie">Attach your PRC ID.</label>
+                    <label class="custom-file-label" id="prc_label" for="selfie">Attach your PRC ID.</label>
                 </div>
 
                 @if ($errors->has('selfie'))
@@ -249,30 +249,12 @@
         </div>
         @endif
         @if(Route::is('register'))
-        <div class="row my-4">
-            <div class="col-12">
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                    <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                    <label class="custom-control-label" for="customCheckRegister">
-                        <span class="text-muted">{{ __('I agree with the') }} <a href="#!">{{ __('Privacy Policy') }}</a></span>
-                    </label>
-                </div>
-            </div>
-        </div>
+        @include('employees.privacy-policy')
         <div class="text-center">
             <button type="submit" class="btn btn-primary mt-4">{{ __('Create account') }}</button>
         </div>
         @elseif(Auth::check() && auth()->user()->is_onboarded == 0)
-        <div class="row my-4">
-            <div class="col-12">
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                    <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                    <label class="custom-control-label" for="customCheckRegister">
-                        <span class="text-muted">{{ __('I agree with the') }} <a href="#!">{{ __('Privacy Policy') }}</a></span>
-                    </label>
-                </div>
-            </div>
-        </div>
+        @include('employees.privacy-policy')
         <div class="text-center">
             <button type="submit" class="btn btn-primary mt-4">{{ __('Create account') }}</button>
         </div>
@@ -316,6 +298,10 @@
                 nodes[nodes.length - 1].submit();
             }
         }
+
+        $("#selfie").change(function() {
+            $("#prc_label").html($(this).val().split("\\").splice(-1, 1)[0] || "Attach your PRC ID.");
+        });
     })
 </script>
 @endpush
