@@ -91,9 +91,9 @@ class CompanyController extends Controller
         Company::where('id', $company->id)->update($data);
 
         $company = $company->fresh();
-        $code = "XV" . Str::limit(str_replace(['A', 'E', 'I', 'O', 'U'], "", strtoupper(str_replace(" ", "", $company->name))), 7);
-        $company->code = $code . $company->id;
-        $company->save();
+        // $code = "XV" . Str::limit(str_replace(['A', 'E', 'I', 'O', 'U'], "", strtoupper(str_replace(" ", "", $company->name))), 7);
+        // $company->code = $code . $company->id;
+        // $company->save();
         
         return redirect()->back();
     }
