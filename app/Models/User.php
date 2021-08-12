@@ -104,11 +104,11 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
-        return 'TODO';        
+        return $this->last_name . ", " . $this->first_name . " " . $this->middle_name;   
     }
 
     public function getAddressAttribute()
     {
-
+        return $this->street_address . ", " . $this->barangay . ", " . $this->region;
     }
 }
