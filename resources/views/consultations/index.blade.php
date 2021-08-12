@@ -16,12 +16,14 @@
                     Health Services Bookings
                     @endif
 
+                    @if(auth()->user()->role->value != 4)
                     @if(Route::is('consultations.index'))
                     <a href="{{ route('consultations.export') }}"><i class="fas fa-plus-square text-danger ml-1"></i> Export Records</a>
                     @else
                     <a href="{{ route('services.export') }}"><i class="fas fa-plus-square text-danger ml-1"></i> Export Records</a>
                     @endif
                     </h3>
+                    @endif
                 </div>
                 <!-- Light table -->
                 <div class="card-body">

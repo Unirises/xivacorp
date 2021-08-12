@@ -82,6 +82,7 @@
                     </div>
                 </li>
                 @endif
+                @if(auth()->user()->role->value != 4)
                 <li class="nav-item">
                     <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
                         <i class="ni ni-badge"></i>
@@ -105,6 +106,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
                     <a class="nav-link" href="#types" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="types">
@@ -175,7 +177,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#test_services" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="test_services">
                         <i class="ni ni-favourite-28"></i>
-                        <span class="nav-link-text">Tests and Services</span>
+                        <span class="nav-link-text">Health and Services</span>
                     </a>
 
                     <div class="collapse hide" id="test_services">
