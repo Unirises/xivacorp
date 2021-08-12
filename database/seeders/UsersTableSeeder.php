@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('companies')->insert([
             'name' => 'Xiva Health',
-            'employer' => "Mark Melgar",
+            'employer' => "Xivahealth's Office",
             'code' => "XVHLTH00",
             'contact' => "09123456789",
         ]);

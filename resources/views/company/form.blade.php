@@ -15,13 +15,13 @@
     <div class="form-group{{ $errors->has('employer') ? ' has-danger' : '' }}">
         <div class="input-group input-group-alternative mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                <span class="input-group-text"><i class="ni ni-world"></i></span>
             </div>
-            <input class="form-control{{ $errors->has('employer') ? ' is-invalid' : '' }}" placeholder="Employer Name" type="text" name="employer" value="{{ old('employer') ?? $company->employer ?? '' }}" required autofocus>
+            <input class="form-control{{ $errors->has('employer') ? ' is-invalid' : '' }}" placeholder="Address" type="text" name="employer" value="{{ old('employer') ?? $company->employer ?? '' }}" required autofocus>
         </div>
         @if ($errors->has('employer'))
         <span class="invalid-feedback" style="display: block;" role="alert">
-            <strong>{{ $errors->first('employer') }}</strong>
+            <strong>Company address should not be empty.</strong>
         </span>
         @endif
     </div>

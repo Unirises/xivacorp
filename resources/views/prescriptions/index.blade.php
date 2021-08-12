@@ -18,7 +18,7 @@
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">Company Name</th>
                                 <th scope="col" class="sort" data-sort="budget">Code</th>
-                                <th scope="col" class="sort" data-sort="status">Employer</th>
+                                <th scope="col" class="sort" data-sort="status">Address</th>
                                 <th scope="col">Contact Phone</th>
                                 <th scope="col">Actions</th>
                             </tr>
