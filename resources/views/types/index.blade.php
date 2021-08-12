@@ -25,13 +25,7 @@
                             @foreach($types as $type)
                             <tr>
                                 <td class="budget">
-                                    @if($type->type->value == 0)
-                                    HCP Type
-                                    @elseif ($type->type->value == 1)
-                                    Tests
-                                    @elseif ($type->type->value == 2)
-                                    Services
-                                    @endif
+                                    {{ $type->type->description }}
                                 </td>
                                 <td>
                                     {{ $type->name }}
