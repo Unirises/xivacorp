@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-// URL::forceScheme('https');
+URL::forceScheme('https');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\URL;
 */
 
 Route::get('/', function () {
+	if(Auth::check()) {
+		return redirect()->route('home');
+	} else {
+		return redirect()->route('login');
+	}
     return view('welcome');
 });
 
