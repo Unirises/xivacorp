@@ -37,6 +37,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'first_name' => 'HCP',
+            'last_name' => 'Test',
             'email' => 'hcp@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -55,6 +56,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'first_name' => 'Employee',
+            'last_name' => 'Test',
             'email' => 'employee@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
@@ -67,6 +69,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'first_name' => 'HR',
+            'last_name' => 'Test',
             'email' => 'hr@test.xyz',
             'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
