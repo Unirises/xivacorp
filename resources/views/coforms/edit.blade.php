@@ -21,7 +21,7 @@
                         <div class="form-group{{ $errors->has('photo') ? ' has-danger' : '' }}">
                             <div class="custom-file">
                                 <input type="file" name="photo" class="custom-file-input" id="photo">
-                                <label class="custom-file-label" for="photo">Optional: Result Photo</label>
+                                <label class="custom-file-label" for="photo" id="photo_label">Optional: Result Photo</label>
                             </div>
 
                             @if ($errors->has('photo'))
@@ -69,6 +69,11 @@
             dataType: 'json',
             formData: JSON.parse(`{{ $form->data }}`.replace(/&quot;/g, '\"'))
         });
+
+        $("#photo").change(function() {
+            $("#photo_label").html($(this).val().split("\\").splice(-1, 1)[0] || "Optional: Result Photo");
+        });
+
         $('#my-form').on('submit', async function(e) {
             e.preventDefault();
             console.clear();

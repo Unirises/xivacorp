@@ -1,6 +1,3 @@
-@if($errors->any())
-    {!! implode('', $errors->all('<div>:message</div>')) !!}
-@endif
 <div>
     <div class="card-header bg-transparent ">
     </div>
@@ -47,7 +44,7 @@
         <div class="form-group{{ $errors->has('photo') ? ' has-danger' : '' }}">
             <div class="custom-file">
                 <input type="file" name="photo" class="custom-file-input" id="photo">
-                <label class="custom-file-label" for="photo">Optional: Item Photo</label>
+                <label class="custom-file-label" for="photo" id="photo_label">Optional: Item Photo</label>
             </div>
 
             @if ($errors->has('photo'))
@@ -70,3 +67,13 @@
         </div>
     </div>
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('load', function() {
+        $("#photo").change(function() {
+            $("#photo_label").html($(this).val().split("\\").splice(-1, 1)[0] || "Optional: Item Photo");
+        });
+    });
+</script>
+@endpush
