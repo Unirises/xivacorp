@@ -38,16 +38,19 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');
 	Route::resource('forms', 'App\Http\Controllers\FormController');
 	Route::resource('consultations', 'App\Http\Controllers\ConsultationController');
-	Route::resource('services', 'App\Http\Controllers\ServiceController');
-	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
-	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
 
 	Route::put('employees/update-hours/{id}', [EmployeeController::class, 'resetHours'])->name('employees.reset-hours');
 
-	Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
-	Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
-	Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');
-	Route::get('export-services', [ServiceController::class, 'export'])->name('services.export');
+	Route::resource('services', 'App\Http\Controllers\HealthServicesController')->except([
+		'edit', 'update'
+	]);
+	// Route::resource('services', 'App\Http\Controllers\ServiceController');
+	// Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
+	// Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
+	// Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
+	// Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
+	// Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');
+	// Route::get('export-services', [ServiceController::class, 'export'])->name('services.export');
 	
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('consultations.forms.edit');
