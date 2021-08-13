@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Type;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HealthServicesController extends Controller
@@ -24,7 +27,10 @@ class HealthServicesController extends Controller
      */
     public function create()
     {
-        return view('services.create');
+        $workspaceId = auth()->user()->workspace_id;
+        $services = Type::where('type', '!=', 0)->get();
+        $users =  auth()->user()->role->value == 0 ? User::where('role', 4)->whereNotNull('workspace_id')->get() : User::where('workspace_id', $workspaceId)->whereIn('role', [4])->get();
+        return view('services.create', compact('services', 'users'));
     }
 
     /**
@@ -35,7 +41,27 @@ class HealthServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $this->validate($request, [
+            'schedule' => 'nullable|date',
+            'service_id' => 'required|exists:types,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+
+        if(!$request->has('user_id')) {
+            $validated['user_id'] = auth()->user()->id;
+        }
+
+        $selectedUser = User::findOrFail($validated['user_id']);
+        
+        Service::create([
+            'user_id' => $validated['user_id'],
+            'workspace_id' => $selectedUser->workspace_id,
+            'service_id' => $validated['service_id'],
+            'schedule' => $request->has('is_continuous') ? null : Carbon::parse($validated['schedule']),
+            'pending' => $request->has('is_continuous') ? false : true,
+        ]);
+
+        return redirect()->route('services.index');
     }
 
     /**
