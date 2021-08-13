@@ -16,7 +16,7 @@
                     Health Services Bookings
                     @endif
 
-                    @if(auth()->user()->role->value != 4)
+                    @if(auth()->user()->role->value == 0)
                     @if(Route::is('consultations.index'))
                     <a href="{{ route('consultations.export') }}"><i class="fas fa-plus-square text-danger ml-1"></i> Export Records</a>
                     @else
