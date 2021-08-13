@@ -17,7 +17,9 @@ class Schedule extends Component
     public function render()
     {
         $workspaceId = auth()->user()->workspace_id;
-        $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->whereNotNull('hours')->get();
+        $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->whereNotNull('hours')->with(['hcp_data' => function ($q) {
+            $q->where('hcp_data.type_id', '=', 3);
+        }])->get();
         return view('livewire.schedule', compact('providers'));
     }
 
