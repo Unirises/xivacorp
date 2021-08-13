@@ -59,6 +59,11 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('news') }}">
+                        <i class="ni ni-planet text-blue"></i>News and Updates
+                    </a>
+                </li>
                 @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
                     <a class="nav-link" href="#companies" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="companies">
@@ -248,11 +253,6 @@
             <h6 class="navbar-heading text-muted">Other Services</h6>
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('news') }}">
-                        <i class="ni ni-planet text-blue"></i>News and Updates
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://xivahealth.io">
                         <i class="ni ni-cloud-download-95 text-blue"></i>Book Vaccination Service
