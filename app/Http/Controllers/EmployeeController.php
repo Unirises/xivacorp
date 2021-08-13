@@ -49,7 +49,7 @@ class EmployeeController extends Controller
         $array = [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
             'street_address' => ['required', 'string', 'max:255'],
             'barangay' => ['required', 'string', 'max:255'],
             'region' => ['required', 'string', 'max:255'],
@@ -144,7 +144,7 @@ class EmployeeController extends Controller
         $array = [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
             'street_address' => ['required', 'string', 'max:255'],
             'barangay' => ['required', 'string', 'max:255'],
             'region' => ['required', 'string', 'max:255'],

@@ -16,7 +16,7 @@ class AddAdditionalFieldsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('last_name')->default('');
             $table->string('first_name')->default('');
-            $table->string('middle_name')->default('-');
+            $table->string('middle_name')->nullable()->default(null);
             $table->string('street_address')->default('');
             $table->string('barangay')->default('');
             $table->string('region')->default('');

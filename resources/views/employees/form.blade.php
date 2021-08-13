@@ -111,7 +111,7 @@
             <div class="col">
                 <div class="form-group{{ $errors->has('middle_name') ? ' has-danger' : '' }}">
                     <div class="input-group input-group-alternative mb-3">
-                        <input class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" placeholder="M.I." type="text" name="middle_name" value="{{ old('middle_name') ?? $employee->middle_name ?? '' }}" required autofocus>
+                        <input class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" placeholder="M.I." type="text" name="middle_name" value="{{ old('middle_name') ?? $employee->middle_name ?? '' }}" autofocus>
                     </div>
                     @if ($errors->has('middle_name'))
                     <span class="invalid-feedback" style="display: block;" role="alert">
