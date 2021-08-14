@@ -45,8 +45,8 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 		'edit', 'update'
 	]);
 	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
+	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
 	// Route::resource('services', 'App\Http\Controllers\ServiceController');
-	// Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
 	// Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
 	// Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
 	// Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');

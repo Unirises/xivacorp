@@ -95,6 +95,10 @@
                                     <td>
                                         <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">Log Record</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
+                                        <a href="{{ route('services.prescriptions.create', $booking->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
+                                        @if($booking->latest_prescription_id)
+                                        <a href="{{ route('services.prescriptions.show', [$booking->id, $booking->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

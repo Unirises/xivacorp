@@ -12,10 +12,15 @@ class Prescription extends Model
     protected $fillable = [
         'prescription',
         'referral',
-        'consultation_id'
+        'consultation_id',
+        'hcp_id',
     ];
 
     public function consultation() {
-        return $this->belongsTo(Consultation::class);
+        return $this->belongsTo(Service::class, 'consultation_id', 'id');
+    }
+
+    public function provider() {
+        return $this->belongsTo(User::class, 'hcp_id', 'id');
     }
 }

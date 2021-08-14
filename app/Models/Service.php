@@ -18,6 +18,10 @@ class Service extends Model
         'pending',
     ];
 
+    protected $appends = [
+        'latest_prescription_id',
+    ];
+
     protected $casts = [
         'schedule' => 'datetime'
     ];
@@ -35,5 +39,10 @@ class Service extends Model
     public function service()
     {
         return $this->belongsTo(Type::class, 'service_id', 'id');
+    }
+
+    public function getLatestPrescriptionIdAttribute()
+    {
+        return Prescription::where('consultation_id', $this->id)->latest()->first()->id ?? null;
     }
 }

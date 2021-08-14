@@ -32,6 +32,13 @@ class CreateServicesTable extends Migration
             $table->unsignedBigInteger('consultation_id')->nullable();
             $table->foreign('consultation_id')->references('id')->on('services');
         });
+
+        Schema::table('prescriptions', function (Blueprint $table) {
+            $table->unsignedBigInteger('consultation_id')->nullable();
+            $table->foreign('consultation_id')->references('id')->on('services');
+            $table->unsignedBigInteger('hcp_id')->nullable();
+            $table->foreign('hcp_id')->references('id')->on('users');
+        });
     }
 
     /**

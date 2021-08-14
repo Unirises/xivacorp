@@ -45,10 +45,11 @@ class PrescriptionController extends Controller
         Prescription::create([
             'referral' => array_key_exists('referral', $data) ? $data['referral'] : null,
             'prescription' => $data['prescription'],
-            'consultation_id' => $id
+            'consultation_id' => $id,
+            'hcp_id' => auth()->user()->id,
         ]);
 
-        return redirect()->route('services.show', $id);
+        return redirect()->route('services.index');
     }
 
     /**
@@ -62,31 +63,31 @@ class PrescriptionController extends Controller
         $prescription = Prescription::findOrFail($pId);
 
         $img = Image::make(public_path('px-template.jpg'));
-        $img->text('Niverba, Kirk Charles P.', 550, 670, function ($font) {
+        $img->text($prescription->consultation->client->name, 550, 670, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text(Carbon::parse($prescription->consultation->user->dob)->isoFormat('MMMM Do YYYY'), 550, 705, function ($font) {
+        $img->text(Carbon::parse($prescription->consultation->client->dob)->isoFormat('MMMM Do YYYY'), 550, 705, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text(Carbon::parse($prescription->consultation->user->dob)->age, 1175, 705, function ($font) {
+        $img->text(Carbon::parse($prescription->consultation->client->dob)->age, 1175, 705, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text($prescription->consultation->user->address, 550, 740, function ($font) {
+        $img->text($prescription->consultation->client->address, 550, 740, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text($prescription->consultation->user->gender->description, 1175, 740, function ($font) {
+        $img->text($prescription->consultation->client->gender->description, 1175, 740, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text($prescription->consultation->provider->name, 1075, 1560, function ($font) {
+        $img->text($prescription->provider->name, 1075, 1560, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
-        $img->text($prescription->consultation->provider->hcp_data->prc_id, 1075, 1560 + 35, function ($font) {
+        $img->text($prescription->provider->hcp_data->prc_id ?? '/ ADMIN /', 1075, 1560 + 35, function ($font) {
             $font->file(public_path('helvetica.otf'));
             $font->size(28);
         });
@@ -101,14 +102,16 @@ class PrescriptionController extends Controller
             });
         }
 
-        $img->text('
-        - - - - - - - - - - - - - - -
-        For Referral To: ' . $prescription->referral . '
-        - - - - - - - - - - - - - - -
-        ', 300, 1500 + 35, function ($font) {
-            $font->file(public_path('helvetica.otf'));
-            $font->size(28);
-        });
+        if($prescription->referral) {
+            $img->text('
+            - - - - - - - - - - - - - - -
+            For Referral To: ' . $prescription->referral . '
+            - - - - - - - - - - - - - - -
+            ', 300, 1500 + 35, function ($font) {
+                $font->file(public_path('helvetica.otf'));
+                $font->size(20);
+            });
+        }
         return $img->response('jpg');
         return redirect()->route('services.show', $cId);
     }

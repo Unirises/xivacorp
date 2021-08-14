@@ -47,6 +47,7 @@ class UsersTableSeeder extends Seeder
             'workspace_id' => 'XVHLTH00',
             'dob' => '1980-01-01',
             'gender' => 0,
+            'hours' => '{"monday":["00:00-23:59"],"tuesday":["00:00-23:59"],"wednesday":["00:00-23:59"],"thursday":["00:00-23:59"],"friday":["00:00-23:59"],"saturday":["00:00-23:59"],"sunday":["00:00-23:59"]}',
         ]);
         DB::table('hcp_data')->insert([
             'user_id' => 2,

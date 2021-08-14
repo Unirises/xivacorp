@@ -17,8 +17,6 @@ class CreatePrescriptionsTable extends Migration
             $table->id();
             $table->longText('prescription');
             $table->longText('referral')->nullable();
-            $table->unsignedBigInteger('consultation_id')->nullable();
-            $table->foreign('consultation_id')->references('id')->on('consultations');
             $table->timestamps();
         });
     }
