@@ -11,6 +11,7 @@ use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -211,7 +212,13 @@ class HealthServicesController extends Controller
         $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
         $url = public_path('storage/results/qrcode/'.$id.'.png');
         QrCode::size(50)->format('png')->generate($id, $url);
-        
+
+        $image = $form->answerer->hcp_data->signature;  // your base64 encoded
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $imageName = $form->answerer->id.'.'.'png';
+        Storage::disk('local')->put('public/hcp/signature/' . $imageName,  base64_decode($image));
+
         $templateProcessor = new TemplateProcessor('word-template/result.docx');
         $templateProcessor->cloneRowAndSetValues('res_name', $values);
         $templateProcessor->setValues([
@@ -233,6 +240,7 @@ class HealthServicesController extends Controller
             $templateProcessor->setValue('photo', '');
         }
         $templateProcessor->setImageValue('qr_code', ['path' => $url, 'width' => 100, 'height' => 100, 'ratio' => false]);
+        $templateProcessor->setImageValue('hcp_signature', ['path' => public_path('storage/hcp/signature/'.$imageName), 'ratio' => false]);
         $fileName = $id.'.docx';
         $templateProcessor->saveAs($fileName);
         return response()->download($fileName);
