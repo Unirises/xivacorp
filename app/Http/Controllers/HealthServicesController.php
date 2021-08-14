@@ -154,7 +154,9 @@ class HealthServicesController extends Controller
             'data.*.name' => 'nullable|string',
             'data.*.label' => 'nullable|string',
             'data.*.value' => 'nullable|string',
-            'photo' => 'nullable|string'
+            'photo' => 'nullable|string',
+            'doctor_name' => 'nullable|string',
+            'doctor_prc' => 'nullable|string',
         ]);
 
         if($request->filled('photo')) {
@@ -169,6 +171,8 @@ class HealthServicesController extends Controller
         $data = ServiceForms::where('id', $formId)->update([
             'answer' => json_encode($validated['data']),
             'photo' => $request->filled('photo') ? $validated['photo'] : null,
+            'doctor_name' => $validated['doctor_name'] ?? null,
+            'doctor_prc' => $validated['doctor_prc'] ?? null,
         ]);
         return $data;
         return redirect()->back();

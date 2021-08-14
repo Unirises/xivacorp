@@ -17,6 +17,8 @@ class ServiceForms extends Model
         'answerable_by',
         'answer',
         'photo',
+        'doctor_name',
+        'doctor_prc',
     ];
 
     public function service()

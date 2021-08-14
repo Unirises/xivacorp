@@ -30,6 +30,26 @@
                             </span>
                             @endif
                         </div>
+                        <div class="form-group{{ $errors->has('doctor_name') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative mb-3">
+                                <input class="form-control{{ $errors->has('doctor_name') ? ' is-invalid' : '' }}" placeholder="Doctor Name Currently on Duty" type="text" name="doctor_name" id="doctor_name" value="{{ old('doctor_name') ?? $employee->doctor_name ?? '' }}" required autofocus>
+                            </div>
+                            @if ($errors->has('doctor_name'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('doctor_name') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group{{ $errors->has('doctor_prc') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <input class="form-control{{ $errors->has('doctor_prc') ? ' is-invalid' : '' }}" placeholder="Doctor PRC ID" type="text" name="doctor_prc" id="doctor_prc" value="{{ old('doctor_prc') ?? $employee->doctor_prc ?? '' }}" required autofocus>
+                                </div>
+                                @if ($errors->has('doctor_prc'))
+                                <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <strong>{{ $errors->first('doctor_prc') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         @endif
                     </div>
                     <!-- Card footer -->
@@ -104,13 +124,15 @@
                     data: parsedFields,
                     signature: canvas != null ? signaturePad.toDataURL() : null,
                     photo: photo != undefined ? await toBase64(photo) : null,
+                    doctor_name: document.getElementById('doctor_name')?.value,
+                    doctor_prc: document.getElementById('doctor_prc')?.value,
                 })
             }).then(async (resp) => {
                 var respData = await resp.text();
                 if (resp.status == 422) {
                     return alert('Please fill in all the fields.');
                 }
-                
+
                 window.history.back();
             }).catch((err) => {
                 console.error(err);
