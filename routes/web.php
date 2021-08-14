@@ -3,6 +3,7 @@
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\ConsultationFormController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HealthServicesController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	]);
 	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
 	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
+	Route::post('services/forms/{id}', [HealthServicesController::class, 'addNewFormToService'])->name('services.add-new-form');
 	// Route::resource('services', 'App\Http\Controllers\ServiceController');
 	// Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
 	// Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');

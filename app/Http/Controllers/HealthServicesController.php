@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Models\Form;
 use App\Models\Service;
+use App\Models\ServiceForms;
 use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
@@ -88,7 +90,9 @@ class HealthServicesController extends Controller
      */
     public function show($id)
     {
-        return view('services.show');
+        $service = Service::findOrFail($id);
+        $forms = Form::whereIn('owner_id', [auth()->user()->id, 1])->get();
+        return view('services.show', compact('forms', 'service'))->with('current_id', $id);
     }
 
     /**
@@ -109,6 +113,23 @@ class HealthServicesController extends Controller
         } else {
             return abort(401);
         }
+
+        return redirect()->back();
+    }
+
+    public function addNewFormToService(Request $request, int $id)
+    {
+        $validated = $this->validate($request, [
+            'form_id' => 'required|exists:forms,id',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+
+        ServiceForms::create([
+            'service_id' => $id,
+            'form_id' => $validated['form_id'],
+            'answerable_by' => $validated['user_id'],
+        ]);
 
         return redirect()->back();
     }
