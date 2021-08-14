@@ -126,7 +126,7 @@ class ConsultationController extends Controller
             }
         }
 
-        $forms = Form::where('owner_id', auth()->user()->id)->get();
+        $forms = Form::whereIn('owner_id', [auth()->user()->id, 1])->get();
         return view('consultations.show', compact('consultation', 'forms'));
     }
 
