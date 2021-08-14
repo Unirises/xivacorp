@@ -41,7 +41,7 @@
                                         {{ $booking->schedule->format('m/d/Y g:i A') }}
                                     </td>
                                     <td>
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('services.accept-booking', $booking->id) }}">
                                             {{ csrf_field() }}
                                             {{ method_field('PUT') }}
 

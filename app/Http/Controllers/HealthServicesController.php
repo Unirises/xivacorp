@@ -121,6 +121,17 @@ class HealthServicesController extends Controller
 
         return redirect()->back();
     }
+    public function acceptBooking(int $id)
+    {
+        $booking = Service::findOrFail($id);
+
+        $booking->update([
+            'pending' => false,
+            'hcp_id' => auth()->user()->id
+        ]);
+
+        return redirect()->back();
+    }
 
     public function addNewFormToService(Request $request, int $id)
     {

@@ -54,6 +54,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('services/{id}/forms/{formId}/response', [HealthServicesController::class, 'showResponse'])->name('services.forms.response');
 	Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');
 	Route::get('export-services', [HealthServicesController::class, 'exportAllBookings'])->name('services.export');
+	Route::put('accept-service/{id}', [HealthServicesController::class, 'acceptBooking'])->name('services.accept-booking');
 	
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('consultations.forms.edit');
