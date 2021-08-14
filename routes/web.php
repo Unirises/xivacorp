@@ -47,11 +47,11 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	]);
 	Route::resource('services.diary', 'App\Http\Controllers\DiaryController');
 	Route::resource('services.prescriptions', 'App\Http\Controllers\PrescriptionController');
-	Route::post('services/forms/{id}', [HealthServicesController::class, 'addNewFormToService'])->name('services.add-new-form');
-	// Route::resource('services', 'App\Http\Controllers\ServiceController');
-	// Route::get('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('services.forms.show');
-	// Route::get('services/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('services.forms.edit');
-	// Route::post('services/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'store'])->name('services.forms.store');
+	Route::post('services/{id}/forms', [HealthServicesController::class, 'addNewFormToService'])->name('services.forms.create');
+
+	Route::get('services/{id}/forms/{formId}', [HealthServicesController::class, 'showAnswerForm'])->name('services.forms.answer');
+	Route::post('services/{id}/forms/{formId}', [HealthServicesController::class, 'storeResponse'])->name('services.forms.store');
+	Route::get('services/{id}/forms/{formId}/response', [HealthServicesController::class, 'showResponse'])->name('services.forms.response');
 	// Route::get('export-services', [ServiceController::class, 'export'])->name('services.export');
 	
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');

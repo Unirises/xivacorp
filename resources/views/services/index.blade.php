@@ -4,6 +4,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
 <div class="container-fluid mt--6">
+    @if(auth()->user()->role->value == 1)
     <div class="row mb-4">
         <div class="col">
             <div class="card">
@@ -61,6 +62,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
@@ -93,9 +95,11 @@
                                         {{ $booking->service->meta }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">Log Record</a>
+                                        <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">View Records</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
+                                        @if(auth()->user()->role->value == 1)
                                         <a href="{{ route('services.prescriptions.create', $booking->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
+                                        @endif
                                         @if($booking->latest_prescription_id)
                                         <a href="{{ route('services.prescriptions.show', [$booking->id, $booking->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
                                         @endif
@@ -146,7 +150,7 @@
                                         {{ $booking->schedule->format('m/d/Y g:i A') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">Log Record</a>
+                                        <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">View Records</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
                                     </td>
                                 </tr>

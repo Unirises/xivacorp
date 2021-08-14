@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
 use App\Models\Form;
+use App\Models\HcpData;
 use App\Models\Service;
 use App\Models\ServiceForms;
 use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HealthServicesController extends Controller
 {
@@ -92,7 +94,8 @@ class HealthServicesController extends Controller
     {
         $service = Service::findOrFail($id);
         $forms = Form::whereIn('owner_id', [auth()->user()->id, 1])->get();
-        return view('services.show', compact('forms', 'service'))->with('current_id', $id);
+        $available_forms = ServiceForms::where('service_id', $id)->get();
+        return view('services.show', compact('forms', 'service', 'available_forms'))->with('current_id', $id);
     }
 
     /**
@@ -132,5 +135,50 @@ class HealthServicesController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function showAnswerForm(int $serviceId, int $formId)
+    {
+        $form = ServiceForms::findOrFail($formId);
+        $data = Form::findOrFail($form->form_id);
+        $form->data = json_decode($data->data);
+        return view('services.forms.answer', compact('form', 'serviceId'));
+    }
+    
+    public function storeResponse(Request $request, int $serviceId, int $formId)
+    {
+        $form = ServiceForms::findOrFail($formId);
+
+        $validated =  $this->validate($request, [
+            'data' => 'required|array',
+            'data.*.name' => 'nullable|string',
+            'data.*.label' => 'nullable|string',
+            'data.*.value' => 'nullable|string',
+            'photo' => 'nullable|string'
+        ]);
+
+        if($request->filled('photo')) {
+            $filename =  'result-'. $form->id . $serviceId . '-'. $formId .'-'. $form->answerable_by . '.' . 'png';
+            $image = $validated['photo'];
+            $imageInfo = explode(";base64,", $image);  
+            $image = str_replace(' ', '+', $imageInfo[1]);
+            Storage::disk('local')->put('public/results/' . $filename, base64_decode($image));
+            $validated['photo'] = $filename;
+        }
+
+        $data = ServiceForms::where('id', $formId)->update([
+            'answer' => json_encode($validated['data']),
+            'photo' => $request->filled('photo') ? $validated['photo'] : null,
+        ]);
+        return $data;
+        return redirect()->back();
+    }
+    
+    public function showResponse(int $serviceId, int $formId)
+    {
+        $form = ServiceForms::findOrFail($formId);
+        $form->answer = json_decode($form->answer);
+        $hcpData = HcpData::select('signature')->where('user_id', $form->answerable_by)->first();
+        return view('services.forms.response', compact('form', 'hcpData'));
     }
 }
