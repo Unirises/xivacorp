@@ -17,4 +17,23 @@ class Service extends Model
         'schedule',
         'pending',
     ];
+
+    protected $casts = [
+        'schedule' => 'datetime'
+    ];
+
+    public function client()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function provider()
+    {
+        return $this->belongsTo(User::class, 'hcp_id', 'id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Type::class, 'service_id', 'id');
+    }
 }

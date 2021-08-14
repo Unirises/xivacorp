@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\Service;
 use App\Models\Type;
 use App\Models\User;
@@ -17,7 +18,22 @@ class HealthServicesController extends Controller
      */
     public function index()
     {
-        return view('services.index');
+        switch(auth()->user()->role) {
+            case UserRole::Admin():
+            case UserRole::CoAdmin():
+                $bookings = Service::all();
+                break;
+            case UserRole::Clinic():
+            case UserRole::HR():
+            case UserRole::HCP():
+                $bookings = Service::where('workspace_id', auth()->user()->workspace_id)->get();
+                break;
+            case UserRole::Employee():
+                $bookings = Service::where('user_id', auth()->user()->id)->get();
+                break;
+        }
+        $bookings = $bookings->sortByDesc('created_at');
+        return view('services.index', compact('bookings'));
     }
 
     /**

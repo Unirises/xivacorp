@@ -15,7 +15,16 @@ class Type extends Model
         'type',
     ];
 
+    protected $appends = [
+        'meta',
+    ];
+
     protected $casts = [
         'type' => TypeIdent::class,
     ];
+
+    public function getMetaAttribute()
+    {
+        return $this->type->description . ' – ' . $this->name;
+    }
 }
