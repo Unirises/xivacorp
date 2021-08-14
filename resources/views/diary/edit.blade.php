@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('services.diary.update', [$consultationId, $diaryId]) }}" method="POST">
+                <form action="{{ route('services.diary.update', [$consultationId, $diaryId]) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     <!-- Card header -->
                     <div class="card-header border-0">

@@ -12,7 +12,8 @@ class Diary extends Model
     protected $fillable = [
         'user_id',
         'consultation_id',
-        'note'
+        'note',
+        'photo',
     ];
 
     public function consultation() {
@@ -21,5 +22,10 @@ class Diary extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPhotoAttribute($value)
+    {
+        return $value == null ? null : url('storage/diaries/'.$value);
     }
 }

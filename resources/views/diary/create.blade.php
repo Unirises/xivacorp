@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('services.diary.store', $consultationId) }}" method="POST">
+                <form action="{{ route('services.diary.store', $consultationId) }}" method="POST" enctype="multipart/form-data">
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <h3 class="mb-0">Record a Health Diary Log</h3>

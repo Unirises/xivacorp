@@ -6,6 +6,9 @@ use App\Models\Diary;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class DiaryController extends Controller
 {
@@ -42,17 +45,25 @@ class DiaryController extends Controller
     {
         $data = $this->validate($request, [
             'note' => 'required|string',
-            'user_id' => 'nullable|exists:users,id'
+            'user_id' => 'nullable|exists:users,id',
+            'photo' => 'nullable|image',
         ]);
 
         if (!$request->has('user_id')) {
             $data['user_id'] = auth()->user()->id;
         }
 
+        if($request->hasFile('photo')) {
+            $filename =  Str::random(22) . '.' . 'png';
+            Storage::disk('local')->put('public/diaries/' . $filename, File::get($request->file('photo')));
+            $validated['photo'] = $filename;
+        }
+
         Diary::create([
             'note' => $data['note'],
             'user_id' => $data['user_id'],
             'consultation_id' => $consultationId,
+            'photo' => $request->hasFile('photo') ? $validated['photo'] : null
         ]);
 
         return redirect()->route('services.diary.index', $consultationId);
@@ -94,17 +105,27 @@ class DiaryController extends Controller
     {
         $data = $this->validate($request, [
             'note' => 'required|string',
-            'user_id' => 'nullable|exists:users,id'
+            'user_id' => 'nullable|exists:users,id',
+            'photo' => 'nullable|image',
         ]);
 
         if (!$request->has('user_id')) {
             $data['user_id'] = auth()->user()->id;
         }
 
-        Diary::where('id', $diaryId)->update([
+        $toUpdate = [
             'note' => $data['note'],
-            'user_id' => $data['user_id']
-        ]);
+            'user_id' => $data['user_id'],
+        ];
+
+        if($request->hasFile('photo')) {
+            $filename =  Str::random(22) . '.' . 'png';
+            Storage::disk('local')->put('public/diaries/' . $filename, File::get($request->file('photo')));
+            $data['photo'] = $filename;
+            $toUpdate['photo'] = $data['photo'];
+        }
+        
+        Diary::where('id', $diaryId)->update($toUpdate);
 
         return redirect()->route('services.diary.index', $consultationId);
     }

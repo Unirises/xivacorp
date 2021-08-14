@@ -19,6 +19,7 @@
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">From</th>
                                     <th scope="col" class="sort" data-sort="name">Data</th>
+                                    <th scope="col" class="sort" data-sort="name">Photo</th>
                                     <th scope="col" class="sort" data-sort="name">Date Created</th>
                                     <th scope="col" class="sort" data-sort="name">Date Updated</th>
                                     <th scope="col" class="sort" data-sort="name">Actions</th>
@@ -32,6 +33,9 @@
                                     </th>
                                     <td>
                                         {{ $diary->note }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ $diary->photo }}" alt="" style="max-width:100%">
                                     </td>
                                     <td>
                                         {{ $diary->created_at }}

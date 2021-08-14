@@ -28,5 +28,28 @@
             </span>
             @endif
         </div>
+        <div class="form-group{{ $errors->has('photo') ? ' has-danger' : '' }}">
+            <div class="custom-file">
+                <input type="file" name="photo" class="custom-file-input" id="photo">
+                <label class="custom-file-label" for="photo" id="photo_label">Optional: Add Photo</label>
+            </div>
+
+            @if ($errors->has('photo'))
+            <span class="invalid-feedback" style="display: block;" role="alert">
+                <strong>{{ $errors->first('photo') }}</strong>
+            </span>
+            @endif
+        </div>
     </div>
 </div>
+
+
+@push('js')
+<script>
+    window.addEventListener('load', function() {
+        $("#photo").change(function() {
+            $("#photo_label").html($(this).val().split("\\").splice(-1, 1)[0] || "Optional: Add Photo");
+        });
+    });
+</script>
+@endpush
