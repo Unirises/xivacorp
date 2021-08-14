@@ -49,7 +49,7 @@ class ConsultationController extends Controller
     {
         $workspaceId = auth()->user()->workspace_id;
         $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get();
-        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [1, 4])->get();
+        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [4])->get();
 
         return view('consultations.create', compact('providers', 'users'));
     }
@@ -80,7 +80,7 @@ class ConsultationController extends Controller
         $response = Http::withToken(env('DAILY_API', 'be86164a3699b823d22e5cc4d7ae84919e941b61f8226c3fdd6740934922d43e'))->post('https://api.daily.co/v1/rooms', [
             'properties' => [
                 'exp' => $endsAt->timestamp,
-                // 'nbf' => $startsAt->timestamp,
+                'nbf' => $startsAt->timestamp,
                 'max_participants' => 2,
                 'enable_chat' => true,
                 'enable_screenshare' => true,

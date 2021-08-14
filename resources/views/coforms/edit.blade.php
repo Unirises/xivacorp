@@ -93,7 +93,7 @@
                 });
             });
 
-            fetch("{{ Route::has('consultations') ? route('consultations.forms.store', [$consultationId, $formId, $userId]) : route('services.forms.store', [$consultationId, $formId, $userId]) }}", {
+            fetch("{{ route('consultations.forms.store', [$consultationId, $formId, $userId]) }}", {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -110,14 +110,12 @@
                 if (resp.status == 422) {
                     return alert('Please fill in all the fields.');
                 }
-
+                
                 window.history.back();
             }).catch((err) => {
                 console.error(err);
                 alert('There was a problem saving your data.');
             });
-
-            return false;
         });
     });
 </script>
