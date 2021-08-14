@@ -21,6 +21,10 @@ class ServiceForms extends Model
         'doctor_prc',
     ];
 
+    protected $appends = [
+        'downloadable_photo_url',
+    ];
+
     public function service()
     {
         return $this->belongsTo(Service::class);
@@ -34,6 +38,13 @@ class ServiceForms extends Model
     public function answerer()
     {
         return $this->belongsTo(User::class, 'answerable_by', 'id');
+    }
+
+    public function getDownloadablePhotoUrlAttribute()
+    {
+        $this->setAppends([]);
+        $photo = substr($this->photo, strrpos($this->photo, '/') + 1);
+        return public_path('storage/results/'.$photo);
     }
 
     public function getPhotoAttribute($value)

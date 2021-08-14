@@ -25,6 +25,8 @@
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpword": "^0.18.2",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/opening-hours": "^2.10"
     },
     "require-dev": {

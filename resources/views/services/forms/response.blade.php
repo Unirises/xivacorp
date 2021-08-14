@@ -42,7 +42,7 @@
                 @if ($form->answerer->role->value == 1)
                     <!-- Card footer -->
                     <div class="card-footer py-4">
-                        <a href="" class="btn btn-primary">Export</a>
+                        <a href="{{ route('services.forms.export', [$serviceId, $form->id]) }}" class="btn btn-primary">Export</a>
                     </div>
                 @endif
             </div>

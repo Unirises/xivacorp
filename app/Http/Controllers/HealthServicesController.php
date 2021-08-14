@@ -12,6 +12,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpWord\TemplateProcessor;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class HealthServicesController extends Controller
 {
@@ -189,7 +191,40 @@ class HealthServicesController extends Controller
     public function exportResponse(int $serviceId, int $formId)
     {
         $form = ServiceForms::findOrFail($formId);
-        return redirect()->back();
+        $data = json_decode($form->answer);
+        $values = [];
+        foreach($data as $datum) {
+            if($datum->label == 'Hidden Field') break;
+            array_push($values, ['res_name' => $datum->label, 'res_val' => $datum->value]);
+        }
+        $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
+        $url = public_path('storage/results/qrcode/'.$id.'.png');
+        QrCode::size(50)->format('png')->generate($id, $url);
+        
+        $templateProcessor = new TemplateProcessor('word-template/result.docx');
+        $templateProcessor->cloneRowAndSetValues('res_name', $values);
+        $templateProcessor->setValues([
+            'c_name' => $form->service->client->name,
+            'c_dob' => $form->service->client->dob,
+            'c_age' => Carbon::parse($form->service->client->dob)->age,
+            'date' => Carbon::now(),
+            'c_gender' => $form->service->client->gender->description,
+            'id' => $id,
+            'hcp_name' => $form->answerer->name,
+            'hcp_prc' => $form->answerer->hcp_data->prc_id,
+            'doctor_fullname' => $form->doctor_name,
+            'doctor_prc' => $form->doctor_prc,
+            'form_name' => $form->form->name
+        ]);
+        if($form->photo) {
+            $templateProcessor->setImageValue('photo', ['path' => $form->downloadable_photo_url, 'width' => 150, 'height' => 150, 'ratio' => false]);
+        } else {
+            $templateProcessor->setValue('photo', '');
+        }
+        $templateProcessor->setImageValue('qr_code', ['path' => $url, 'width' => 100, 'height' => 100, 'ratio' => false]);
+        $fileName = $id.'.docx';
+        $templateProcessor->saveAs($fileName);
+        return response()->download($fileName);
     }
 
     public function exportAllBookings()
