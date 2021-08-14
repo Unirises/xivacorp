@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Consultation;
 use App\Models\Diary;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -27,7 +27,7 @@ class DiaryController extends Controller
      */
     public function create(int $consultationId)
     {
-        $consultation = Consultation::findOrFail($consultationId);
+        $consultation = Service::findOrFail($consultationId);
         $users = User::whereIn('id', [$consultation->user_id, $consultation->hcp_id])->get();
         return view('diary.create', compact('consultationId', 'users'));
     }
@@ -77,7 +77,7 @@ class DiaryController extends Controller
      */
     public function edit(int $consultationId, int $diaryId)
     {
-        $consultation = Consultation::findOrFail($consultationId);
+        $consultation = Service::findOrFail($consultationId);
         $users = User::whereIn('id', [$consultation->user_id, $consultation->hcp_id])->get();
 
         return view('diary.edit', compact('users', 'consultationId', 'diaryId'));

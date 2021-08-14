@@ -17,8 +17,6 @@ class CreateDiariesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('consultation_id')->nullable();
-            $table->foreign('consultation_id')->references('id')->on('consultations');
             $table->longText('note');
             $table->timestamps();
         });

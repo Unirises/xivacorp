@@ -27,6 +27,11 @@ class CreateServicesTable extends Migration
             $table->boolean('pending')->default(true);
             $table->timestamps();
         });
+
+        Schema::table('diaries', function (Blueprint $table) {
+            $table->unsignedBigInteger('consultation_id')->nullable();
+            $table->foreign('consultation_id')->references('id')->on('services');
+        });
     }
 
     /**
