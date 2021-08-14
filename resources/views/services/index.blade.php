@@ -110,9 +110,6 @@
                         </table>
                     </div>
                 </div>
-                <!-- Card footer -->
-                <div class="card-footer py-4">
-                </div>
             </div>
         </div>
         <div class="col-lg-6 col-md-12">
@@ -160,8 +157,11 @@
                     </div>
                 </div>
                 <!-- Card footer -->
+                @if(auth()->user()->role->value == 1)
                 <div class="card-footer py-4">
+                    <a href="{{ route('services.export') }}" class="btn btn-primary">Export All Bookings</a>
                 </div>
+                @endif
             </div>
         </div>
     </div>

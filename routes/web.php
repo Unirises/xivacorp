@@ -52,7 +52,8 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('services/{id}/forms/{formId}', [HealthServicesController::class, 'showAnswerForm'])->name('services.forms.answer');
 	Route::post('services/{id}/forms/{formId}', [HealthServicesController::class, 'storeResponse'])->name('services.forms.store');
 	Route::get('services/{id}/forms/{formId}/response', [HealthServicesController::class, 'showResponse'])->name('services.forms.response');
-	// Route::get('export-services', [ServiceController::class, 'export'])->name('services.export');
+	Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');
+	Route::get('export-services', [HealthServicesController::class, 'exportAllBookings'])->name('services.export');
 	
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}', [ConsultationFormController::class, 'show'])->name('consultations.forms.show');
 	Route::get('consultations/{consultationId}/forms/{formId}/{userId}/answer', [ConsultationFormController::class, 'edit'])->name('consultations.forms.edit');

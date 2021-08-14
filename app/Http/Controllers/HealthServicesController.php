@@ -179,6 +179,54 @@ class HealthServicesController extends Controller
         $form = ServiceForms::findOrFail($formId);
         $form->answer = json_decode($form->answer);
         $hcpData = HcpData::select('signature')->where('user_id', $form->answerable_by)->first();
-        return view('services.forms.response', compact('form', 'hcpData'));
+        return view('services.forms.response', compact('form', 'hcpData', 'serviceId'));
+    }
+    
+    public function exportResponse(int $serviceId, int $formId)
+    {
+        $form = ServiceForms::findOrFail($formId);
+        return redirect()->back();
+    }
+
+    public function exportAllBookings()
+    {
+        $bookings = Service::all();
+        $bookings = $bookings->sortByDesc('created_at');
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=bookings-". Carbon::now() .".csv",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $columns = array('Workspace ID', 'Client', 'Provider', 'Service', 'Schedule', 'Is Pending for HCP Acceptance');
+
+        $callback = function() use($bookings, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($bookings as $consultation) {
+                $row['Workspace ID'] = $consultation->workspace_id;
+                $row['Client'] = $consultation->client->name;
+                $row['Provider'] = $consultation->provider->name ?? 'N/A';
+                $row['Service'] = $consultation->service->meta;
+                $row['Schedule'] = $consultation->schedule ?? 'Recurring';
+                $row['Is Pending'] = $consultation->pending == 1 ? 'Yes' : 'No';
+
+                fputcsv($file, array(
+                    $row['Workspace ID'], 
+                    $row['Client'], 
+                    $row['Provider'], 
+                    $row['Service'], 
+                    $row['Schedule'], 
+                    $row['Is Pending'], 
+                ));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }
