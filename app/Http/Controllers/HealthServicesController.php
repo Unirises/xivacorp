@@ -212,7 +212,7 @@ class HealthServicesController extends Controller
         abort_if($data == null, 422);
         foreach($data as $datum) {
             if($datum->label == 'Hidden Field') break;
-            array_push($values, ['res_name' => $datum->label, 'res_val' => $datum->value]);
+            array_push($values, ['res_name' => str_replace('\n', "", str_replace("&nbsp;", "", strip_tags($datum->label))) , 'res_val' => $datum->value]);
         }
         $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
         $url = public_path('storage/results/qrcode/'.$id.'.png');
