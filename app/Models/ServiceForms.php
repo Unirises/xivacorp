@@ -20,6 +20,8 @@ class ServiceForms extends Model
         'doctor_name',
         'doctor_prc',
         'is_exportable',
+        'signature',
+        'need_signature',
     ];
 
     protected $appends = [

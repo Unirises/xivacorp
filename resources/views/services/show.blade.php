@@ -34,6 +34,8 @@
                             </div>
                         </div>
                         <input type="checkbox" name="checkbox" id="checkbox" value=""> <label for="checkbox">This form is exportable. <small>(Only when selected for Health Care Provider only)</small></label>
+                        <br>
+                        <input type="checkbox" name="client_signature" id="client_signature" value=""> <label for="client_signature">Require client signature. <small>(Only when selected for Client only)</small></label>
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">

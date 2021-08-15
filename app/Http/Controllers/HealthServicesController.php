@@ -146,6 +146,7 @@ class HealthServicesController extends Controller
             'form_id' => $validated['form_id'],
             'answerable_by' => $validated['user_id'],
             'is_exportable' => $request->has('checkbox') ? true : false,
+            'need_signature' => $request->has('client_signature') ? true : false,
         ]);
 
         return redirect()->back();
@@ -172,6 +173,7 @@ class HealthServicesController extends Controller
             'photo' => 'nullable|string',
             'doctor_name' => 'nullable|string',
             'doctor_prc' => 'nullable|string',
+            'signature' => 'nullable|string',
         ]);
 
         if($request->filled('photo')) {
@@ -188,6 +190,7 @@ class HealthServicesController extends Controller
             'photo' => $request->filled('photo') ? $validated['photo'] : null,
             'doctor_name' => $validated['doctor_name'] ?? null,
             'doctor_prc' => $validated['doctor_prc'] ?? null,
+            'signature' => $validated['signature'] ?? null,
         ]);
         return $data;
         return redirect()->back();

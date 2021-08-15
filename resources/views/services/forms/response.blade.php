@@ -26,6 +26,7 @@
                             <tbody>
                                 @if($form->answer)
                                 @foreach($form->answer as $answerDetail)
+                                @if($answerDetail->label != "Hidden Field")
                                 <tr>
                                     <!-- <th scope="row">
                                         {{ $answerDetail->name }}
@@ -33,6 +34,7 @@
                                     <td>{{ str_replace("&nbsp;", "", strip_tags($answerDetail->label)) }}</td>
                                     <td>{{ $answerDetail->value }}</td>
                                 </tr>
+                                @endif
                                 @endforeach
                                 @endif
                             </tbody>
@@ -53,10 +55,24 @@
         <div class="col">
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Signature</h3>
+                    <h3 class="mb-0">HCP Signature</h3>
                 </div>
                 <div class="card-body px-lg-5 py-lg-5">
                 <img src="{{ $hcpData->signature }}" style="max-width: 100%" alt="HCP Signature" />
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    @if($form->signature ?? null)
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Client Signature</h3>
+                </div>
+                <div class="card-body px-lg-5 py-lg-5">
+                <img src="{{ $form->signature }}" style="max-width: 100%" alt="Client Signature" />
                 </div>
             </div>
         </div>
