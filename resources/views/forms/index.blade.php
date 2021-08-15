@@ -17,7 +17,6 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">Name</th>
-                                <th scope="col" class="sort" data-sort="name">Required</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -31,9 +30,6 @@
                                         </div>
                                     </div>
                                 </th>
-                                <td>
-                                    {{ $form->required ? 'YES' : null }}
-                                </td>
                                 <td>
                                     <a href="{{ route('forms.show', $form) }}" class="btn btn-primary my-4">View Form</a>
                                     @if($form->has_answer)
