@@ -145,8 +145,8 @@ class HealthServicesController extends Controller
             'service_id' => $id,
             'form_id' => $validated['form_id'],
             'answerable_by' => $validated['user_id'],
-            'is_exportable' => $request->has('checkbox') ? true : false,
-            'need_signature' => $request->has('client_signature') ? true : false,
+            'is_exportable' => $request->has('checkbox') && $validated['user_id'] == auth()->user()->id ? true : false,
+            'need_signature' => $request->has('client_signature') && $validated['user_id'] != auth()->user()->id ? true : false,
         ]);
 
         return redirect()->back();
@@ -209,6 +209,7 @@ class HealthServicesController extends Controller
         $form = ServiceForms::findOrFail($formId);
         $data = json_decode($form->answer);
         $values = [];
+        abort_if($data == null, 422);
         foreach($data as $datum) {
             if($datum->label == 'Hidden Field') break;
             array_push($values, ['res_name' => $datum->label, 'res_val' => $datum->value]);
