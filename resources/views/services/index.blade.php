@@ -83,7 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody class="list">
-                                @foreach($bookings->where('pending', 0) as $booking)
+                                @foreach($bookings->where('pending', 0)->whereNull('schedule') as $booking)
                                 <tr>
                                     <th>
                                         {{ $booking->workspace_id }}
