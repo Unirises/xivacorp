@@ -38,9 +38,11 @@
                                 </td>
                                 <td class="budget">
                                     <ul>
+                                        @if($hcp->hours)
                                         @foreach(json_decode($hcp->hours) as $day => $hour)
                                         <li>{{ ucwords($day) }} - {{ ucwords($hour[0]) }}</li>
                                         @endforeach
+                                        @endif
                                     </ul>
                                 </td>
                                 <form method="POST" action="{{ route('change-company.change', $hcp->id) }}">
