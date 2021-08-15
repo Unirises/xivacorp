@@ -27,9 +27,14 @@ class UserController extends Controller
     public function onboard(Request $request)
     {
         $array = [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'street_address' => ['required', 'string', 'max:255'],
+            'barangay' => ['required', 'string', 'max:255'],
+            'region' => ['required', 'string', 'max:255'],
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
-            'address' => 'required|string',
             'gender' => 'required|numeric',
         ];
 
@@ -47,9 +52,14 @@ class UserController extends Controller
         ]);
 
         User::where('id', auth()->user()->id)->update([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'],
+            'street_address' => $validated['street_address'],
+            'barangay' => $validated['barangay'],
+            'region' => $validated['region'],
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
-            'address' => $validated['address'],
             'gender' => $validated['gender'],
             'is_onboarded' => true,
         ]);
