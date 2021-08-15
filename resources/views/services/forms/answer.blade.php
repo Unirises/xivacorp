@@ -30,6 +30,7 @@
                             </span>
                             @endif
                         </div>
+                        @if($form->is_exportable)
                         <div class="form-group{{ $errors->has('doctor_name') ? ' has-danger' : '' }}">
                             <div class="input-group input-group-alternative mb-3">
                                 <input class="form-control{{ $errors->has('doctor_name') ? ' is-invalid' : '' }}" placeholder="Doctor Name Currently on Duty" type="text" name="doctor_name" id="doctor_name" value="{{ old('doctor_name') ?? $employee->doctor_name ?? '' }}" required autofocus>
@@ -41,15 +42,16 @@
                             @endif
                         </div>
                         <div class="form-group{{ $errors->has('doctor_prc') ? ' has-danger' : '' }}">
-                                <div class="input-group input-group-alternative mb-3">
-                                    <input class="form-control{{ $errors->has('doctor_prc') ? ' is-invalid' : '' }}" placeholder="Doctor PRC ID" type="text" name="doctor_prc" id="doctor_prc" value="{{ old('doctor_prc') ?? $employee->doctor_prc ?? '' }}" required autofocus>
-                                </div>
-                                @if ($errors->has('doctor_prc'))
-                                <span class="invalid-feedback" style="display: block;" role="alert">
-                                    <strong>{{ $errors->first('doctor_prc') }}</strong>
-                                </span>
-                                @endif
+                            <div class="input-group input-group-alternative mb-3">
+                                <input class="form-control{{ $errors->has('doctor_prc') ? ' is-invalid' : '' }}" placeholder="Doctor PRC ID" type="text" name="doctor_prc" id="doctor_prc" value="{{ old('doctor_prc') ?? $employee->doctor_prc ?? '' }}" required autofocus>
                             </div>
+                            @if ($errors->has('doctor_prc'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('doctor_prc') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        @endif
                         @endif
                     </div>
                     <!-- Card footer -->

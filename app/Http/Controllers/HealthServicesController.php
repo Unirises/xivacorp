@@ -138,14 +138,14 @@ class HealthServicesController extends Controller
     {
         $validated = $this->validate($request, [
             'form_id' => 'required|exists:forms,id',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
         ]);
-
 
         ServiceForms::create([
             'service_id' => $id,
             'form_id' => $validated['form_id'],
             'answerable_by' => $validated['user_id'],
+            'is_exportable' => $request->has('checkbox') ? true : false,
         ]);
 
         return redirect()->back();
@@ -245,6 +245,14 @@ class HealthServicesController extends Controller
         $fileName = $id.'.docx';
         $templateProcessor->saveAs($fileName);
         return response()->download($fileName);
+    }
+
+    public function deleteForm(int $serviceId, int $formId)
+    {
+        $form = ServiceForms::findOrFail($formId);
+        $form->delete();
+
+        return redirect()->back();
     }
 
     public function exportAllBookings()

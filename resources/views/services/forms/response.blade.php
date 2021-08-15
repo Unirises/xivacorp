@@ -39,7 +39,7 @@
                         </table>
                     </div>
                 </div>
-                @if ($form->answerer->role->value == 1)
+                @if ($form->answerer->role->value == 1 && $form->is_exportable)
                     <!-- Card footer -->
                     <div class="card-footer py-4">
                         <a href="{{ route('services.forms.export', [$serviceId, $form->id]) }}" class="btn btn-primary">Export</a>

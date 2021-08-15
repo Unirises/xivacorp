@@ -33,6 +33,7 @@
                                 </select>
                             </div>
                         </div>
+                        <input type="checkbox" name="checkbox" id="checkbox" value=""> <label for="checkbox">This form is exportable. <small>(Only when selected for Health Care Provider only)</small></label>
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">
@@ -72,7 +73,19 @@
                                         @if( $form->answerable_by == auth()->user()->id)
                                         <a href="{{ route('services.forms.answer', [$service->id, $form->id]) }}" class="btn btn-primary my-4">Answer/Update</a>
                                         @endif
+                                        @if($form->answer ?? null)
                                         <a href="{{ route('services.forms.response', [$service->id, $form->id]) }}" class="btn btn-primary my-4">View Response</a>
+                                        @endif
+                                        @if(auth()->user()->role->value == 1)
+                                        <form method="POST" action="{{ route('services.forms.delete', [$service->id, $form->id]) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger" value="Delete Form">
+                                            </div>
+                                        </form>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -53,6 +53,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::post('services/{id}/forms/{formId}', [HealthServicesController::class, 'storeResponse'])->name('services.forms.store');
 	Route::get('services/{id}/forms/{formId}/response', [HealthServicesController::class, 'showResponse'])->name('services.forms.response');
 	Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');
+	Route::delete('services/{id}/forms/{formId}', [HealthServicesController::class, 'deleteForm'])->name('services.forms.delete');
 	Route::get('export-services', [HealthServicesController::class, 'exportAllBookings'])->name('services.export');
 	Route::put('accept-service/{id}', [HealthServicesController::class, 'acceptBooking'])->name('services.accept-booking');
 	
