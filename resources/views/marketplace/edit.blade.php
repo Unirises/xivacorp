@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('marketplace.update', $item->id) }}" method="POST">
+                <form action="{{ route('marketplace.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     <!-- Card header -->
                     <div class="card-header border-0">
