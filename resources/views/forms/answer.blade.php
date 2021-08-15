@@ -29,7 +29,7 @@
                                     <th scope="row">
                                         {{ $answerDetail->name }}
                                     </th>
-                                    <td>{{ $answerDetail->label }}</td>
+                                    <td>{{ str_replace("&nbsp;", "", strip_tags($answerDetail->label)) }}</td>
                                     <td>{{ $answerDetail->value }}</td>
                                 </tr>
                                 @endforeach

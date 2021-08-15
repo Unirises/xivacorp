@@ -17,7 +17,7 @@ class FormController extends Controller
      */
     public function index()
     {
-        $forms = Form::where('owner_id', auth()->user()->id)->get();
+        $forms = Form::whereIn('owner_id', [auth()->user()->id, 1])->get();
         return view('forms.index', compact('forms'));
     }
 
@@ -91,6 +91,7 @@ class FormController extends Controller
     public function show(Form $form)
     {
         $form['data'] = json_decode($form['data']);
+        $form['data'] = str_replace('\n', "", $form['data']);
         $users = null;
 
         if(auth()->user()->role == UserRole::Admin()) {

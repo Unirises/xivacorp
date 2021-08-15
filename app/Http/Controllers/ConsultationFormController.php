@@ -17,6 +17,7 @@ class ConsultationFormController extends Controller
     {
         $form = Form::findOrFail($formId);
         $form['data'] = json_decode($form['data']);
+        $form['data'] = str_replace('\n', "", $form['data']);
 
         return view('coforms.edit', compact('consultationId', 'formId', 'userId', 'form'));
     }

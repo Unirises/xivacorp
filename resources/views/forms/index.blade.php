@@ -35,13 +35,7 @@
                                     {{ $form->required ? 'YES' : null }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('forms.show', $form) }}" class="btn btn-primary my-4">
-                                        @if($form->has_answer)
-                                        Update Answer
-                                        @else
-                                        Answer Now
-                                        @endif
-                                    </a>
+                                    <a href="{{ route('forms.show', $form) }}" class="btn btn-primary my-4">View Form</a>
                                     @if($form->has_answer)
                                     <a href="{{ route('view-answer', ['formId' => $form->id, 'userId' => auth()->user()->id]) }}" class="btn btn-primary my-4">View Answer</a>
                                     @endif

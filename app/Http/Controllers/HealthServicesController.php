@@ -156,6 +156,7 @@ class HealthServicesController extends Controller
         $form = ServiceForms::findOrFail($formId);
         $data = Form::findOrFail($form->form_id);
         $form->data = json_decode($data->data);
+        $form->data = str_replace('\n', "", $form->data);
         return view('services.forms.answer', compact('form', 'serviceId'));
     }
     

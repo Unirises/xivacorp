@@ -16,25 +16,12 @@
                         <h3 class="mb-0">{{ $form->name }}</h3>
                     </div>
                     <div class="card-body">
-                        @if($users)
-                        <div class="input-group input-group-alternative mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="user">I am answering for</label>
-                            </div>
-                            <select class="custom-select" id="user" name="user">
-                                <option disabled>Choose...</option>
-                                @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ (old('user_id', $user->id ?? auth()->user()->id) == $user->id ? 'selected' : '') }}>{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
                         <div class="fb-render"></div>
                     </div>
                     <!-- Card footer -->
-                    <div class="card-footer py-4">
+                    <!-- <div class="card-footer py-4">
                         <button type="submit" class="btn btn-primary">Submit Answer</button>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>
