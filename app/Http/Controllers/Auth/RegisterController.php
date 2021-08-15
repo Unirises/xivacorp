@@ -89,9 +89,9 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(Request $request)
+    protected function create($data)
     {
-        $data = $request->all();
+        $data = request()->all();
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -109,7 +109,7 @@ class RegisterController extends Controller
 
         if($data['type'] == '1') {
             $filename =  Str::random(22) . '.' . 'png';
-            Storage::disk('local')->put('public/hcp/' . $filename, File::get($request->file('selfie')));
+            Storage::disk('local')->put('public/hcp/' . $filename, File::get(request()->file('selfie')));
 
             HcpData::create([
                 'user_id' => $user->id,
