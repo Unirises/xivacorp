@@ -44,7 +44,7 @@
                     </div>
                     <select class="custom-select" id="role" name="role">
                         <option disabled>Choose...</option>
-                        @foreach($types as $type)
+                        @foreach($types ?? App\Models\Type::where('type', 0)->get() as $type)
                         <option value="{{ $type->id }}" {{ (old('role', $employee->hcp_data->type_id ?? 0) == $type->id ? 'selected' : '') }}>{{ $type->name }}</option>
                         @endforeach
                     </select>
