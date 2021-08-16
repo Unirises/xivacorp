@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\GenderEnum;
 use App\Enums\UserRole;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,6 +67,7 @@ class User extends Authenticatable
         'working_hours',
         'name',
         'address',
+        'recent_service',
     ];
 
     public function hcp_data()
@@ -110,5 +112,15 @@ class User extends Authenticatable
     public function getAddressAttribute()
     {
         return strtoupper(implode(", ", array_filter([$this->street_address, $this->barangay, $this->region])));
+    }
+
+    public function getRecentServiceAttribute()
+    {
+        $service = Service::where('user_id', $this->id)->latest()->first();
+        if(!$service) {
+            return 'N/A';
+        }
+        
+        return Carbon::parse($service->created_at)->format('m/d/Y g:i A');
     }
 }
