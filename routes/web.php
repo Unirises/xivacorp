@@ -92,3 +92,6 @@ Route::group(['middleware' => ['auth', 'onboard']], function () {
 Route::group(['middleware' => ['auth']], function () {
 	Route::post('register-onboard', ['as' => 'register-onboard', 'uses' => 'App\Http\Controllers\UserController@onboard']);
 });
+
+Route::get('verify-qr', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@index']);
+Route::get('verify-qr/{id}', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@fetch']);

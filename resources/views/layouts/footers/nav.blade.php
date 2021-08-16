@@ -1,5 +1,5 @@
 <div class="copyright text-center text-muted">
-    @if(!Auth::check())
+    @if(Route::is('register') || Route::is('login') || Route::is('password.*'))
     <h3 style="color: white">Powered By:</h3>
     <img src="{{ asset('argon') }}/img/brand/vavs.png" style="max-width: 25%" alt=""><br><br>
     @else
