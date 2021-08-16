@@ -12,7 +12,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Employees @if(auth()->user()->role->value == 0)<a href="{{ route('employees.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
+                    <h3 class="mb-0">Active Personnel List  @if(auth()->user()->role->value == 0)<a href="{{ route('employees.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">
@@ -25,6 +25,7 @@
                                 <th scope="col" class="sort" data-sort="status">Email</th>
                                 @endif
                                 <th scope="col">Role</th>
+                                <th scope="col">Recently Serviced</th>
                                 @if(auth()->user()->role->value == 0)
                                 <th scope="col">Actions</th>
                                 @endif
@@ -54,6 +55,9 @@
                                     @else
                                     {{ strtoupper($employee->role->description)  }}
                                     @endif
+                                </td>
+                                <td>
+                                    {{ $employee->recent_service }}
                                 </td>
                                 @if(auth()->user()->role->value == 0)
                                 <td>
