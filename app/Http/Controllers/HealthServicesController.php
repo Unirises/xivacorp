@@ -225,6 +225,12 @@ class HealthServicesController extends Controller
         $imageName = $form->answerer->id.'.'.'png';
         Storage::disk('local')->put('public/hcp/signature/' . $imageName,  base64_decode($image));
 
+        $image1 = $form->doctor->hcp_data->signature;  // your base64 encoded
+        $image1 = str_replace('data:image/png;base64,', '', $image1);
+        $image1 = str_replace(' ', '+', $image1);
+        $imageName1 = $form->doctor->id.'.'.'png';
+        Storage::disk('local')->put('public/hcp/signature/' . $imageName1,  base64_decode($image));
+
         $templateProcessor = new TemplateProcessor('word-template/result.docx');
         $templateProcessor->cloneRowAndSetValues('res_name', $values);
 
@@ -248,6 +254,7 @@ class HealthServicesController extends Controller
         }
         $templateProcessor->setImageValue('qr_code', ['path' => $url, 'width' => 100, 'height' => 100, 'ratio' => false]);
         $templateProcessor->setImageValue('hcp_signature', ['path' => public_path('storage/hcp/signature/'.$imageName), 'ratio' => false]);
+        $templateProcessor->setImageValue('doctor_signature', ['path' => public_path('storage/hcp/signature/'.$imageName1), 'ratio' => false]);
         $fileName = $id.'.docx';
         $templateProcessor->saveAs($fileName);
         return response()->download($fileName);
