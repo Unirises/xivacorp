@@ -1,4 +1,5 @@
 <!-- Top navbar -->
+@if(!Route::is('news'))
 <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
     <div class="container-fluid">
         <!-- Brand -->
@@ -32,3 +33,4 @@
         </ul>
     </div>
 </nav>
+@endif
