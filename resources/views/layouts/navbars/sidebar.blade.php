@@ -13,7 +13,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
-                    <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
+                        <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
@@ -64,7 +64,7 @@
                         <i class="ni ni-planet text-blue"></i>News and Updates
                     </a>
                 </li>
-                @if(auth()->user()->role->value == 0)
+                @if(auth()->user()->role->value == 0 || auth()->user()->hcp_data->type_id == 3)
                 <li class="nav-item">
                     <a class="nav-link" href="#notifications" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="notifications">
                         <i class="ni ni-bell-55"></i>
@@ -73,6 +73,7 @@
 
                     <div class="collapse hide" id="notifications">
                         <ul class="nav nav-sm flex-column">
+                            @if(auth()->user()->role->value == 0)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('working-hours-notification.index') }}">
                                     Working Hours
@@ -83,6 +84,13 @@
                                     Change HCP Company
                                 </a>
                             </li>
+                            @elseif(auth()->user()->hcp_data->type_id == 3)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('doctors.forms.index') }}">
+                                    Validated Documents
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </li>

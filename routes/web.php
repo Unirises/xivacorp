@@ -70,6 +70,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 		return view('layouts.news');
 	})->name('news');
 
+	Route::get('notifications/forms', ['as' => 'doctors.forms.index', 'uses' => 'App\Http\Controllers\NotificationController@showForms']);
 	Route::get('notifications', ['as' => 'working-hours-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@index']);
 	Route::post('notifications/{id}', ['as' => 'working-hours-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@approve']);
 

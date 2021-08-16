@@ -257,7 +257,7 @@ class HealthServicesController extends Controller
         $templateProcessor->setImageValue('doctor_signature', ['path' => public_path('storage/hcp/signature/'.$imageName1), 'ratio' => false]);
         $fileName = $id.'.docx';
         $templateProcessor->saveAs($fileName);
-        return response()->download($fileName);
+        return response()->download($fileName)->deleteFileAfterSend(true);;
     }
 
     public function deleteForm(int $serviceId, int $formId)

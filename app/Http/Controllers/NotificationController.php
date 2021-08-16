@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\HcpData;
+use App\Models\ServiceForms;
 use App\Models\User;
 use App\Models\WorkingHoursNotification;
 use Illuminate\Http\Request;
@@ -55,5 +56,11 @@ class NotificationController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function showForms()
+    {
+        $forms = ServiceForms::where('doctor_id', auth()->user()->id)->get();
+        return view('admin.forms', compact('forms'));
     }
 }
