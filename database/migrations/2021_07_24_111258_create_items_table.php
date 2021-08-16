@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->longText('description')->nullable();
             $table->string('photo')->nullable();
             $table->string('viewable_as')->default(UserRole::Employee);
-            $table->decimal('price')->default(0);
+            $table->decimal('price')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

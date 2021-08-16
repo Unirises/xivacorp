@@ -46,7 +46,7 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'photo' => 'nullable|image',
             'viewable_as' => 'required|digits_between:1,4',
-            'price' => 'required|numeric',
+            'price' => 'nullable|numeric',
         ]);
 
         if($request->hasFile('photo')) {
@@ -98,7 +98,7 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'photo' => 'nullable|image',
             'viewable_as' => 'required|digits_between:1,4',
-            'price' => 'required|numeric',
+            'price' => 'nullable|numeric',
         ]);
 
         if($request->hasFile('photo')) {

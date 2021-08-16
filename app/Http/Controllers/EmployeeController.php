@@ -23,7 +23,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $employees = $user->role == UserRole::Admin() ? User::all() : User::where('workspace_id', $user->workspace_id)->get();
+        $employees = $user->role == UserRole::Admin() ? User::orderBy('last_name', 'asc')->get() : User::orderBy('last_name', 'asc')->where('workspace_id', $user->workspace_id)->get();
         return view('employees.index', compact('employees'));
     }
 

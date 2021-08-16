@@ -81,6 +81,19 @@ class UsersTableSeeder extends Seeder
             'dob' => '1980-01-01',
             'gender' => 0,
         ]);
+        DB::table('users')->insert([
+            'first_name' => 'Clinic',
+            'last_name' => 'Test',
+            'email' => 'clinic@test.xyz',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'role' => 3,
+            'workspace_id' => 'XVHLTH00',
+            'dob' => '1980-01-01',
+            'gender' => 0,
+        ]);
 
         Excel::import(new UsersImport, 'xiva-users.csv');
     }

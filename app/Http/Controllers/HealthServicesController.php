@@ -158,7 +158,10 @@ class HealthServicesController extends Controller
         $data = Form::findOrFail($form->form_id);
         $form->data = json_decode($data->data);
         $form->data = str_replace('\n', "", $form->data);
-        return view('services.forms.answer', compact('form', 'serviceId'));
+        $doctors = User::where('workspace_id', auth()->user()->workspace_id)->where('role', 1)->whereNotNull('hours')->with(['hcp_data' => function ($q) {
+            $q->where('hcp_data.type_id', '=', 3);
+        }])->get();
+        return view('services.forms.answer', compact('form', 'serviceId', 'doctors'));
     }
     
     public function storeResponse(Request $request, int $serviceId, int $formId)
@@ -171,8 +174,7 @@ class HealthServicesController extends Controller
             'data.*.label' => 'nullable|string',
             'data.*.value' => 'nullable|string',
             'photo' => 'nullable|string',
-            'doctor_name' => 'nullable|string',
-            'doctor_prc' => 'nullable|string',
+            'doctor_id' => 'nullable|exists:users,id',
             'signature' => 'nullable|string',
         ]);
 
@@ -188,8 +190,7 @@ class HealthServicesController extends Controller
         $data = ServiceForms::where('id', $formId)->update([
             'answer' => json_encode($validated['data']),
             'photo' => $request->filled('photo') ? $validated['photo'] : null,
-            'doctor_name' => $validated['doctor_name'] ?? null,
-            'doctor_prc' => $validated['doctor_prc'] ?? null,
+            'doctor_id' => $validated['doctor_id'] ?? null,
             'signature' => $validated['signature'] ?? null,
         ]);
         return $data;
@@ -226,6 +227,7 @@ class HealthServicesController extends Controller
 
         $templateProcessor = new TemplateProcessor('word-template/result.docx');
         $templateProcessor->cloneRowAndSetValues('res_name', $values);
+
         $templateProcessor->setValues([
             'c_name' => $form->service->client->name,
             'c_dob' => $form->service->client->dob,
@@ -235,8 +237,8 @@ class HealthServicesController extends Controller
             'id' => $id,
             'hcp_name' => $form->answerer->name,
             'hcp_prc' => $form->answerer->hcp_data->prc_id,
-            'doctor_fullname' => $form->doctor_name,
-            'doctor_prc' => $form->doctor_prc,
+            'doctor_fullname' => $form->doctor->name,
+            'doctor_prc' => $form->doctor->hcp_data->prc_id,
             'form_name' => $form->form->name
         ]);
         if($form->photo) {

@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="{{ route('services.prescriptions.store', $consultation_id) }}" method="POST">
+                <form action="{{ Route::is('consultations.*') ? route('consultations.prescriptions.store', $consultation_id) : route('services.prescriptions.store', $consultation_id) }}" method="POST">
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <h3 class="mb-0">Record a new prescription and/or referral form</h3>

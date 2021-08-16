@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endsection
 
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
@@ -13,14 +16,18 @@
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
+                    <table class="table align-items-center table-flush" id="employee_table">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">Workspace ID</th>
                                 <th scope="col" class="sort" data-sort="budget">Name</th>
+                                @if(auth()->user()->role->value == 0)
                                 <th scope="col" class="sort" data-sort="status">Email</th>
+                                @endif
                                 <th scope="col">Role</th>
+                                @if(auth()->user()->role->value == 0)
                                 <th scope="col">Actions</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody class="list">
@@ -36,9 +43,11 @@
                                 <td class="budget">
                                     {{ $employee->name }}
                                 </td>
+                                @if(auth()->user()->role->value == 0)
                                 <td>
                                     {{ $employee->email }}
                                 </td>
+                                @endif
                                 <td>
                                     @if($employee->hcp_data)
                                     {{ $employee->hcp_data->type->name }} - {{ $employee->hcp_data->prc_id }}
@@ -46,6 +55,7 @@
                                     {{ strtoupper($employee->role->description)  }}
                                     @endif
                                 </td>
+                                @if(auth()->user()->role->value == 0)
                                 <td>
                                     @if($employee->id !== auth()->user()->id && auth()->user()->role->value == 0)
                                     <a href="{{ route('employees.edit', $employee) }}" class="btn btn-primary my-4">Update</a>
@@ -69,6 +79,7 @@
                                     @endif
                                     @endif
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -85,4 +96,27 @@
 @endsection
 
 @push('js')
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#employee_table thead tr').clone(true).appendTo('#employee_table thead');
+        $('#employee_table thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var table = $('#employee_table').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+    });
+</script>
 @endpush

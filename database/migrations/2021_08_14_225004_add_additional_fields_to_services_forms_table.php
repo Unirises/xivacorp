@@ -14,8 +14,8 @@ class AddAdditionalFieldsToServicesFormsTable extends Migration
     public function up()
     {
         Schema::table('services_forms', function (Blueprint $table) {
-            $table->string('doctor_name')->nullable();
-            $table->string('doctor_prc')->nullable();
+            $table->unsignedBigInteger('doctor_id')->nullable();
+            $table->foreign('doctor_id')->references('id')->on('users');
         });
     }
 

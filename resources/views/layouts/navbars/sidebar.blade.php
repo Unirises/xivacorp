@@ -66,6 +66,29 @@
                 </li>
                 @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
+                    <a class="nav-link" href="#notifications" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="notifications">
+                        <i class="ni ni-bell-55"></i>
+                        <span class="nav-link-text">Notifications</span>
+                    </a>
+
+                    <div class="collapse hide" id="notifications">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('working-hours-notification.index') }}">
+                                    Working Hours
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('change-company.index') }}">
+                                    Change HCP Company
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
+                @if(auth()->user()->role->value == 0)
+                <li class="nav-item">
                     <a class="nav-link" href="#companies" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="companies">
                         <i class="ni ni-building"></i>
                         <span class="nav-link-text">Companies</span>
@@ -91,7 +114,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#employees" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="employees">
                         <i class="ni ni-badge"></i>
-                        <span class="nav-link-text">Employees</span>
+                        <span class="nav-link-text">Active Personnel List</span>
                     </a>
 
                     <div class="collapse hide" id="employees">
@@ -108,52 +131,6 @@
                                 </a>
                             </li>
                             @endif
-                        </ul>
-                    </div>
-                </li>
-                @endif
-                @if(auth()->user()->role->value == 0)
-                <li class="nav-item">
-                    <a class="nav-link" href="#types" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="types">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span class="nav-link-text">Manage Types</span>
-                    </a>
-
-                    <div class="collapse hide" id="types">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('types.index') }}">
-                                    Overview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('types.create') }}">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-                @if(auth()->user()->role->value == 0)
-                <li class="nav-item">
-                    <a class="nav-link" href="#notifications" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="notifications">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span class="nav-link-text">Notifications</span>
-                    </a>
-
-                    <div class="collapse hide" id="notifications">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('working-hours-notification.index') }}">
-                                    Working Hours
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('change-company.index') }}">
-                                    Change HCP Company
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>
@@ -182,30 +159,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#teleconsult" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="teleconsult">
-                        <i class="ni ni-circle-08"></i>
-                        <span class="nav-link-text">Teleconsult</span>
-                    </a>
-
-                    <div class="collapse hide" id="teleconsult">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('consultations.index') }}">
-                                    Overview
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('consultations.create') }}">
-                                    Schedule
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#test_services" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="test_services">
                         <i class="ni ni-favourite-28"></i>
-                        <span class="nav-link-text">Health and Services</span>
+                        <span class="nav-link-text">Healthcare Services</span>
                     </a>
 
                     <div class="collapse hide" id="test_services">
@@ -223,11 +179,32 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#teleconsult" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="teleconsult">
+                        <i class="ni ni-circle-08"></i>
+                        <span class="nav-link-text">Teleconsultations</span>
+                    </a>
+
+                    <div class="collapse hide" id="teleconsult">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('consultations.index') }}">
+                                    Overview
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('consultations.create') }}">
+                                    Schedule
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 @if(auth()->user()->role->value == 0 || auth()->user()->role->value == 1)
                 <li class="nav-item">
                     <a class="nav-link" href="#forms" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="forms">
                         <i class="ni ni-collection"></i>
-                        <span class="nav-link-text">Forms</span>
+                        <span class="nav-link-text">Manage Forms</span>
                     </a>
 
                     <div class="collapse hide" id="forms">
@@ -246,18 +223,29 @@
                     </div>
                 </li>
                 @endif
-            </ul>
-              <!-- Divider -->
-              <hr class="my-3">
-            <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Other Services</h6>
-            <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
+                @if(auth()->user()->role->value == 0)
                 <li class="nav-item">
-                    <a class="nav-link" href="https://xivahealth.io">
-                        <i class="ni ni-cloud-download-95 text-blue"></i>Book Vaccination Service
+                    <a class="nav-link" href="#types" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="types">
+                        <i class="ni ni-settings-gear-65"></i>
+                        <span class="nav-link-text">Manage Types</span>
                     </a>
+
+                    <div class="collapse hide" id="types">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('types.index') }}">
+                                    Overview
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('types.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

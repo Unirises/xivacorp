@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\ServiceStatus;
 use App\Enums\ServiceType;
-use App\Enums\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -84,5 +83,10 @@ class Consultation extends Model
     public function getIsOngoingAttribute()
     {
         return Carbon::now()->between($this->starts_at, $this->ends_at);
+    }
+
+    public function getLatestPrescriptionIdAttribute()
+    {
+        return ConsultationPrescription::where('consultation_id', $this->id)->latest()->first()->id ?? null;
     }
 }

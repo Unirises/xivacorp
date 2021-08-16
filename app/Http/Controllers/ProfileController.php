@@ -92,4 +92,17 @@ class ProfileController extends Controller
 
         return redirect()->back();
     }
+
+    public function email(Request $request)
+    {
+        $data = $this->validate($request, [
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,'.auth()->user()->id],
+        ]);
+
+        auth()->user()->update([
+            'email' => $data['email']
+        ]);
+
+        return redirect()->back();
+    }
 }

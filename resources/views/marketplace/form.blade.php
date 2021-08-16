@@ -5,7 +5,7 @@
         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    <span class="input-group-text"><i class="ni ni-bag-17"></i></span>
                 </div>
                 <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" type="text" name="name" value="{{ old('name') ?? $item->name ?? '' }}" required autofocus>
             </div>
@@ -18,7 +18,7 @@
         <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    <span class="input-group-text"><i class="ni ni-align-center"></i></span>
                 </div>
                 <input class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="Item Description" type="text" name="description" value="{{ old('description') ?? $item->description ?? '' }}" autofocus>
             </div>
@@ -33,7 +33,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Php</span>
                 </div>
-                <input class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Item Price" type="number" name="price" value="{{ old('price') ?? $item->price ?? '' }}" required autofocus>
+                <input class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="Item Price" type="number" name="price" value="{{ old('price') ?? $item->price ?? '' }}" autofocus>
             </div>
             @if ($errors->has('price'))
             <span class="invalid-feedback" style="display: block;" role="alert">

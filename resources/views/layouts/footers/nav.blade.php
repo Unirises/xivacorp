@@ -1,6 +1,11 @@
 <div class="copyright text-center text-muted">
+    @if(!Auth::check())
     <h3 style="color: white">Powered By:</h3>
     <img src="{{ asset('argon') }}/img/brand/vavs.png" style="max-width: 25%" alt=""><br><br>
+    @else
+    <h3 style="color: black">Powered By:</h3>
+    <img src="{{ asset('argon') }}/img/brand/logoonlypng.png" style="max-width: 25%" alt=""><br><br>
+    @endif
     <div class="d-flex justify-content-center" style="height: 50px">
     <img src="{{ asset('argon') }}/img/brand/FDA.jpg" style="height: 100%" alt=""><br>
         <img src="{{ asset('argon') }}/img/brand/DOH.jpg" style="height: 100%" alt=""><br>

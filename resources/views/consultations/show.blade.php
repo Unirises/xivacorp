@@ -40,6 +40,12 @@
                 </div>
                 <!-- Card footer -->
                 <div class="card-footer py-4">
+                    @if(auth()->user()->role->value == 1)
+                    <a href="{{ route('consultations.prescriptions.create', $consultation->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
+                    @endif
+                    @if($consultation->latest_prescription_id)
+                    <a href="{{ route('consultations.prescriptions.show', [$consultation->id, $consultation->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
+                    @endif
                 </div>
             </div>
         </div>

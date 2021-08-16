@@ -1,17 +1,12 @@
-@extends('layouts.app', ['title' => __('User Profile')])
-
-@section('content')
-@include('users.partials.header', [
-'title' => __('Hello') . ' '. auth()->user()->name,
-'description' => __('This is your profile page. You can edit your information here.'),
-'class' => 'col-lg-7'
-])
+@extends('layouts.app')
 
 @section('head')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
-
+@section('content')
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+</div>
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -147,6 +142,26 @@
                     </form>
                     <hr class="my-4" />
                     @endif
+                    <form method="POST" action="{{ route('profile.email') }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="pl-lg-4">
+                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-email">Email</label>
+                                <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" value="{{ old('email', auth()->user()->email) }}" required>
+
+                                @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success mt-4">Update Email</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr class="my-4" />
                     <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
                         @csrf
                         @method('put')

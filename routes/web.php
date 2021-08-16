@@ -39,6 +39,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::resource('employees', 'App\Http\Controllers\EmployeeController');
 	Route::resource('forms', 'App\Http\Controllers\FormController');
 	Route::resource('consultations', 'App\Http\Controllers\ConsultationController');
+	Route::resource('consultations.prescriptions', 'App\Http\Controllers\ConsultationPrescriptionController');
 
 	Route::put('employees/update-hours/{id}', [EmployeeController::class, 'resetHours'])->name('employees.reset-hours');
 
@@ -82,6 +83,7 @@ Route::group(['middleware' => ['auth', 'onboard']], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::put('profile/email', ['as' => 'profile.email', 'uses' => 'App\Http\Controllers\ProfileController@email']);
 	Route::post('update-hours', ['as' => 'profile.hours', 'uses' => 'App\Http\Controllers\ProfileController@hours']);
 	Route::post('update-signature', ['as' => 'profile.signature', 'uses' => 'App\Http\Controllers\ProfileController@signature']);
 });

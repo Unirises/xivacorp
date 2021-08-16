@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
+use App\Models\Company;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        if(auth()->user()->role->value == 4) {
+            return view('profile.edit');
+        }
+        switch(auth()->user()->role) {
+            case UserRole::Admin():
+                $companies = Company::all();
+                break;
+            case UserRole::CoAdmin():
+            case UserRole::Clinic():
+            case UserRole::HR():
+            case UserRole::HCP():
+                $companies = Company::where('code', auth()->user()->workspace_id)->get();
+                break;
+        }
+       
+        return view('dashboard', compact('companies'));
     }
 }

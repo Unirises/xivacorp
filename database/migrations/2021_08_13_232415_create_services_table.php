@@ -22,7 +22,7 @@ class CreateServicesTable extends Migration
             $table->string('workspace_id');
             $table->foreign('workspace_id')->references('code')->on('companies');
             $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('types');
+        $table->foreign('service_id')->references('id')->on('types');
             $table->dateTime('schedule')->nullable();
             $table->boolean('pending')->default(true);
             $table->timestamps();

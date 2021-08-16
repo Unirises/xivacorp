@@ -17,8 +17,7 @@ class ServiceForms extends Model
         'answerable_by',
         'answer',
         'photo',
-        'doctor_name',
-        'doctor_prc',
+        'doctor_id',
         'is_exportable',
         'signature',
         'need_signature',
@@ -36,6 +35,11 @@ class ServiceForms extends Model
     public function form()
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
 
     public function answerer()

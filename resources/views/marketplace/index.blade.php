@@ -20,7 +20,7 @@
                             <img class="card-img-top" src="{{ $item->photo }}" alt="Card image cap">
                             @endif
                             <div class="card-body">
-                                <h5 class="card-title">{{ $item->name }} - Php {{ $item->price }}</h5>
+                                <h5 class="card-title">{{ $item->name }} @if($item->price)- Php {{ $item->price }}@endif</h5>
                                 <p class="card-text">{{ $item->description }}</p>
                                 @if(auth()->user()->role->value == 0)
                                 <a href="{{ route('marketplace.edit', $item->id) }}" class="btn btn-primary">Update</a>

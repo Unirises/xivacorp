@@ -16,7 +16,7 @@
                         <h3 class="mb-0">{{ $form->name }}</h3>
                     </div>
                     <div class="card-body">
-                    @if($form->need_signature)
+                        @if($form->need_signature)
                         <div class="form-group{{ $errors->has('signature') ? ' has-danger' : '' }}">
                             <input type="hidden" id="signature" name="signature">
                             <canvas width="664" style="touch-action: none;" height="373"></canvas>
@@ -43,26 +43,12 @@
                             @endif
                         </div>
                         @if($form->is_exportable)
-                        <div class="form-group{{ $errors->has('doctor_name') ? ' has-danger' : '' }}">
-                            <div class="input-group input-group-alternative mb-3">
-                                <input class="form-control{{ $errors->has('doctor_name') ? ' is-invalid' : '' }}" placeholder="Doctor Name Currently on Duty" type="text" name="doctor_name" id="doctor_name" value="{{ old('doctor_name') ?? $employee->doctor_name ?? '' }}" required autofocus>
-                            </div>
-                            @if ($errors->has('doctor_name'))
-                            <span class="invalid-feedback" style="display: block;" role="alert">
-                                <strong>{{ $errors->first('doctor_name') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class="form-group{{ $errors->has('doctor_prc') ? ' has-danger' : '' }}">
-                            <div class="input-group input-group-alternative mb-3">
-                                <input class="form-control{{ $errors->has('doctor_prc') ? ' is-invalid' : '' }}" placeholder="Doctor PRC ID" type="text" name="doctor_prc" id="doctor_prc" value="{{ old('doctor_prc') ?? $employee->doctor_prc ?? '' }}" required autofocus>
-                            </div>
-                            @if ($errors->has('doctor_prc'))
-                            <span class="invalid-feedback" style="display: block;" role="alert">
-                                <strong>{{ $errors->first('doctor_prc') }}</strong>
-                            </span>
-                            @endif
-                        </div>
+                        <select class="custom-select" id="doctor_id" name="doctor_id">
+                            <option>Choose...</option>
+                            @foreach($doctors as $doctor)
+                            <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                            @endforeach
+                        </select>
                         @endif
                         @endif
                     </div>
@@ -138,8 +124,7 @@
                     data: parsedFields,
                     signature: canvas != null ? signaturePad.toDataURL() : null,
                     photo: photo != undefined ? await toBase64(photo) : null,
-                    doctor_name: document.getElementById('doctor_name')?.value,
-                    doctor_prc: document.getElementById('doctor_prc')?.value,
+                    doctor_id: $("#doctor_id").find(':selected').val() ?? null,
                 })
             }).then(async (resp) => {
                 var respData = await resp.text();
