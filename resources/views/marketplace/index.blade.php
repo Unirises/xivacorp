@@ -24,6 +24,14 @@
                                 <p class="card-text">{{ $item->description }}</p>
                                 @if(auth()->user()->role->value == 0)
                                 <a href="{{ route('marketplace.edit', $item->id) }}" class="btn btn-primary">Update</a>
+                                <form method="POST" action="{{ route('marketplace.destroy', $item->id) }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                    </div>
+                                </form>
                                 @else
                                 <a href="javascript:void(Tawk_API.toggle())" class="btn btn-primary">Message to Inquire</a>
                                 @endif
