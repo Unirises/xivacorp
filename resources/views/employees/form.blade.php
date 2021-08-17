@@ -174,16 +174,33 @@
                 </div>
             </div>
         </div>
-        <div class="form-group{{ $errors->has('region') ? ' has-danger' : '' }}">
-            <div class="input-group input-group-alternative mb-3">
-                <input class="form-control{{ $errors->has('region') ? ' is-invalid' : '' }}" placeholder="Region" type="text" name="region" value="{{ old('region') ?? $employee->region ?? '' }}" required autofocus>
+        <div class="row">
+            <div class="col">
+                <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
+                    <div class="input-group input-group-alternative mb-3">
+                        <input class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="City/Province" type="text" name="city" value="{{ old('city') ?? $employee->city ?? '' }}" required autofocus>
+                    </div>
+                    @if ($errors->has('city'))
+                    <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('city') }}</strong>
+                    </span>
+                    @endif
+                </div>
             </div>
-            @if ($errors->has('region'))
-            <span class="invalid-feedback" style="display: block;" role="alert">
-                <strong>{{ $errors->first('region') }}</strong>
-            </span>
-            @endif
+            <div class="col">
+                <div class="form-group{{ $errors->has('region') ? ' has-danger' : '' }}">
+                    <div class="input-group input-group-alternative mb-3">
+                        <input class="form-control{{ $errors->has('region') ? ' is-invalid' : '' }}" placeholder="Region" type="text" name="region" value="{{ old('region') ?? $employee->region ?? '' }}" required autofocus>
+                    </div>
+                    @if ($errors->has('region'))
+                    <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('region') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
         </div>
+
         @if(!Auth::check() || (Auth::check() && auth()->user()->is_onboarded == 1))
         <div class="form-group{{ $errors->has('dob') ? ' has-danger' : '' }}">
             <div class="input-group input-group-alternative mb-3">

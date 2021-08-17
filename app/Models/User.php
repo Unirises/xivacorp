@@ -38,6 +38,7 @@ class User extends Authenticatable
         'street_address',
         'barangay',
         'region',
+        'city',
     ];
 
     /**
@@ -111,7 +112,7 @@ class User extends Authenticatable
     
     public function getAddressAttribute()
     {
-        return strtoupper(implode(", ", array_filter([$this->street_address, $this->barangay, $this->region])));
+        return strtoupper(implode(", ", array_filter([$this->street_address, $this->barangay, $this->city, $this->region])));
     }
 
     public function getRecentServiceAttribute()
