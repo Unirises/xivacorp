@@ -60,7 +60,7 @@
             <select class="custom-select" id="viewable_as" name="viewable_as">
                 <option disabled>Choose...</option>
                 <option value="1" {{ (old('viewable_as', $item->viewable_as->value ?? 0) == 1 ? 'selected' : '') }}>Health Care Provider</option>
-                <option value="2" {{ (old('viewable_as', $item->viewable_as->value ?? 0) == 2 ? 'selected' : '') }}>HR</option>
+                <option value="2" {{ (old('viewable_as', $item->viewable_as->value ?? 0) == 2 ? 'selected' : '') }}>Management</option>
                 <option value="3" {{ (old('viewable_as', $item->viewable_as->value ?? 0) == 3 ? 'selected' : '') }}>Company / In-house Clinic</option>
                 <option value="4" {{ (old('viewable_as', $item->viewable_as->value ?? 0) == 4 ? 'selected' : '') }}>Employee</option>
             </select>

@@ -25,7 +25,7 @@
                 <select class="custom-select" id="type" name="type">
                     <option disabled>Choose...</option>
                     <option value="1" {{ (old('type', $employee->role->value ?? 0) == 1 ? 'selected' : '') }}>Health Care Provider</option>
-                    <option value="2" {{ (old('type', $employee->role->value ?? 0) == 2 ? 'selected' : '') }}>HR</option>
+                    <option value="2" {{ (old('type', $employee->role->value ?? 0) == 2 ? 'selected' : '') }}>Management</option>
                     <option value="3" {{ (old('type', $employee->role->value ?? 0) == 3 ? 'selected' : '') }}>Company / In-house Clinic</option>
                     <option value="4" {{ (old('type', $employee->role->value ?? 0) == 4 ? 'selected' : '') }}>Employee</option>
                 </select>

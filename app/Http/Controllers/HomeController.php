@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
 use App\Models\Company;
+use App\Models\Service;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -38,7 +41,20 @@ class HomeController extends Controller
                 $companies = Company::where('code', auth()->user()->workspace_id)->get();
                 break;
         }
+        $lineChart = 
+            Service::where('workspace_id', auth()->user()->workspace_id)->get()->groupBy(function($model) {
+                return Carbon::parse($model->schedule)->format('d');
+            });
+
+        $customArray = [];
+
+        foreach($lineChart as $day => $services) {
+            array_merge($customArray, array($day => []));
+            foreach($services as $index => $service) {
+                $customArray[$day][$service->service->meta][] = $service;
+            }
+        }
        
-        return view('dashboard', compact('companies'));
+        return view('dashboard', compact('companies', 'customArray'));
     }
 }

@@ -17,4 +17,13 @@ final class UserRole extends Enum
     const Clinic = 3;
     const Employee = 4;
     const CoAdmin = 5;
+
+    public static function getDescription($value): string
+    {
+        if ($value === self::HR) {
+            return 'Management';
+        }
+    
+        return parent::getDescription($value);
+    }
 }

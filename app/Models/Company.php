@@ -24,9 +24,12 @@ class Company extends Model
     public function getStatisticsAttribute()
     {
         $types = Type::where('type', '!=', 0)->get();
-        foreach ($types as $type) {
-            $serviced = Service::where('service_id', $type->id)->where('workspace_id', $this->code)->get()->unique('user_id');
+        foreach ($types as $index => $type) {
+            $serviced = Service::where('service_id', $type->id)->where('workspace_id', $this->code)->get();
             $type['serviced'] =  $serviced->count();
+            if($serviced->count() < 1) {
+                unset($types[$index]);
+            }
         }
         return $types;
     }
