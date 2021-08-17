@@ -64,7 +64,7 @@
                         <i class="ni ni-planet text-blue"></i>News and Updates
                     </a>
                 </li>
-                @if(auth()->user()->role->value == 0 || auth()->user()->hcp_data->type_id == 3)
+                @if(auth()->user()->role->value == 0 || (auth()->user()->hcp_data->type_id ?? null) == 3)
                 <li class="nav-item">
                     <a class="nav-link" href="#notifications" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="notifications">
                         <i class="ni ni-bell-55"></i>
