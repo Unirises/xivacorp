@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('register-onboard', ['as' => 'register-onboard', 'uses' => 'App\Http\Controllers\UserController@onboard']);
 });
 
+Route::get('view-qr/{data}', ['as' => 'qr.view', 'uses' => 'App\Http\Controllers\QrCodeController@show']);
 Route::get('verify-qr', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@index']);
-Route::get('verify-qr/{id}', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@fetch']);
+Route::get('verify-qr/{id}', ['as' => 'qr.verify.fetch', 'uses' => 'App\Http\Controllers\QrCodeController@fetch']);
 Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');

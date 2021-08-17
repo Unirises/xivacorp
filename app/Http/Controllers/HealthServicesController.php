@@ -11,6 +11,7 @@ use App\Models\Type;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -217,7 +218,7 @@ class HealthServicesController extends Controller
         }
         $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
         $url = public_path('storage/results/qrcode/'.$id.'.png');
-        QrCode::size(50)->format('png')->generate($id, $url);
+        QrCode::size(175)->format('png')->generate(route('qr.view', Crypt::encryptString($id)), $url);
 
         $image = $form->answerer->hcp_data->signature;  // your base64 encoded
         $image = str_replace('data:image/png;base64,', '', $image);

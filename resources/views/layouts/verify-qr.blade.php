@@ -45,10 +45,10 @@
                 <b>
                     <div id="findings"></div>
                 </b>
-                <a href="" id="res_download">Download Report</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="" id="res_download" class="btn btn-primary">Download Report</a>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.0.3/html5-qrcode.min.js" integrity="sha512-uOj9C1++KO/GY58nW0CjDiUjLKWQG4yB/NJMj3PtJNmFA52Hg56lojRtvBpLgQyVByUD+1M3M/1tKdoGDKUBAQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function onScanSuccess(decodedText, decodedResult) {
-        fetch(`verify-qr/${decodedText}`).then(async (data) => {
+        fetch(`verify-qr/${decodedText.split("/").pop()}`).then(async (data) => {
             var respData = (await data.json())['data'];
 
             $("#client_name").text(respData['service']['client']['name']);
@@ -92,7 +92,7 @@
 
             var sub_ul = $('<ul/>');
             respData['answer'].forEach(element => {
-                var sub_li = $('<li/>').html(element['label']+' – '+element['value']);
+                var sub_li = $('<li/>').html(element['label'] + ' – ' + element['value']);
                 sub_ul.append(sub_li);
             });
 
@@ -110,7 +110,7 @@
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
             fps: 10,
-            qrbox: 250
+            qrbox: 300
         }, /* verbose= */ false);
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 </script>
