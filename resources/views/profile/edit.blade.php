@@ -142,6 +142,15 @@
                     </form>
                     <hr class="my-4" />
                     @endif
+                    <form method="POST" action="{{ route('profile.info') }}">
+                        @csrf
+                        @method('PUT')
+                        @include('employees.basic-form')
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-4">Update Info</button>
+                        </div>
+                    </form>
+                    <hr class="my-4" />
                     <form method="POST" action="{{ route('profile.email') }}">
                         @csrf
                         @method('PUT')

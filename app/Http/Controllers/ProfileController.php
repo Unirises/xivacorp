@@ -21,7 +21,8 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('profile.edit');
+        $employee = auth()->user();
+        return view('profile.edit', compact('employee'));
     }
 
     /**
@@ -101,6 +102,35 @@ class ProfileController extends Controller
 
         auth()->user()->update([
             'email' => $data['email']
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function info(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'street_address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'barangay' => ['required', 'string', 'max:255'],
+            'region' => ['required', 'string', 'max:255'],
+            'dob' => 'required|date',
+            'gender' => 'required|numeric',
+        ]);
+
+        auth()->user()->update([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'middle_name' => $validated['middle_name'],
+            'street_address' => $validated['street_address'],
+            'city' => $validated['city'],
+            'barangay' => $validated['barangay'],
+            'region' => $validated['region'],
+            'dob' => $validated['dob'],
+            'gender' => $validated['gender'],
         ]);
 
         return redirect()->back();

@@ -53,7 +53,6 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('services/{id}/forms/{formId}', [HealthServicesController::class, 'showAnswerForm'])->name('services.forms.answer');
 	Route::post('services/{id}/forms/{formId}', [HealthServicesController::class, 'storeResponse'])->name('services.forms.store');
 	Route::get('services/{id}/forms/{formId}/response', [HealthServicesController::class, 'showResponse'])->name('services.forms.response');
-	Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');
 	Route::delete('services/{id}/forms/{formId}', [HealthServicesController::class, 'deleteForm'])->name('services.forms.delete');
 	Route::get('export-services', [HealthServicesController::class, 'exportAllBookings'])->name('services.export');
 	Route::put('accept-service/{id}', [HealthServicesController::class, 'acceptBooking'])->name('services.accept-booking');
@@ -85,6 +84,7 @@ Route::group(['middleware' => ['auth', 'onboard']], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::put('profile/email', ['as' => 'profile.email', 'uses' => 'App\Http\Controllers\ProfileController@email']);
+	Route::put('profile/info', ['as' => 'profile.info', 'uses' => 'App\Http\Controllers\ProfileController@info']);
 	Route::post('update-hours', ['as' => 'profile.hours', 'uses' => 'App\Http\Controllers\ProfileController@hours']);
 	Route::post('update-signature', ['as' => 'profile.signature', 'uses' => 'App\Http\Controllers\ProfileController@signature']);
 });
@@ -95,3 +95,4 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('verify-qr', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@index']);
 Route::get('verify-qr/{id}', ['as' => 'qr.verify', 'uses' => 'App\Http\Controllers\QrCodeController@fetch']);
+Route::get('services/{id}/forms/{formId}/export', [HealthServicesController::class, 'exportResponse'])->name('services.forms.export');
