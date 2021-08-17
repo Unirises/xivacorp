@@ -84,7 +84,7 @@
             <div class="form-group{{ $errors->has('signature') ? ' has-danger' : '' }}">
                 <input type="hidden" id="signature" name="signature">
                 <canvas width="664" style="touch-action: none;" height="373"></canvas>
-                <div class="text-muted text-center mt-2 mb-3"><small>Sign above for your signature.</small></div>
+                <div class="text-muted mt-2 mb-3"><small>Sign above for your signature.</small></div>
                 @if ($errors->has('signature'))
                 <span class="invalid-feedback" style="display: block;" role="alert">
                     <strong>{{ $errors->first('signature') }}</strong>
