@@ -43,7 +43,15 @@
                                     {{ $company->contact }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('company.edit', $company) }}" class="btn btn-primary my-4">Update</button>
+                                    <a href="{{ route('company.edit', $company) }}" class="btn btn-primary my-4">Update</a>
+                                    <form method="POST" action="{{ route('company.destroy', $company) }}" id="deleteCompany">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -61,4 +69,13 @@
 @endsection
 
 @push('js')
+<script>
+    $(document).ready(function() {
+        $("#deleteCompany").submit(function(event) {
+            if (!confirm('Are you sure that you want to submit the form')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 @endpush

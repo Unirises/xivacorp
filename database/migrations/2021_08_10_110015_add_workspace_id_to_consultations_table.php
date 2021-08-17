@@ -15,7 +15,7 @@ class AddWorkspaceIdToConsultationsTable extends Migration
     {
         Schema::table('consultations', function (Blueprint $table) {
             $table->string('workspace_id');
-            $table->foreign('workspace_id')->references('code')->on('companies');
+            $table->foreign('workspace_id')->references('code')->on('companies')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -20,7 +20,7 @@ class CreateServicesTable extends Migration
             $table->unsignedBigInteger('hcp_id')->nullable();
             $table->foreign('hcp_id')->references('id')->on('users');
             $table->string('workspace_id');
-            $table->foreign('workspace_id')->references('code')->on('companies');
+            $table->foreign('workspace_id')->references('code')->on('companies')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('service_id');
         $table->foreign('service_id')->references('id')->on('types');
             $table->dateTime('schedule')->nullable();
