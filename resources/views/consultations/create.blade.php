@@ -17,7 +17,7 @@
                     <div class="card-header border-0">
                         <h3 class="mb-0">Schedule a
                             @if(Route::is('consultations.create'))
-                            Consultation
+                            Teleconsultation
                             @else
                             Health Services Booking
                             @endif

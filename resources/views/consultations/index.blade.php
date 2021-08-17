@@ -11,7 +11,7 @@
                 <div class="card-header border-0">
                     <h3 class="mb-0">Your 
                     @if(Route::is('consultations.index'))
-                    Consultations
+                    Teleconsultations
                     @else
                     Health Services Bookings
                     @endif

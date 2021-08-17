@@ -9,7 +9,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Consultation's Health Diary <a href="{{ route('services.diary.create', $consultationId) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Log Record</a></h3>
+                    <h3 class="mb-0">Health Diary <a href="{{ route('services.diary.create', $consultationId) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Log Record</a></h3>
                 </div>
                 <!-- Light table -->
                 <div class="card-body">
