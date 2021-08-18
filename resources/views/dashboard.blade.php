@@ -29,10 +29,10 @@
                             </thead>
                             <br>
                             <tbody class="list">
-                                @foreach($company->statistics as $stat)
+                                @foreach($company->statistics as $key => $stat)
                                 <tr>
-                                    <th>{{ $stat->meta }}</th>
-                                    <td>{{ $stat['serviced'] }}</td>
+                                    <th>{{ $key }}</th>
+                                    <td>{{ count($stat) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

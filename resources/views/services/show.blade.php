@@ -31,11 +31,14 @@
                                     <option value="{{ $service->client->id }}">{{ $service->client->name }}</option>
                                     <option value="{{ auth()->user()->id }}">Health Care Provider (You)</option>
                                 </select>
+                                <div id="exportDiv">
+                                    <input type="checkbox" name="checkbox" id="checkbox" value=""> <label for="checkbox">Make this form exportable</label>
+                                </div>
+                                <div id="signatureDiv">
+                                    <input type="checkbox" name="client_signature" id="client_signature" value=""> <label for="client_signature">Require client signature.</label>
+                                </div>
                             </div>
                         </div>
-                        <input type="checkbox" name="checkbox" id="checkbox" value=""> <label for="checkbox">This form is exportable. <small>(Only when selected for Health Care Provider only)</small></label>
-                        <br>
-                        <input type="checkbox" name="client_signature" id="client_signature" value=""> <label for="client_signature">Require client signature. <small>(Only when selected for Client only)</small></label>
                     </div>
                     <!-- Card footer -->
                     <div class="card-footer py-4">
@@ -48,7 +51,7 @@
     @endif
     <div class="row">
         <div class="col">
-        <div class="card">
+            <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
                     <h3 class="mb-0">Forms</h3>
@@ -67,11 +70,11 @@
                             </thead>
                             <tbody class="list">
                                 @foreach ($available_forms as $form)
-                                    <tr>
-                                        <th>{{ $form->form->name }}</th>
-                                        <td>{{ $form->answerer->name }}</td>
-                                        <td>{{ $form->created_at }}</td>
-                                        <td>
+                                <tr>
+                                    <th>{{ $form->form->name }}</th>
+                                    <td>{{ $form->answerer->name }}</td>
+                                    <td>{{ $form->created_at }}</td>
+                                    <td>
                                         @if( $form->answerable_by == auth()->user()->id)
                                         <a href="{{ route('services.forms.answer', [$service->id, $form->id]) }}" class="btn btn-primary my-4">Answer/Update</a>
                                         @endif
@@ -88,20 +91,36 @@
                                             </div>
                                         </form>
                                         @endif
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
-    @include('layouts.footers.auth')
+</div>
+@include('layouts.footers.auth')
 </div>
 @endsection
 
 @push('js')
+<script>
+    jQuery(document).ready(function($) {
+        $("#exportDiv").hide();
+        $("#signatureDiv").show();
+        
+        $("#user_id").change(function() {
+            if($(this).children('option:selected').index() == 1) {
+                $("#exportDiv").hide();
+                $("#signatureDiv").show();
+            } else {
+                $("#exportDiv").show();
+                $("#signatureDiv").hide();
+            }
+        });
+    });
+</script>
 @endpush

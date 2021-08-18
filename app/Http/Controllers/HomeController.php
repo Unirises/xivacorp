@@ -42,19 +42,19 @@ class HomeController extends Controller
                 $companies = Company::where('code', auth()->user()->workspace_id)->get();
                 break;
         }
-        $lineChart = 
-            Service::where('workspace_id', auth()->user()->workspace_id)->get()->groupBy(function($model) {
-                return Carbon::parse($model->schedule)->format('d');
+        $recurringChart = 
+            ServiceForms::where('is_exportable', true)->whereNotNull('answer')->whereHas('service', function($q) {
+                $q->where('workspace_id', auth()->user()->workspace_id);
+            })->get()->groupBy(function($model) {
+                return Carbon::parse($model->created_at)->format('d');
             });
-
+            
         $customArray = [];
 
-        foreach($lineChart as $day => $services) {
+        foreach($recurringChart as $day => $services) {
             array_merge($customArray, array($day => []));
             foreach($services as $index => $service) {
-                $recurring = ServiceForms::where('service_id', $service->id)->where('is_exportable', true)->count();
-                $customArray[$day][$service->service->meta][] = $service;
-                $customArray[$day][$service->service->meta][] = $recurring;
+                $customArray[$day][$service->service->service->meta][] = $service;
             }
         }
 

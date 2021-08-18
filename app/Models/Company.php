@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,20 +24,17 @@ class Company extends Model
 
     public function getStatisticsAttribute()
     {
-        $types = Type::where('type', '!=', 0)->get();
-        foreach ($types as $index => $type) {
-            $serviced = Service::where('service_id', $type->id)->where('workspace_id', $this->code)->get();
-            if($serviced->count() < 1) {
-                unset($types[$index]);
-            } else {
-                $recurring = ServiceForms::where('service_id', $serviced[0]->id)->where('is_exportable', true)->get();
-                
-                $type['serviced'] =  $serviced->count() + $recurring->count();
-                if($serviced->count() + $recurring->count()  < 1) {
-                    unset($types[$index]);
-                }
-            }
+        $recurringChart =
+            ServiceForms::where('is_exportable', true)->whereNotNull('answer')->whereHas('service', function($q) {
+                $q->where('workspace_id', $this->code);
+            })->get();
+
+        $customArray = [];
+
+        foreach ($recurringChart as $service) {
+            $customArray[$service->service->service->meta][] = $service;
         }
-        return $types;
+
+        return $customArray;
     }
 }
