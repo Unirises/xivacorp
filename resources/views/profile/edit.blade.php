@@ -130,6 +130,11 @@
                     <form id="my-form">
                         @csrf
                         <h6 class="heading-small text-muted mb-4">Signature</h6>
+                        @if (!auth()->user()->hcp_data->signature)
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <h1>You haven't set your signature yet!</h1>
+                        </div>
+                        @endif
                         <canvas width="664" style="touch-action: none;" height="373"></canvas>
                         <div class="row">
                             <div class="col">
@@ -142,7 +147,99 @@
                     </form>
                     <hr class="my-4" />
                     @endif
+                    <form action="{{ route('profile.company') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <h6 class="heading-small text-muted mb-4">Change Company</h6>
+                        @if (\Session::has('success1'))
+                        <div class="alert alert-success">
+                            {!! \Session::get('success1') !!}</li>
+                        </div>
+                        @endif
+                        <div class="form-group{{ $errors->has('code') ? ' has-danger' : '' }} mb-3">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                                </div>
+                                <input class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" placeholder="Workspace Identifier" type="text" name="code" value="{{ old('code') ?? $employee->workspace_id ?? '' }}" autofocus>
+                            </div>
+                            @if ($errors->has('code'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('code') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
+                            <div class="input-group input-group-alternative mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="type">I am signing up as</label>
+                                </div>
+                                <select class="custom-select" id="type" name="type">
+                                    <option disabled>Choose...</option>
+                                    <option value="1" {{ (old('type', $employee->role->value ?? 0) == 1 ? 'selected' : '') }}>Health Care Provider</option>
+                                    <option value="2" {{ (old('type', $employee->role->value ?? 0) == 2 ? 'selected' : '') }}>Management</option>
+                                    <option value="3" {{ (old('type', $employee->role->value ?? 0) == 3 ? 'selected' : '') }}>Company / In-house Clinic</option>
+                                    <option value="4" {{ (old('type', $employee->role->value ?? 0) == 4 ? 'selected' : '') }}>Employee</option>
+                                </select>
+                            </div>
+                            @if ($errors->has('type'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>{{ $errors->first('type') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div id="forHcp">
+                            <div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="role">I am a</label>
+                                    </div>
+                                    <select class="custom-select" id="role" name="role">
+                                        <option disabled>Choose...</option>
+                                        @foreach($types ?? App\Models\Type::where('type', 0)->get() as $type)
+                                        <option value="{{ $type->id }}" {{ (old('role', $employee->hcp_data->type_id ?? 0) == $type->id ? 'selected' : '') }}>{{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @if ($errors->has('role'))
+                                <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <strong>{{ $errors->first('role') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('prc_id') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">PRC ID</span>
+                                    </div>
+                                    <input class="form-control{{ $errors->has('prc_id') ? ' is-invalid' : '' }}" placeholder="" type="text" name="prc_id" value="{{ old('prc_id') ?? $employee->hcp_data->prc_id ?? '' }}" autofocus>
+                                </div>
+                                @if ($errors->has('prc_id'))
+                                <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <strong>{{ $errors->first('prc_id') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('selfie') ? ' has-danger' : '' }}">
+                                <div class="custom-file">
+                                    <input type="file" name="selfie" class="custom-file-input" id="selfie">
+                                    <label class="custom-file-label" id="prc_label" for="selfie">Attach your PRC ID.</label>
+                                </div>
+
+                                @if ($errors->has('selfie'))
+                                <span class="invalid-feedback" style="display: block;" role="alert">
+                                    <strong>{{ $errors->first('selfie') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success mt-4">Update Signature</button>
+                        </div>
+                    </form>
+                    <hr>
                     <form method="POST" action="{{ route('profile.info') }}">
+                        <h6 class="heading-small text-muted mb-4">Update your Basic Information</h6>
                         @csrf
                         @method('PUT')
                         @include('employees.basic-form')
@@ -244,10 +341,26 @@
         dateFormat: "H:i",
     });
     jQuery(function($) {
+        var dropdown = document.getElementById('type');
+        var hcpToggleDiv = document.getElementById('forHcp');
+
         var canvas = document.querySelector("canvas");
         if (canvas) {
             var signaturePad = new SignaturePad(canvas);
         }
+
+        if (dropdown.value === '1') {
+            hcpToggleDiv.style.display = "block";
+        } else {
+            hcpToggleDiv.style.display = "none";
+        }
+        dropdown.addEventListener('change', (event) => {
+            if (dropdown.value === '1') {
+                hcpToggleDiv.style.display = "block";
+            } else {
+                hcpToggleDiv.style.display = "none";
+            }
+        })
 
         $('#my-form').on('submit', async function(e) {
             e.preventDefault();

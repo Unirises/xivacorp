@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChangeCompany;
 use App\Models\Company;
 use App\Models\HcpData;
 use App\Models\ServiceForms;
 use App\Models\User;
 use App\Models\WorkingHoursNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -62,5 +64,30 @@ class NotificationController extends Controller
     {
         $forms = ServiceForms::where('doctor_id', auth()->user()->id)->get();
         return view('admin.forms', compact('forms'));
+    }
+
+    public function employeeCompanyIndex()
+    {
+        $data = ChangeCompany::all();
+
+        return view('admin.employee-company', compact('data'));
+    }
+
+    public function employeeCompanyApprove(int $id)
+    {
+        $data = DB::table('company_change')->where('id', $id)->first();
+
+        User::where('id', $data->user_id)->update([
+            'role' => $data->role,
+            'workspace_id' => $data->workspace_id,
+        ]);
+
+        if($data->role != '1') {
+            HcpData::where('user_id', $data->user_id)->delete();
+        }
+
+        DB::table('company_change')->where('id', $id)->delete();
+
+        return redirect()->back();
     }
 }

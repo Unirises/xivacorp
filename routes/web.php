@@ -72,6 +72,8 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('notifications/forms', ['as' => 'doctors.forms.index', 'uses' => 'App\Http\Controllers\NotificationController@showForms']);
 	Route::get('notifications', ['as' => 'working-hours-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@index']);
 	Route::post('notifications/{id}', ['as' => 'working-hours-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@approve']);
+	Route::get('notifications/company', ['as' => 'company-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@employeeCompanyIndex']);
+	Route::post('notifications/company/{id}', ['as' => 'company-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@employeeCompanyApprove']);
 
 	Route::get('change-company', ['as' => 'change-company.index', 'uses' => 'App\Http\Controllers\NotificationController@companyIndex']);
 	Route::post('change-company/{id}', ['as' => 'change-company.change', 'uses' => 'App\Http\Controllers\NotificationController@companyChange']);
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['auth', 'onboard']], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::put('profile/email', ['as' => 'profile.email', 'uses' => 'App\Http\Controllers\ProfileController@email']);
 	Route::put('profile/info', ['as' => 'profile.info', 'uses' => 'App\Http\Controllers\ProfileController@info']);
+	Route::put('profile/company', ['as' => 'profile.company', 'uses' => 'App\Http\Controllers\ProfileController@company']);
 	Route::post('update-hours', ['as' => 'profile.hours', 'uses' => 'App\Http\Controllers\ProfileController@hours']);
 	Route::post('update-signature', ['as' => 'profile.signature', 'uses' => 'App\Http\Controllers\ProfileController@signature']);
 });

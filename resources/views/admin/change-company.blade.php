@@ -9,7 +9,7 @@
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <h3 class="mb-0">Personnel List @if(auth()->user()->role->value == 0)<a href="{{ route('employees.create') }}"><i class="fas fa-plus-square text-danger ml-1"></i></a>@endif</h3>
+                    <h3 class="mb-0">Personnel List</h3>
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">

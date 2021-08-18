@@ -84,6 +84,11 @@
                                     Change HCP Company
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('company-notification.index') }}">
+                                    Role & Workspace Change Approval
+                                </a>
+                            </li>
                             @elseif(auth()->user()->hcp_data->type_id == 3)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('doctors.forms.index') }}">

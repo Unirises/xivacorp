@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Spatie\OpeningHours\OpeningHours;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -134,5 +136,50 @@ class ProfileController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function company(Request $request)
+    {
+        $user = auth()->user();
+        $x = [
+            'code' => 'required|exists:companies,code',
+            'type' => 'required|digits_between:1,4',
+        ];
+     
+        
+        if($request['type'] == '1') {
+            $x = array_merge($x, [
+                'role' => 'required|exists:types,id',
+                'prc_id' => 'required',
+                'selfie' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            ]);
+        }
+
+        $validated = $this->validate($request, $x);
+
+        DB::table('company_change')->insert([
+            'user_id' => auth()->user()->id,
+            'role' => $validated['type'],
+            'workspace_id' => $validated['code'],
+        ]);
+
+        if($user->hcp_data && $request['type'] == '1') {
+            $user->hcp_data->update([
+                'type_id' => $validated['role'],
+                'prc_id' => $validated['prc_id']
+            ]);
+        } else if ($request['type'] == '1' && !$user->hcp_data) {
+            $filename =  Str::random(22) . '.' . 'png';
+            Storage::disk('local')->put('public/hcp/' . $filename, File::get($request->file('selfie')));
+
+            HcpData::create([
+                'user_id' => $user->id,
+                'type_id' => $validated['role'],
+                'prc_id' => $validated['prc_id'],
+                'photo' => $filename,
+            ]);
+        }
+
+        return redirect()->back()->with('success1', 'Your new workspace and role is now for approval from admin.');
     }
 }
