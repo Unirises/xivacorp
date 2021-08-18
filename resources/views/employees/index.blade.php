@@ -63,6 +63,7 @@
                                 <td>
                                     @if($employee->id !== auth()->user()->id && auth()->user()->role->value == 0)
                                     <a href="{{ route('employees.edit', $employee) }}" class="btn btn-primary my-4">Update</a>
+                                    @if($employee->id != 1)
                                     <form method="POST" action="{{ route('employees.destroy', $employee->id) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
@@ -71,6 +72,7 @@
                                             <input type="submit" class="btn btn-danger" value="Delete user">
                                         </div>
                                     </form>
+                                    @endif
                                     @if($employee->role->value == 1 && $employee->hours != null)
                                     <form method="POST" action="{{ route('employees.reset-hours', $employee->id) }}">
                                         {{ csrf_field() }}

@@ -36,6 +36,19 @@ class UsersTableSeeder extends Seeder
             'gender' => 0,
         ]);
         DB::table('users')->insert([
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
+            'email' => 'csr@xivahealth.io',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'role' => 0,
+            'workspace_id' => 'XVHLTH00',
+            'dob' => '1980-01-01',
+            'gender' => 0,
+        ]);
+        DB::table('users')->insert([
             'first_name' => 'HCP',
             'last_name' => 'Test',
             'email' => 'hcp@test.xyz',
