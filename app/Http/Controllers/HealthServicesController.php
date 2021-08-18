@@ -216,9 +216,9 @@ class HealthServicesController extends Controller
             if($datum->label == 'Hidden Field') break;
             array_push($values, ['res_name' => str_replace('\n', "", str_replace("&nbsp;", "", strip_tags($datum->label))) , 'res_val' => $datum->value]);
         }
-        $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
+        $id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . '-' . $form->id;
         $url = public_path('storage/results/qrcode/'.$id.'.png');
-        QrCode::size(175)->format('png')->generate(route('qr.view', Crypt::encryptString($id)), $url);
+        QrCode::size(175)->format('png')->generate(route('qr.view', $id), $url);
 
         $image = $form->answerer->hcp_data->signature;  // your base64 encoded
         $image = str_replace('data:image/png;base64,', '', $image);

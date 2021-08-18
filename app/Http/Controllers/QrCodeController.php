@@ -17,9 +17,11 @@ class QrCodeController extends Controller
 
     public function fetch(string $data)
     {
-        $data = Crypt::decryptString($data);
-        $form = ServiceForms::with('service', 'service.client')->findOrFail(substr($data, -1));
-        $form->custom_id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . $form->id;
+        $x = explode('-', $data);
+        $y = end($x);
+
+        $form = ServiceForms::with('service', 'service.client')->findOrFail($y);
+        $form->custom_id = $form->service->workspace_id . "-" . $form->service_id . $form->form_id . $form->answerable_by . '-'. $form->id;
         $form->done_date = Carbon::parse($form->updated_at)->toDayDateTimeString();
         $form->answer = json_decode($form->answer);
 
@@ -28,10 +30,12 @@ class QrCodeController extends Controller
         ]);
     }
 
-    public function show(string $encData)
+    public function show(string $data)
     {
-        $data = Crypt::decryptString($encData);
-        $form = ServiceForms::with('service', 'service.client')->findOrFail(substr($data, -1));
+        $x = explode('-', $data);
+        $y = end($x);
+
+        $form = ServiceForms::with('service', 'service.client')->findOrFail($y);
         $form->answer = json_decode($form->answer);
         return view('layouts.show-qr', compact('form'));
     }
