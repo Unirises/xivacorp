@@ -19,8 +19,8 @@
                         @if($consultation->prescription)
                         <a href="{{ route('services.prescriptions.edit', [$consultation->id, $consultation->prescription->id]) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Edit Prescription</a>
                         <a href="{{ route('services.prescriptions.show', [$consultation->id, $consultation->prescription->id]) }}"><i class="fas fa-image text-danger ml-1"></i> Export as Photo</a>
-                        @elseif((auth()->user()->hcp_data->type_id ?? null) == 3)
-                        <a href="{{ route('services.prescriptions.create', $consultation->id) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Create Prescription</a>
+                        @elseif(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id == 3)
+                        <a href="{{ route('services.prescriptions.create', $consultation->id) }}"><i class="fas fa-plus-square text-danger ml-1"></i> Create New Prescription</a>
                         @else
                         @endif
                         @endif
@@ -41,7 +41,7 @@
                 </div>
                 <!-- Card footer -->
                 <div class="card-footer py-4">
-                    @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id ?? null == 3)
+                    @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id == 3)
                     <a href="{{ route('consultations.prescriptions.create', $consultation->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
                     @endif
                     @if($consultation->latest_prescription_id)

@@ -21,6 +21,8 @@
                                 <th scope="col" class="sort" data-sort="budget">New Workspace ID</th>
                                 <th scope="col" class="sort" data-sort="budget">Previous Role</th>
                                 <th scope="col" class="sort" data-sort="budget">Current Role</th>
+                                <th scope="col" class="sort" data-sort="budget">Company ID</th>
+                                <th scope="col" class="sort" data-sort="budget">Contact Details</th>
                                 <th scope="col" class="sort" data-sort="status">Actions</th>
                             </tr>
                         </thead>
@@ -40,6 +42,12 @@
                                     @else
                                     {{ $datum->role->description }}
                                     @endif
+                                </td>
+                                <td>
+                                    <img src="{{ $datum->company_id }}" alt="" style="max-width: 100%">
+                                </td>
+                                <td>
+                                    Mobile Number: {{ $datum->user->mobile_number }} | Telephone Number: {{ $datum->user->telephone_number ?? 'N/A' }}
                                 </td>
                                 <td>
                                     <form method="POST" action="{{ route('company-notification.approve', $datum->id) }}">

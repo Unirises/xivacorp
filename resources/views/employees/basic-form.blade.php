@@ -102,7 +102,32 @@
         </span>
         @endif
     </div>
-
+    <div class="row">
+        <div class="col">
+            <div class="form-group{{ $errors->has('mobile_number') ? ' has-danger' : '' }}">
+                <div class="input-group input-group-alternative mb-3">
+                    <input class="form-control{{ $errors->has('mobile_number') ? ' is-invalid' : '' }}" placeholder="Mobile Number" type="text" name="mobile_number" value="{{ old('mobile_number') ?? $employee->mobile_number ?? '' }}" required autofocus>
+                </div>
+                @if ($errors->has('mobile_number'))
+                <span class="invalid-feedback" style="display: block;" role="alert">
+                    <strong>{{ $errors->first('mobile_number') }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group{{ $errors->has('telephone_number') ? ' has-danger' : '' }}">
+                <div class="input-group input-group-alternative mb-3">
+                    <input class="form-control{{ $errors->has('telephone_number') ? ' is-invalid' : '' }}" placeholder="Telephone Number (Optional)" type="text" name="telephone_number" value="{{ old('telephone_number') ?? $employee->telephone_number ?? '' }}" autofocus>
+                </div>
+                @if ($errors->has('telephone_number'))
+                <span class="invalid-feedback" style="display: block;" role="alert">
+                    <strong>{{ $errors->first('telephone_number') }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
+    </div>
     <div class="form-group{{ $errors->has('gender') ? ' has-danger' : '' }}">
         <div class="input-group input-group-alternative mb-3">
             <div class="input-group-prepend">

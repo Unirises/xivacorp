@@ -121,6 +121,8 @@ class ProfileController extends Controller
             'region' => ['required', 'string', 'max:255'],
             'dob' => 'required|date',
             'gender' => 'required|numeric',
+            'mobile_number' => 'required',
+            'telephone_number' => 'nullable',
         ]);
 
         auth()->user()->update([
@@ -133,6 +135,8 @@ class ProfileController extends Controller
             'region' => $validated['region'],
             'dob' => $validated['dob'],
             'gender' => $validated['gender'],
+            'mobile_number' => $validated['mobile_number'],
+            'telephone_number' => $validated['telephone_number'],
         ]);
 
         return redirect()->back();
@@ -144,6 +148,7 @@ class ProfileController extends Controller
         $x = [
             'code' => 'required|exists:companies,code',
             'type' => 'required|digits_between:1,4',
+            'company_id' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ];
      
         
@@ -157,10 +162,14 @@ class ProfileController extends Controller
 
         $validated = $this->validate($request, $x);
 
+        $filename1 =  Str::random(15) . '.' . 'png';
+        Storage::disk('local')->put('public/employee/company_id/' . $filename1, File::get($request->file('company_id')));
+
         DB::table('company_change')->insert([
             'user_id' => auth()->user()->id,
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],
+            'company_id' => $filename1,
         ]);
 
         if($user->hcp_data && $request['type'] == '1') {

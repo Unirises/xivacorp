@@ -230,7 +230,7 @@ class HealthServicesController extends Controller
         $image1 = str_replace('data:image/png;base64,', '', $image1);
         $image1 = str_replace(' ', '+', $image1);
         $imageName1 = $form->doctor->id.'.'.'png';
-        Storage::disk('local')->put('public/hcp/signature/' . $imageName1,  base64_decode($image));
+        Storage::disk('local')->put('public/hcp/signature/' . $imageName1,  base64_decode($image1));
 
         $templateProcessor = new TemplateProcessor('word-template/result.docx');
         $templateProcessor->cloneRowAndSetValues('res_name', $values);

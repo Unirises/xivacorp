@@ -26,9 +26,15 @@ class Company extends Model
         $types = Type::where('type', '!=', 0)->get();
         foreach ($types as $index => $type) {
             $serviced = Service::where('service_id', $type->id)->where('workspace_id', $this->code)->get();
-            $type['serviced'] =  $serviced->count();
             if($serviced->count() < 1) {
                 unset($types[$index]);
+            } else {
+                $recurring = ServiceForms::where('service_id', $serviced[0]->id)->where('is_exportable', true)->get();
+                
+                $type['serviced'] =  $serviced->count() + $recurring->count();
+                if($serviced->count() + $recurring->count()  < 1) {
+                    unset($types[$index]);
+                }
             }
         }
         return $types;

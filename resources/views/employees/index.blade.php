@@ -27,6 +27,7 @@
                                 <th scope="col">Role</th>
                                 <th scope="col">Recently Serviced</th>
                                 @if(auth()->user()->role->value == 0)
+                                <th scope="col">Contact Details</th>
                                 <th scope="col">Actions</th>
                                 @endif
                             </tr>
@@ -51,7 +52,8 @@
                                 @endif
                                 <td>
                                     @if($employee->hcp_data)
-                                    {{ $employee->hcp_data->type->name }} - {{ $employee->hcp_data->prc_id }}
+                                    {{ $employee->hcp_data->type->name }} - {{ $employee->hcp_data->prc_id }} <br>
+                                    <img src="{{ $employee->hcp_data->photo }}" alt="HCP Photo" srcset="" style="max-width: 100%">
                                     @else
                                     {{ strtoupper($employee->role->description)  }}
                                     @endif
@@ -60,6 +62,9 @@
                                     {{ $employee->recent_service }}
                                 </td>
                                 @if(auth()->user()->role->value == 0)
+                                <td>
+                                    Mobile Number: {{ $employee->mobile_number ?? 'N/A' }} | Telephone Number: {{ $employee->telephone_number ?? 'N/A' }}
+                                </td>
                                 <td>
                                     @if($employee->id !== auth()->user()->id && auth()->user()->role->value == 0)
                                     <a href="{{ route('employees.edit', $employee) }}" class="btn btn-primary my-4">Update</a>

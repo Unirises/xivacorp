@@ -4,6 +4,7 @@
 @include('layouts.headers.cards')
 <div class="container-fluid mt--7">
     <div class="row mt-5">
+        @if($canView)
         @foreach($companies as $company)
         <div class="col{{ $companies->count() > 1 ? '-6' : '' }} mt-2">
             <div class="card shadow">
@@ -67,6 +68,7 @@
             </div>
         </div>
         @endforeach
+        @endif
     </div>
 
     @include('layouts.footers.auth')

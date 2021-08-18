@@ -37,6 +37,8 @@ class UserController extends Controller
             'type' => 'required|digits_between:1,4',
             'code' => 'nullable|exists:companies,code',
             'gender' => 'required|numeric',
+            'mobile_number' => 'required',
+            'telephone_number' => 'nullable',
         ];
 
         if($request['type'] == '1') {
@@ -64,6 +66,8 @@ class UserController extends Controller
             'workspace_id' => $validated['code'],
             'gender' => $validated['gender'],
             'is_onboarded' => true,
+            'mobile_number' => $validated['mobile_number'],
+            'telephone_number' => $validated['telephone_number'],
         ]);
 
 

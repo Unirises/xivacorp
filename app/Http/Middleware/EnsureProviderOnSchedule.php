@@ -19,9 +19,11 @@ class EnsureProviderOnSchedule
     {
 
         $user = auth()->user();
-        if($user->role == UserRole::HCP()) {
-            if(!$user->in_schedule || $user->hcp_data->signature == null) {
-                    return redirect('home');
+        if ($user->role == UserRole::HCP()) {
+            if ($user->in_schedule && ($user->hcp_data->signature ?? null) != null) {
+                return $next($request);
+            } else {
+                return redirect('home');
             }
         }
 

@@ -39,6 +39,8 @@ class User extends Authenticatable
         'barangay',
         'region',
         'city',
+        'mobile_number',
+        'telephone_number',
     ];
 
     /**

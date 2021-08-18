@@ -97,7 +97,7 @@
                                     <td>
                                         <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">View Records</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
-                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id ?? null == 3)
+                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id == 3)
                                         <a href="{{ route('services.prescriptions.create', $booking->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
                                         @endif
                                         @if($booking->latest_prescription_id)
@@ -149,7 +149,7 @@
                                     <td>
                                         <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">View Records</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
-                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id ?? null == 3)
+                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id == 3)
                                         <a href="{{ route('services.prescriptions.create', $booking->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
                                         @endif
                                         @if($booking->latest_prescription_id)
@@ -204,7 +204,7 @@
                                     <td>
                                         <a href="{{ route('services.show', $booking->id) }}" class="btn btn-block btn-primary">View Records</a>
                                         <a href="{{ route('services.diary.index', $booking->id) }}" class="btn btn-block btn-info">Health Diary</a>
-                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id ?? null == 3)
+                                        @if(auth()->user()->role->value == 1 && auth()->user()->hcp_data->type_id == 3)
                                         <a href="{{ route('services.prescriptions.create', $booking->id) }}" class="btn btn-block btn-primary">Create New Prescription</a>
                                         @endif
                                         @if($booking->latest_prescription_id)

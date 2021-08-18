@@ -68,6 +68,8 @@ class RegisterController extends Controller
             'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
             'gender' => 'required|numeric',
+            'mobile_number' => 'required',
+            'telephone_number' => 'nullable',
         ];
         
         if($data['type'] == '1') {
@@ -107,6 +109,8 @@ class RegisterController extends Controller
             'workspace_id' => $data['code'],
             'dob' => $data['dob'],
             'gender' => $data['gender'],
+            'mobile_number' => $data['mobile_number'],
+            'telephone_number' => $data['telephone_number'],
         ]);
 
         if($data['type'] == '1') {

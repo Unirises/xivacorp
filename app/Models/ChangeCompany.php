@@ -26,4 +26,8 @@ class ChangeCompany extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getCompanyIdAttribute($value) {
+        return url('storage/employee/company_id/' . rawurlencode($value));
+    }
 }

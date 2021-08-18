@@ -130,7 +130,7 @@
                     <form id="my-form">
                         @csrf
                         <h6 class="heading-small text-muted mb-4">Signature</h6>
-                        @if (!auth()->user()->hcp_data->signature)
+                        @if (!(auth()->user()->hcp_data->signature ?? null))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <h1>You haven't set your signature yet!</h1>
                         </div>
@@ -188,6 +188,18 @@
                             </span>
                             @endif
                         </div>
+                        <div class="form-group{{ $errors->has('company_id') ? ' has-danger' : '' }}">
+                            <div class="custom-file">
+                                <input type="file" name="company_id" class="custom-file-input" id="company_id">
+                                <label class="custom-file-label" id="company_id_label" for="company_id">Attach your Company ID.</label>
+                            </div>
+
+                            @if ($errors->has('company_id'))
+                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                <strong>Your Company ID photo is required.</strong>
+                            </span>
+                            @endif
+                        </div>
                         <div id="forHcp">
                             <div class="form-group{{ $errors->has('role') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
@@ -228,13 +240,13 @@
 
                                 @if ($errors->has('selfie'))
                                 <span class="invalid-feedback" style="display: block;" role="alert">
-                                    <strong>{{ $errors->first('selfie') }}</strong>
+                                    <strong>Your PRC ID photo is required.</strong>
                                 </span>
                                 @endif
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success mt-4">Update Signature</button>
+                            <button type="submit" class="btn btn-success mt-4">Update Company</button>
                         </div>
                     </form>
                     <hr>
@@ -310,7 +322,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success mt-4">{{ __('Change password') }}</button>
+                                <button type="submit" class="btn btn-success mt-4">Change Password</button>
                             </div>
                         </div>
                     </form>
@@ -361,7 +373,9 @@
                 hcpToggleDiv.style.display = "none";
             }
         })
-
+        $("#company_id").change(function() {
+            $("#company_id_label").html($(this).val().split("\\").splice(-1, 1)[0] || "Attach your Company ID.");
+        });
         $('#my-form').on('submit', async function(e) {
             e.preventDefault();
 
@@ -380,7 +394,7 @@
                 if (resp.status == 422) {
                     return alert('Please fill in all the fields.');
                 }
-
+                console.log(respData);
                 alert('Your signature has been updated!');
             }).catch((err) => {
                 console.error(err);

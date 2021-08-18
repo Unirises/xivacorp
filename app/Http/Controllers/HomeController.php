@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\UserRole;
 use App\Models\Company;
 use App\Models\Service;
+use App\Models\ServiceForms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -51,10 +52,22 @@ class HomeController extends Controller
         foreach($lineChart as $day => $services) {
             array_merge($customArray, array($day => []));
             foreach($services as $index => $service) {
+                $recurring = ServiceForms::where('service_id', $service->id)->where('is_exportable', true)->count();
                 $customArray[$day][$service->service->meta][] = $service;
+                $customArray[$day][$service->service->meta][] = $recurring;
             }
         }
-       
-        return view('dashboard', compact('companies', 'customArray'));
+
+        $canView = true;
+
+        if (auth()->user()->role == UserRole::HCP()) {
+            if (auth()->user()->in_schedule && (auth()->user()->hcp_data->signature ?? null) != null) {
+            } else {
+                $canView = false;
+            }
+        }
+
+        
+        return view('dashboard', compact('companies', 'customArray', 'canView'));
     }
 }

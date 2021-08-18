@@ -60,6 +60,8 @@ class EmployeeController extends Controller
             'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
             'gender' => 'required|numeric',
+            'mobile_number' => 'required',
+            'telephone_number' => 'nullable',
         ];
         
         if($request['type'] == '1') {
@@ -89,6 +91,8 @@ class EmployeeController extends Controller
             'workspace_id' => $validated['code'],
             'dob' => $validated['dob'],
             'gender' => $validated['gender'],
+            'mobile_number' => $validated['mobile_number'],
+            'telephone_number' => $validated['telephone_number'],
         ]);
 
         if($validated['type'] == '1') {
@@ -157,6 +161,8 @@ class EmployeeController extends Controller
             'code' => 'nullable|exists:companies,code',
             'dob' => 'required|date',
             'gender' => 'required|numeric',
+            'mobile_number' => 'required',
+            'telephone_number' => 'nullable',
         ];
 
         if($request['type'] == '1') {
@@ -187,6 +193,8 @@ class EmployeeController extends Controller
             'workspace_id' => $validated['code'],
             'dob' => $validated['dob'],
             'gender' => $validated['gender'],
+            'mobile_number' => $validated['mobile_number'],
+            'telephone_number' => $validated['telephone_number'],
         ]);
 
         if($user->hcp_data && $request['type'] == '1') {
