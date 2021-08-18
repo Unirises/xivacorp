@@ -27,7 +27,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('qr.verify') }}">
-                        <span class="nav-link-inner--text">Verify QR Code</span>
+                    <i class="ni ni-tablet-button"></i><span class="nav-link-inner--text"> Verify QR Code</span>
                     </a>
                 </li>
                 <li class="nav-item">
