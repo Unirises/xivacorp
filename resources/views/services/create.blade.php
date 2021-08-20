@@ -11,6 +11,9 @@
     <div class="row">
         <div class="col">
             <div class="card">
+                @if($errors->any())
+                    {{ implode('', $errors->all('<div>:message</div>')) }}
+                @endif
                 <form action="{{ route('services.store') }}" method="POST">
                     <!-- Card header -->
                     <div class="card-header border-0">

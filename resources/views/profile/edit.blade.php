@@ -31,7 +31,14 @@
                 </div>
             </div>
         </div>
+        <br>
         <div class="col-xl-8 order-xl-1">
+            <a href="{{ route('logout') }}" class="btn btn-primary btn-block mb-2" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                <i class="ni ni-user-run"></i>
+                <span>{{ __('Logout') }}</span>
+            </a>
+            <br>
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">

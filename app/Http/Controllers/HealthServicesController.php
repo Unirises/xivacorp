@@ -53,7 +53,7 @@ class HealthServicesController extends Controller
     {
         $workspaceId = auth()->user()->workspace_id;
         $services = Type::where('type', '!=', 0)->get();
-        $users =  auth()->user()->role->value == 0 ? User::where('role', 4)->whereNotNull('workspace_id')->get() : User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get();
+        $users =  auth()->user()->role->value == 0 ? User::where('role', 4)->whereNotNull('workspace_id')->get()->sortBy('name') : User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get()->sortBy('name');
         return view('services.create', compact('services', 'users'));
     }
 

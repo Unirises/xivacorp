@@ -4,6 +4,11 @@
 @include('layouts.headers.cards')
 <div class="container-fluid mt--7">
     <div class="row mt-5">
+        <a href="{{ route('logout') }}" class="btn btn-primary btn-block mb-2" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+            <i class="ni ni-user-run"></i>
+            <span>{{ __('Logout') }}</span>
+        </a>
         @if($canView)
         @foreach($companies as $company)
         <div class="col{{ $companies->count() > 1 ? '-6' : '' }} mt-2">
@@ -16,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <span>{{ $company->users->count() }} Registered Users</span> | 
+                    <span>{{ $company->users->count() }} Registered Users</span> |
                     <span>{{ $company->users()->where('role', 4)->count() }} Employees</span><br><br>
                     @if(auth()->user()->role->value == 0)
                     <div class="table-responsive">
