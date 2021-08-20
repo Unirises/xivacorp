@@ -49,7 +49,7 @@ class ConsultationController extends Controller
     {
         $workspaceId = auth()->user()->workspace_id;
         $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get();
-        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [4])->get();
+        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get();
 
         return view('consultations.create', compact('providers', 'users'));
     }
