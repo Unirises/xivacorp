@@ -2,7 +2,7 @@
     <div class="card-header bg-transparent ">
     </div>
     <div class="card-body pb-lg-5">
-        @if(auth()->user()->role->value == 0 || auth()->user()->role->value == 1)
+        @if(auth()->user()->role->value != 4)
         <div class="input-group input-group-alternative mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="user_id">Select a user</label>

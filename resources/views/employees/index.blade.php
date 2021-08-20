@@ -53,7 +53,7 @@
                                 <td>
                                     @if($employee->hcp_data)
                                     {{ $employee->hcp_data->type->name }} - {{ $employee->hcp_data->prc_id }} <br>
-                                    <img src="{{ $employee->hcp_data->photo }}" alt="HCP Photo" srcset="" style="max-width: 100%">
+                                    <img src="{{ $employee->hcp_data->photo }}" alt="HCP Photo" srcset="" style="max-width: 250px; height: auto;">
                                     @else
                                     {{ strtoupper($employee->role->description)  }}
                                     @endif

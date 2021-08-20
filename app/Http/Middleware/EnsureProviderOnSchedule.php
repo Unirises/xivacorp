@@ -25,6 +25,10 @@ class EnsureProviderOnSchedule
             } else {
                 return redirect('home');
             }
+        } else if ($user->role == UserRole::Employee()) {
+            if($user->workspace_id == null) {
+                return redirect('home');
+            }
         }
 
         return $next($request);
