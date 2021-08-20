@@ -4,7 +4,6 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
 <div class="container-fluid mt--6">
-    @if(auth()->user()->role->value == 1)
     <div class="row mb-4">
         <div class="col">
             <div class="card">
@@ -22,7 +21,9 @@
                                     <th scope="col" class="sort" data-sort="name">Client</th>
                                     <th scope="col" class="sort" data-sort="name">Service</th>
                                     <th scope="col" class="sort" data-sort="name">Schedule</th>
+                                    @if(auth()->user()->role->value == 1)
                                     <th scope="col">Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="list">
@@ -40,6 +41,7 @@
                                     <td>
                                         {{ $booking->schedule->format('m/d/Y g:i A') }}
                                     </td>
+                                    @if(auth()->user()->role->value == 1)
                                     <td>
                                         <form method="POST" action="{{ route('services.accept-booking', $booking->id) }}">
                                             {{ csrf_field() }}
@@ -50,6 +52,7 @@
                                             </div>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -62,7 +65,6 @@
             </div>
         </div>
     </div>
-    @endif
     <div class="row mb-4">
         <div class="col-lg-6 col-md-12">
             <div class="card">
