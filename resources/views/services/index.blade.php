@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endsection
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
@@ -14,7 +16,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="tab1">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">Workspace ID</th>
@@ -75,7 +77,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="tab2">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">Workspace ID</th>
@@ -123,7 +125,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="tab3">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">Workspace ID</th>
@@ -178,7 +180,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="tab4">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">Workspace ID</th>
@@ -233,4 +235,81 @@
 @endsection
 
 @push('js')
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#tab1 thead tr').clone(true).appendTo('#tab1 thead');
+        $('#tab1 thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (tab1.column(i).search() !== this.value) {
+                    tab1
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var tab1 = $('#tab1').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+        $('#tab2 thead tr').clone(true).appendTo('#tab2 thead');
+        $('#tab2 thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (tab2.column(i).search() !== this.value) {
+                    tab2
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var tab2 = $('#tab2').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+        $('#tab3 thead tr').clone(true).appendTo('#tab3 thead');
+        $('#tab3 thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (tab3.column(i).search() !== this.value) {
+                    tab3
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var tab3 = $('#tab3').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+        $('#tab4 thead tr').clone(true).appendTo('#tab4 thead');
+        $('#tab4 thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (tab4.column(i).search() !== this.value) {
+                    tab4
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var tab4 = $('#tab4').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+    });
+</script>
 @endpush
