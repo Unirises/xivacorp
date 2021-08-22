@@ -52,8 +52,8 @@ class ServiceController extends Controller
     {
         $workspaceId = auth()->user()->workspace_id;
         $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get();
-        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [1, 4])->get();
-        $services = Type::where('type', '!=', 0)->get();
+        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [1, 4])->get()->sortBy('name');
+        $services = Type::where('type', '!=', 0)->get()->sortBy('name')->sortBy('type');
 
         return view('consultations.create', compact('providers', 'users', 'services'));
     }

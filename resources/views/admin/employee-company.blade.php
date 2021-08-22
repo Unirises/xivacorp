@@ -46,7 +46,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="{{ $datum->company_id }}" alt="" style="max-width: 500px; height: auto;">
+                                    <img src="{{ $datum->company_id }}" alt="" style="max-width: 250px; height: auto;">
                                 </td>
                                 <td>
                                     Mobile Number: {{ $datum->user->mobile_number }} | Telephone Number: {{ $datum->user->telephone_number ?? 'N/A' }}

@@ -52,7 +52,7 @@ class HealthServicesController extends Controller
     public function create()
     {
         $workspaceId = auth()->user()->workspace_id;
-        $services = Type::where('type', '!=', 0)->get();
+        $services = Type::where('type', '!=', 0)->get()->sortBy('name')->sortBy('type');
         $users =  auth()->user()->role->value == 0 ? User::where('role', 4)->whereNotNull('workspace_id')->get()->sortBy('name') : User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get()->sortBy('name');
         return view('services.create', compact('services', 'users'));
     }
@@ -110,12 +110,15 @@ class HealthServicesController extends Controller
      */
     public function destroy($id)
     {
-        $service = Service::where('id', $id)->get();
-        if(auth()->user()->role == 0) {
+        $service = Service::where('id', $id)->first();
+        if(auth()->user()->role->value == 0) {
+            $service->forms()->delete();
             $service->delete();
         } else if ($service->hcp_id != null && $service->hcp_id == auth()->user()->id) {
+            $service->forms()->delete();
             $service->delete();
         } else if ($service->hcp_id == null && $service->workspace_id == auth()->user()->workspace_id) {
+            $service->forms()->delete();
             $service->delete();
         } else {
             return abort(401);

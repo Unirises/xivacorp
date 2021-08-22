@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div class="form-group{{ $errors->has('schedule') ? ' has-danger' : '' }}" id="schedule_div">
-                            <input type="text" name="schedule" id="schedule" class="form-control form-control-alternative{{ $errors->has('schedule') ? ' is-invalid' : '' }}" placeholder="Select a schedule" value="{{ old('schedule') }}" required>
+                            <input type="text" name="schedule" id="schedule" class="form-control form-control-alternative{{ $errors->has('schedule') ? ' is-invalid' : '' }}" placeholder="Select a schedule" value="{{ old('schedule') }}">
 
                             @if ($errors->has('schedule'))
                             <span class="invalid-feedback" role="alert">

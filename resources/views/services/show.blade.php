@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endsection
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
@@ -59,7 +61,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="form_table">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="sort" data-sort="name">Form</th>
@@ -81,7 +83,7 @@
                                         @if($form->answer ?? null)
                                         <a href="{{ route('services.forms.response', [$service->id, $form->id]) }}" class="btn btn-primary my-4">View Response</a>
                                         @endif
-                                        @if(auth()->user()->role->value == 1)
+                                        @if(auth()->user()->role->value != 4)
                                         <form method="POST" action="{{ route('services.forms.delete', [$service->id, $form->id]) }}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
@@ -107,6 +109,7 @@
 @endsection
 
 @push('js')
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 <script>
     jQuery(document).ready(function($) {
         $("#exportDiv").hide();
@@ -120,6 +123,24 @@
                 $("#exportDiv").show();
                 $("#signatureDiv").hide();
             }
+        });
+        $('#form_table thead tr').clone(true).appendTo('#form_table thead');
+        $('#form_table thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var table = $('#form_table').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
         });
     });
 </script>

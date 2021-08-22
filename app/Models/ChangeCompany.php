@@ -15,7 +15,8 @@ class ChangeCompany extends Model
     protected $fillable = [
         'user_id',
         'role',
-        'workspace_id'
+        'workspace_id',
+        'company_id',
     ];
 
     protected $casts = [

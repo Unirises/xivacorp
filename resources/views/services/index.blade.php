@@ -23,9 +23,7 @@
                                     <th scope="col" class="sort" data-sort="name">Client</th>
                                     <th scope="col" class="sort" data-sort="name">Service</th>
                                     <th scope="col" class="sort" data-sort="name">Schedule</th>
-                                    @if(auth()->user()->role->value == 1)
                                     <th scope="col">Actions</th>
-                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="list">
@@ -43,8 +41,16 @@
                                     <td>
                                         {{ $booking->schedule->format('m/d/Y g:i A') }}
                                     </td>
-                                    @if(auth()->user()->role->value == 1)
                                     <td>
+                                        <form method="POST" action="{{ route('services.destroy', $booking->id) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger btn-block" value="Delete">
+                                            </div>
+                                        </form>
+                                        @if(auth()->user()->role->value == 1)
                                         <form method="POST" action="{{ route('services.accept-booking', $booking->id) }}">
                                             {{ csrf_field() }}
                                             {{ method_field('PUT') }}
@@ -53,8 +59,8 @@
                                                 <input type="submit" class="btn btn-success btn-block" value="Accept">
                                             </div>
                                         </form>
+                                        @endif
                                     </td>
-                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -107,6 +113,15 @@
                                         @if($booking->latest_prescription_id)
                                         <a href="{{ route('services.prescriptions.show', [$booking->id, $booking->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
                                         @endif
+                                        <br>
+                                        <form method="POST" action="{{ route('services.destroy', $booking->id) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger btn-block" value="Delete">
+                                            </div>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -159,6 +174,15 @@
                                         @if($booking->latest_prescription_id)
                                         <a href="{{ route('services.prescriptions.show', [$booking->id, $booking->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
                                         @endif
+                                        <br>
+                                        <form method="POST" action="{{ route('services.destroy', $booking->id) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger btn-block" value="Delete">
+                                            </div>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -213,6 +237,18 @@
                                         @endif
                                         @if($booking->latest_prescription_id)
                                         <a href="{{ route('services.prescriptions.show', [$booking->id, $booking->latest_prescription_id]) }}" class="btn btn-block btn-info">View Latest Prescription</a>
+                                        @endif
+
+                                        @if(auth()->user()->role->value == 0)
+                                        <br>
+                                        <form method="POST" action="{{ route('services.destroy', $booking->id) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger btn-block" value="Delete">
+                                            </div>
+                                        </form>
                                         @endif
                                     </td>
                                 </tr>

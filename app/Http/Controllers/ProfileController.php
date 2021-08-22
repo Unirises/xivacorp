@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
+use App\Models\ChangeCompany;
 use App\Models\HcpData;
 use App\Models\WorkingHoursNotification;
 use Illuminate\Http\Request;
@@ -74,7 +75,7 @@ class ProfileController extends Controller
         foreach ($validated['days'] as $key => $value) {
             $formattedDays[$value] = [$validated['start'].'-'.$validated['end']];
         }
-
+        WorkingHoursNotification::where('user_id', auth()->user()->id)->delete();
         WorkingHoursNotification::create([
             'user_id' => auth()->user()->id,
             'hours' => json_encode($formattedDays)
@@ -164,8 +165,8 @@ class ProfileController extends Controller
 
         $filename1 =  Str::random(15) . '.' . 'png';
         Storage::disk('local')->put('public/employee/company_id/' . $filename1, File::get($request->file('company_id')));
-
-        DB::table('company_change')->insert([
+        ChangeCompany::where('user_id', auth()->user()->id)->delete();
+        ChangeCompany::create([
             'user_id' => auth()->user()->id,
             'role' => $validated['type'],
             'workspace_id' => $validated['code'],

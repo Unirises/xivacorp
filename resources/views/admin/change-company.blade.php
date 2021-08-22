@@ -21,6 +21,7 @@
                                 <th scope="col" class="sort" data-sort="budget">Current Working Hours</th>
                                 <th scope="col" class="sort" data-sort="budget">Company</th>
                                 <th scope="col" class="sort" data-sort="status">Actions</th>
+                                <th>Reset Hours</th>
                             </tr>
                         </thead>
                         <tbody class="list">
@@ -64,6 +65,16 @@
                                         @endif
                                     </td>
                                 </form>
+                                <td>
+                                    <form method="POST" action="{{ route('employees.reset-hours', $hcp->id) }}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-warning" value="Reset Working Hours">
+                                        </div>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -45,7 +45,7 @@ class HomeController extends Controller
         $recurringChart = 
             ServiceForms::where('is_exportable', true)->whereNotNull('answer')->whereHas('service', function($q) {
                 $q->where('workspace_id', auth()->user()->workspace_id);
-            })->get()->groupBy(function($model) {
+            })->where('created_at', '>=', Carbon::now()->subDays(10))->get()->groupBy(function($model) {
                 return Carbon::parse($model->created_at)->format('d');
             });
             

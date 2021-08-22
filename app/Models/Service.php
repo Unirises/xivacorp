@@ -45,4 +45,9 @@ class Service extends Model
     {
         return Prescription::where('consultation_id', $this->id)->latest()->first()->id ?? null;
     }
+
+    public function forms()
+    {
+        return $this->hasMany(ServiceForms::class, 'service_id', 'id');
+    }
 }

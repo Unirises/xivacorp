@@ -96,7 +96,7 @@
 
         $('#my-form').on('submit', async function(e) {
             e.preventDefault();
-            console.clear();
+
             var formData = $(this).serializeArray();
             const photo = document.querySelector('#photo')?.files[0];
             var parsedFields = [];

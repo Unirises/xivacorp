@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endsection
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
@@ -13,7 +15,7 @@
                 </div>
                 <!-- Light table -->
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
+                    <table class="table align-items-center table-flush" id="form_table">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">Classification</th>
@@ -49,4 +51,30 @@
 @endsection
 
 @push('js')
+@endpush
+
+@push('js')
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#form_table thead tr').clone(true).appendTo('#form_table thead');
+        $('#form_table thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var table = $('#form_table').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+    });
+</script>
 @endpush

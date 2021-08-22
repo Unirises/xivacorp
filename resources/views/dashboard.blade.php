@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endsection
 @section('content')
 @include('layouts.headers.cards')
 <div class="container-fluid mt--7">
@@ -79,3 +81,30 @@
     @include('layouts.footers.auth')
 </div>
 @endsection
+
+
+@push('js')
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('table.table thead tr').clone(true).appendTo('#table thead');
+        $('table.table thead tr:eq(1) th').each(function(i) {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+            $('input', this).on('keyup change', function() {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        var table = $('table.table').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true
+        });
+    });
+</script>
+@endpush
