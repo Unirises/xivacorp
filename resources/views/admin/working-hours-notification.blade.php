@@ -51,6 +51,14 @@
                                             <input type="submit" class="btn btn-success" value="Approve">
                                         </div>
                                     </form>
+                                    <form method="POST" action="{{ route('working-hours-notification.delete', $request) }}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </div>
+                                    </form>
                                     @endif
                                 </td>
                             </tr>

@@ -37,6 +37,16 @@ class NotificationController extends Controller
         return redirect()->back();
     }
 
+    public function delete(int $id)
+    {
+        abort_if(auth()->user()->role->value != 0, 401);
+
+        $data = WorkingHoursNotification::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
+
     public function companyIndex()
     {
         abort_if(auth()->user()->role->value != 0, 401);

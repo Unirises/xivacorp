@@ -72,6 +72,7 @@ Route::group(['middleware' => ['schedule', 'onboard', 'auth']], function () {
 	Route::get('notifications/forms', ['as' => 'doctors.forms.index', 'uses' => 'App\Http\Controllers\NotificationController@showForms']);
 	Route::get('notifications', ['as' => 'working-hours-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@index']);
 	Route::post('notifications/{id}', ['as' => 'working-hours-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@approve']);
+	Route::delete('notifications/{id}', ['as' => 'working-hours-notification.delete', 'uses' => 'App\Http\Controllers\NotificationController@delete']);
 	Route::get('notifications/company', ['as' => 'company-notification.index', 'uses' => 'App\Http\Controllers\NotificationController@employeeCompanyIndex']);
 	Route::post('notifications/company/{id}', ['as' => 'company-notification.approve', 'uses' => 'App\Http\Controllers\NotificationController@employeeCompanyApprove']);
 	Route::delete('notifications/company/{id}', ['as' => 'company-notification.delete', 'uses' => 'App\Http\Controllers\NotificationController@employeeCompanyDelete']);
