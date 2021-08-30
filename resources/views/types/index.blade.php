@@ -33,7 +33,17 @@
                                     {{ $type->name }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('types.edit', $type) }}" class="btn btn-primary my-4">Update</button>
+                                    <a href="{{ route('types.edit', $type) }}" class="btn btn-primary my-4">Update</a>
+                                    <form method="POST" action="{{ route('types.destroy', $type) }}">
+                                        @if(auth()->user()->role->value == 0)
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </div>
+                                        @endif
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

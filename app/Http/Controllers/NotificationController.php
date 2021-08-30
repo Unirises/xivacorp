@@ -87,6 +87,14 @@ class NotificationController extends Controller
         }
 
         DB::table('company_change')->where('id', $id)->delete();
+        DB::table('company_change')->where('user_id', $data->user_id)->delete();
+
+        return redirect()->back();
+    }
+
+    public function employeeCompanyDelete(int $id)
+    {
+        DB::table('company_change')->where('id', $id)->delete();
 
         return redirect()->back();
     }

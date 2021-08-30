@@ -83,7 +83,7 @@
                                         @if($form->answer ?? null)
                                         <a href="{{ route('services.forms.response', [$service->id, $form->id]) }}" class="btn btn-primary my-4">View Response</a>
                                         @endif
-                                        @if(auth()->user()->role->value != 4)
+                                        @if(auth()->user()->role->value == 0 || auth()->user()->role->value == 1)
                                         <form method="POST" action="{{ route('services.forms.delete', [$service->id, $form->id]) }}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}

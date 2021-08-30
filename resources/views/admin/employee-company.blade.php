@@ -61,6 +61,16 @@
                                         </div>
                                         @endif
                                     </form>
+                                    <form method="POST" action="{{ route('company-notification.delete', $datum->id) }}">
+                                        @if(auth()->user()->role->value == 0)
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        </div>
+                                        @endif
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

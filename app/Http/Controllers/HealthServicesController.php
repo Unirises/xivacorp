@@ -191,13 +191,12 @@ class HealthServicesController extends Controller
             $validated['photo'] = $filename;
         }
 
-        $data = ServiceForms::where('id', $formId)->update([
+        ServiceForms::where('id', $formId)->update([
             'answer' => json_encode($validated['data']),
             'photo' => $request->filled('photo') ? $validated['photo'] : null,
             'doctor_id' => $validated['doctor_id'] ?? null,
             'signature' => $validated['signature'] ?? null,
         ]);
-        return $data;
         return redirect()->back();
     }
     

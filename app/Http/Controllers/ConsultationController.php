@@ -48,8 +48,8 @@ class ConsultationController extends Controller
     public function create()
     {
         $workspaceId = auth()->user()->workspace_id;
-        $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get();
-        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get();
+        $providers = User::where('workspace_id', $workspaceId)->where('role', 1)->get()->sortBy('name');
+        $users = User::where('workspace_id', $workspaceId)->whereIn('role', [2, 3, 4])->get()->sortBy('name');
 
         return view('consultations.create', compact('providers', 'users'));
     }
