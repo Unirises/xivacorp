@@ -1,3 +1,10 @@
+@section('head')
+<script>
+    alert('wew');
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/themes/default.css" integrity="sha512-x9ZSPqJJfUhtPuo+fw6331wHeC3vhDpNI3Iu4KC05zJrxx7MWYewaDaASGxAUgWyrwU50oFn6Xk0CrQnTSuoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
+
 <div>
     <div class="row">
         <div class="col-5">
@@ -94,7 +101,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ni ni-watch-time"></i></span>
             </div>
-            <input class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" placeholder="Date of Birth" type="date" name="dob" value="{{ old('dob') ?? $employee->dob ?? '' }}" required autofocus>
+            <input type="text" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" id="dob" name="dob" placeholder=" Date of Birth" value=""/>
         </div>
         @if ($errors->has('dob'))
         <span class="invalid-feedback" style="display: block;" role="alert">
@@ -147,3 +154,16 @@
         @endif
     </div>
 </div>
+
+
+@push('js')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+$(document).ready(function() {
+    $("#dob").flatpickr({
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+    });
+});
+</script>
+@endpush
