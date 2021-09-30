@@ -63,7 +63,8 @@
             onSave: function(evt, formData) {
                 var jsonData = formBuilder.actions.getData('json', true);
                 document.getElementById("data").value = jsonData;
-            }
+            },
+            disableFields: ['autocomplete', 'button', 'date', 'file', 'hidden', 'starRating', 'textarea']
         };
         var formBuilder = $(fbTemplate).formBuilder(options);
     });
