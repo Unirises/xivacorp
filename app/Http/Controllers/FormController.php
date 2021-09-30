@@ -134,6 +134,9 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
+        $form->service_forms()->delete();
+        $form->consultation_forms()->delete();
+        $form->answers()->delete();
         $form->delete();
 
         return redirect()->back();
