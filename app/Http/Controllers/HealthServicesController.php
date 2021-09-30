@@ -241,7 +241,7 @@ class HealthServicesController extends Controller
             'c_name' => $form->service->client->name,
             'c_dob' => $form->service->client->dob,
             'c_age' => Carbon::parse($form->service->client->dob)->age,
-            'date' => Carbon::now(),
+            'date' => Carbon::parse($form->updated_at)->format('m/d/Y g:i A'),
             'c_gender' => $form->service->client->gender->description,
             'id' => $id,
             'hcp_name' => $form->answerer->name,
