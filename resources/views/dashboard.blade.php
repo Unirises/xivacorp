@@ -48,7 +48,7 @@
                     @endif
                     @if(auth()->user()->role->value != 0)
                     @foreach($customArray as $day => $data)
-                    <b>{{ \Carbon\Carbon::now()->format('M') . ' ' . $day}}</b>
+                    <b>{{ \Carbon\Carbon::createFromFormat('m/d/Y', $day)->format('M d Y') }}</b>
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
