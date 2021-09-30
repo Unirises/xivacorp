@@ -51,7 +51,7 @@ class NotificationController extends Controller
     {
         abort_if(auth()->user()->role->value != 0, 401);
 
-        $hcps = User::where('role', 1)->get();
+        $hcps = User::where('role', 1)->whereNotNull('hours')->get();
         $companies = Company::all();
 
         return view('admin.change-company', compact('hcps', 'companies'));

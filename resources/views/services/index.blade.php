@@ -33,7 +33,7 @@
                                         {{ $booking->workspace_id }}
                                     </th>
                                     <td>
-                                        {{ $booking->client->name }}
+                                        {{ $booking->client->name ?? 'NO NAME' }}
                                     </td>
                                     <td>
                                         {{ $booking->service->meta }}
@@ -221,7 +221,7 @@
                                         {{ $booking->workspace_id }}
                                     </th>
                                     <td>
-                                        {{ $booking->client->name }}
+                                        {{ $booking->client->name ?? $booking->id }}
                                     </td>
                                     <td>
                                         {{ $booking->service->meta }}
