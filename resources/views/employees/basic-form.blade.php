@@ -101,7 +101,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="ni ni-watch-time"></i></span>
             </div>
-            <input type="text" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }}" id="dob" name="dob" placeholder=" Date of Birth" value=""/>
+            <input type="text" class="form-control{{ $errors->has('dob') ? ' is-invalid' : '' }} bg-white" id="dob" name="dob" placeholder=" Date of Birth" value=""/>
         </div>
         @if ($errors->has('dob'))
         <span class="invalid-feedback" style="display: block;" role="alert">
@@ -163,6 +163,7 @@ $(document).ready(function() {
     $("#dob").flatpickr({
         dateFormat: "Y-m-d",
         maxDate: "today",
+        disableMobile: "true"
     });
 });
 </script>

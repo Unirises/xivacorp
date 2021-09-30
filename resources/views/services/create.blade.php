@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div class="form-group{{ $errors->has('schedule') ? ' has-danger' : '' }}" id="schedule_div">
-                            <input type="text" name="schedule" id="schedule" class="form-control form-control-alternative{{ $errors->has('schedule') ? ' is-invalid' : '' }}" placeholder="Select a schedule" value="{{ old('schedule') }}">
+                            <input type="text" name="schedule" id="schedule" class="form-control form-control-alternative{{ $errors->has('schedule') ? ' is-invalid' : '' }} bg-white" placeholder="Select a schedule">
 
                             @if ($errors->has('schedule'))
                             <span class="invalid-feedback" role="alert">
@@ -83,6 +83,7 @@
             dateFormat: 'Y-m-d h:i K',
             minDate: "today",
             enableTime: true,
+            disableMobile: "true"
         });
         $('#is_continuous').change(function() {
             $('#schedule_div').toggle(!this.checked);

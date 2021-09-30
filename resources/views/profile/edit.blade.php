@@ -107,7 +107,7 @@
                             <div class="col">
                                 <div class="form-group{{ $errors->has('start') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-email">Start Time</label>
-                                    <input type="text" name="start" id="start" class="form-control form-control-alternative{{ $errors->has('start') ? ' is-invalid' : '' }}" placeholder="Starting Time" value="{{ old('start') }}" required>
+                                    <input type="text" name="start" id="start" class="form-control form-control-alternative{{ $errors->has('start') ? ' is-invalid' : '' }} bg-white" placeholder="Starting Time" value="{{ old('start') }}" required>
 
                                     @if ($errors->has('start'))
                                     <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
                             <div class="col">
                                 <div class="form-group{{ $errors->has('end') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-email">End Time</label>
-                                    <input type="text" name="end" id="end" class="form-control form-control-alternative{{ $errors->has('end') ? ' is-invalid' : '' }}" placeholder="End Time" value="{{ old('end') }}" required>
+                                    <input type="text" name="end" id="end" class="form-control form-control-alternative{{ $errors->has('end') ? ' is-invalid' : '' }} bg-white" placeholder="End Time" value="{{ old('end') }}" required>
 
                                     @if ($errors->has('end'))
                                     <span class="invalid-feedback" role="alert">
@@ -352,12 +352,14 @@
         noCalendar: true,
         time_24hr: true,
         dateFormat: "H:i",
+        disableMobile: "true"
     });
     $("#end").flatpickr({
         enableTime: true,
         noCalendar: true,
         time_24hr: true,
         dateFormat: "H:i",
+        disableMobile: "true"
     });
     jQuery(function($) {
         var dropdown = document.getElementById('type');

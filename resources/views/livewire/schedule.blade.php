@@ -15,7 +15,7 @@
         </div>
         <div class="col">
             <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                <input type="text" name="date" id="date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}" placeholder="Select a Date" value="{{ old('date') }}" required wire:model="date">
+                <input type="text" name="date" id="date" class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }} bg-white" placeholder="Select a Date" value="{{ old('date') }}" required wire:model="date">
 
                 @if ($errors->has('date'))
                 <span class="invalid-feedback" role="alert">
@@ -45,12 +45,14 @@
     $("#date").flatpickr({
         dateFormat: 'Y-m-d',
         minDate: "today",
+        disableMobile: "true"
     });
 
     Livewire.on('updateDays', data => {
         $("#date").flatpickr({
             dateFormat: 'Y-m-d',
             minDate: "today",
+            disableMobile: "true",
             disable: [
                 function(date) {
                     return data.some(function(e) {
